@@ -1,33 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tienda Mun</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
+
     body {
       height: 100vh;
       width: 100vw;
-      background: #f0f0f0;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #f0f0f0; /* Fallback */
     }
+
+    /* Fondo animado con capas de degradado */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #f0f0f0, #a8d0e6);
+      filter: blur(40px) contrast(1.1);
+      opacity: 0.7;
+      transform: scale(1.2);
+    }
+
     .logo {
       width: 320px;
       max-width: 80vw;
       height: auto;
       display: block;
       margin: 0 auto;
+      transition: filter 0.4s ease;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+
+    /* Efecto sutil al pasar el mouse */
+    .logo:hover {
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2)) brightness(1.05);
     }
   </style>
 </head>
 <body>
+
+  <!-- Fondo animado -->
+  <div class="bg-animation" id="bg"></div>
+
+  <!-- Logo -->
   <img src="mun-logo.png" class="logo" alt="Logo Mun">
+
+  <script>
+    // Selección del fondo
+    const bg = document.getElementById("bg");
+
+    // Paleta de colores moderna: azules suaves, morados, rosas pastel
+    const colors = [
+      { grad: "linear-gradient(45deg, #f0f0f0, #a8d0e6)" },
+      { grad: "linear-gradient(45deg, #e0f7fa, #7986cb)" },
+      { grad: "linear-gradient(45deg, #f3e5f5, #b39dca)" },
+      { grad: "linear-gradient(45deg, #e8f5e8, #a5d6a7)" },
+      { grad: "linear-gradient(45deg, #fff3e0, #ffcc80)" }
+    ];
+
+    // Animación principal con GSAP
+    function animateBackground() {
+      gsap.to(bg, {
+        duration: 8,
+        background: colors[0].grad,
+        ease: "sine.inOut",
+        onComplete: () => {
+          // Rotar colores
+          colors.push(colors.shift());
+          animateBackground();
+        }
+      });
+
+      // Pequeña pulsación (efecto respiración)
+      gsap.to(bg, {
+        duration: 4,
+        opacity: 0.6,
+        scale: 1.15,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: 1
+      });
+    }
+
+    // Iniciar animación al cargar
+    window.addEventListener("load", () => {
+      animateBackground();
+
+      // Opcional: animación sutil del logo al cargar
+      gsap.from(".logo", {
+        duration: 1.2,
+        opacity: 0,
+        y: 30,
+        ease: "back.out(1.2)"
+      });
+    });
+  </script>
+
 </body>
 </html>
