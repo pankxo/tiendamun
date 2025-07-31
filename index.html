@@ -2,102 +2,88 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>TiendaMun - Productos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUN Parallax</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f6f6f6;
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden;
     }
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    body {
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      /* Parallax background */
+      background: linear-gradient(120deg, #ffe5e0 0%, #fff2e6 100%);
+      position: relative;
     }
-    h1 {
-      text-align: center;
-      color: #222;
+    .parallax-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
+    .parallax-layer {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png') repeat;
+      opacity: 0.1;
+      animation: parallax-move 7s linear infinite alternate;
     }
-    .producto {
-      background: #fafafa;
-      border-radius: 6px;
-      padding: 18px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      text-align: center;
-      transition: box-shadow 0.2s;
+    @keyframes parallax-move {
+      from { transform: translateY(0) scale(1);}
+      to   { transform: translateY(-40px) scale(1.03);}
     }
-    .producto:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    .logo-container {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 90vw;
+      max-width: 400px;
+      padding: 2rem 1rem;
+      box-sizing: border-box;
     }
-    .producto img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 14px;
+    .logo-container img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 16px #f7e3d5);
+      transition: transform 0.4s cubic-bezier(.75,0,.25,1);
     }
-    .nombre {
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .precio {
-      color: #008060;
-      font-size: 1em;
-      font-weight: 500;
-    }
-    .footer {
-      text-align: center;
-      margin: 32px 0 0 0;
-      color: #555;
-      font-size: 0.95em;
+    .logo-container img:hover {
+      transform: scale(1.04);
     }
     @media (max-width: 600px) {
-      .container { padding: 8px; }
-      .grid { gap: 12px; }
-      .producto { padding: 10px; }
+      .logo-container {
+        max-width: 90vw;
+        padding: 1rem;
+      }
+      .logo-container img {
+        max-width: 80vw;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenido a TiendaMun</h1>
-    <div class="grid">
-      <div class="producto">
-        <img src="https://via.placeholder.com/100?text=Producto+1" alt="Producto 1">
-        <div class="nombre">Producto 1</div>
-        <div class="precio">$10.99</div>
-      </div>
-      <div class="producto">
-        <img src="https://via.placeholder.com/100?text=Producto+2" alt="Producto 2">
-        <div class="nombre">Producto 2</div>
-        <div class="precio">$8.50</div>
-      </div>
-      <div class="producto">
-        <img src="https://via.placeholder.com/100?text=Producto+3" alt="Producto 3">
-        <div class="nombre">Producto 3</div>
-        <div class="precio">$15.00</div>
-      </div>
-      <div class="producto">
-        <img src="https://via.placeholder.com/100?text=Producto+4" alt="Producto 4">
-        <div class="nombre">Producto 4</div>
-        <div class="precio">$21.75</div>
-      </div>
-      <!-- Agrega más productos aquí -->
-    </div>
+  <div class="parallax-bg">
+    <div class="parallax-layer"></div>
   </div>
-  <div class="footer">
-    &copy; 2025 TiendaMun - Página de presentación de productos.
+  <div class="logo-container">
+    <!-- Logo PNG cargado por el usuario -->
+    <img src="logo-mun.png" alt="Logo MUN">
+    <!-- Si el logo tiene otro nombre, cambia src="logo-mun.png" por el nombre correcto -->
   </div>
 </body>
 </html>
