@@ -2,88 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MUN Parallax</title>
+  <title>Tienda Mun</title>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
     }
     body {
       height: 100vh;
       width: 100vw;
-      box-sizing: border-box;
-      /* Parallax background */
-      background: linear-gradient(120deg, #ffe5e0 0%, #fff2e6 100%);
-      position: relative;
-    }
-    .parallax-bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .parallax-layer {
-      position: absolute;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png') repeat;
-      opacity: 0.1;
-      animation: parallax-move 7s linear infinite alternate;
-    }
-    @keyframes parallax-move {
-      from { transform: translateY(0) scale(1);}
-      to   { transform: translateY(-40px) scale(1.03);}
-    }
-    .logo-container {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
+      background: #f0f0f0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 90vw;
-      max-width: 400px;
-      padding: 2rem 1rem;
-      box-sizing: border-box;
     }
-    .logo-container img {
-      width: 100%;
-      max-width: 320px;
+    .logo {
+      width: 320px;
+      max-width: 80vw;
       height: auto;
       display: block;
       margin: 0 auto;
-      filter: drop-shadow(0 0 16px #f7e3d5);
-      transition: transform 0.4s cubic-bezier(.75,0,.25,1);
-    }
-    .logo-container img:hover {
-      transform: scale(1.04);
-    }
-    @media (max-width: 600px) {
-      .logo-container {
-        max-width: 90vw;
-        padding: 1rem;
-      }
-      .logo-container img {
-        max-width: 80vw;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="parallax-bg">
-    <div class="parallax-layer"></div>
-  </div>
-  <div class="logo-container">
-    <!-- Logo PNG cargado por el usuario -->
-    <img src="logo-mun.png" alt="Logo MUN">
-    <!-- Si el logo tiene otro nombre, cambia src="logo-mun.png" por el nombre correcto -->
-  </div>
+  <img src="mun-logo.png" class="logo" alt="Logo Mun">
 </body>
 </html>
