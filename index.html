@@ -71,12 +71,53 @@
       margin: 0;
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
+    /* Estilo para el botón Detener */
+    .detener-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #a8d0e6;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .detener-btn:hover {
+      background: rgba(255, 255, 255, 1);
+      border-color: #7986cb;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .detener-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Ocultar el botón en dispositivos móviles */
+    @media (max-width: 768px) {
+      .detener-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- Fondo animado -->
   <div class="bg-animation" id="bg"></div>
+
+  <!-- Botón Detener (solo visible en desktop) -->
+  <button class="detener-btn" id="detenerBtn">Detener</button>
 
   <!-- Contenido principal -->
   <div class="main-content">
@@ -88,8 +129,13 @@
   </div>
 
   <script>
-    // Selección del fondo
+    // Selección del fondo y botón
     const bg = document.getElementById("bg");
+    const detenerBtn = document.getElementById("detenerBtn");
+
+    // Estado de la animación
+    let animationActive = true;
+    let animationTimeline;
 
     // Paleta de colores moderna: azules suaves, morados, rosas pastel
     const colors = [
@@ -102,14 +148,18 @@
 
     // Animación principal con GSAP
     function animateBackground() {
+      if (!animationActive) return;
+      
       gsap.to(bg, {
         duration: 8,
         background: colors[0].grad,
         ease: "sine.inOut",
         onComplete: () => {
-          // Rotar colores
-          colors.push(colors.shift());
-          animateBackground();
+          // Rotar colores solo si la animación sigue activa
+          if (animationActive) {
+            colors.push(colors.shift());
+            animateBackground();
+          }
         }
       });
 
@@ -123,6 +173,23 @@
         repeat: 1
       });
     }
+
+    // Función para detener/reanudar animación
+    function toggleAnimation() {
+      animationActive = !animationActive;
+      
+      if (animationActive) {
+        detenerBtn.textContent = "Detener";
+        animateBackground();
+      } else {
+        detenerBtn.textContent = "Reanudar";
+        // Detener todas las animaciones de GSAP en el elemento bg
+        gsap.killTweensOf(bg);
+      }
+    }
+
+    // Event listener para el botón
+    detenerBtn.addEventListener("click", toggleAnimation);
 
     // Iniciar animación al cargar
     window.addEventListener("load", () => {
