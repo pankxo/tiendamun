@@ -4,22 +4,175 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tienda Mun</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      font-family: 'Arial', sans-serif;
     }
 
     body {
-      height: 100vh;
-      width: 100vw;
+      background: #f0f0f0; /* Fallback */
+      padding-top: 70px; /* Space for fixed header */
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-sizing: border-box;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      justify-content: space-between;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background: #333;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(9px, 9px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(8px, -8px);
+    }
+
+    /* Header Logo */
+    .header-logo {
+      height: 50px;
+      width: auto;
+    }
+
+    /* Placeholder Icon */
+    .user-icon {
+      width: 30px;
+      height: 30px;
+      background: #333;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0f0f0; /* Fallback */
+      color: white;
+      font-size: 16px;
+    }
+
+    /* Desktop Menu */
+    .desktop-menu {
+      display: none;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 30px;
+    }
+
+    .desktop-menu li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .desktop-menu li a:hover {
+      color: #a8d0e6;
+    }
+
+    /* Mobile Sidebar Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      left: -300px;
+      width: 300px;
+      height: calc(100vh - 70px);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      transition: left 0.3s ease;
+      z-index: 999;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 20px 0;
+    }
+
+    .mobile-menu li {
+      padding: 0;
+    }
+
+    .mobile-menu li a {
+      display: block;
+      padding: 15px 25px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .mobile-menu li a:hover {
+      background-color: rgba(168, 208, 230, 0.2);
+    }
+
+    /* Mobile Menu Overlay */
+    .menu-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 70px);
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Main Content */
+    .main-content {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
 
     /* Fondo animado con capas de degradado */
@@ -30,10 +183,23 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(45deg, #f0f0f0, #a8d0e6);
-      filter: blur(40px) contrast(1.1);
+      background: linear-gradient(45deg, #f0f0f0, #a8d0e6, #e0f7fa, #7986cb);
+      background-size: 400% 400%;
+      animation: gradientAnimation 8s ease infinite;
       opacity: 0.7;
       transform: scale(1.2);
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .logo {
@@ -44,11 +210,56 @@
       margin: 0 auto;
       transition: filter 0.4s ease;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+      animation: logoFadeIn 1.2s ease-out;
+    }
+
+    @keyframes logoFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Efecto sutil al pasar el mouse */
     .logo:hover {
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2)) brightness(1.05);
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (min-width: 768px) {
+      .hamburger {
+        display: none;
+      }
+      
+      .desktop-menu {
+        display: flex !important;
+      }
+      
+      .mobile-menu {
+        display: none;
+      }
+      
+      .header {
+        padding: 0 40px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .desktop-menu {
+        display: none !important;
+      }
+      
+      .header {
+        padding: 0 15px;
+      }
+      
+      .header-logo {
+        height: 40px;
+      }
     }
   </style>
 </head>
@@ -57,57 +268,100 @@
   <!-- Fondo animado -->
   <div class="bg-animation" id="bg"></div>
 
-  <!-- Logo -->
-  <img src="mun-logo.png" class="logo" alt="Logo Mun">
+  <!-- Header -->
+  <header class="header">
+    <!-- Hamburger Menu (Mobile) -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav class="desktop-menu">
+      <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 30px;">
+        <li><a href="#home">Inicio</a></li>
+        <li><a href="#products">Productos</a></li>
+        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Logo (Centered) -->
+    <img src="mun-logo.png" class="header-logo" alt="Logo Mun">
+
+    <!-- User/Cart Icon (Placeholder) -->
+    <div class="user-icon">👤</div>
+  </header>
+
+  <!-- Mobile Sidebar Menu -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#home">Inicio</a></li>
+      <li><a href="#products">Productos</a></li>
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <img src="mun-logo.png" class="logo" alt="Logo Mun">
+  </main>
+
+  <!-- Additional content to test scrolling -->
+  <section style="padding: 50px 20px; max-width: 800px; margin: 0 auto; background: rgba(255,255,255,0.9); border-radius: 20px; margin-top: 50px; margin-bottom: 50px;">
+    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">Bienvenidos a Tienda Mun</h2>
+    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+      Descubre nuestra increíble colección de productos únicos. En Tienda Mun encontrarás todo lo que necesitas para expresar tu estilo personal.
+    </p>
+    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+      Nuestro compromiso es ofrecerte la mejor calidad y un servicio excepcional. Cada producto está cuidadosamente seleccionado para garantizar tu satisfacción.
+    </p>
+    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+      Explora nuestras categorías y encuentra exactamente lo que buscas. Desde productos para el hogar hasta accesorios personales, tenemos todo lo que necesitas.
+    </p>
+    <p style="color: #666; line-height: 1.6;">
+      ¡Gracias por elegir Tienda Mun! Estamos aquí para hacer tu experiencia de compra memorable.
+    </p>
+  </section>
 
   <script>
-    // Selección del fondo
-    const bg = document.getElementById("bg");
+    // Mobile Menu Toggle Functionality
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
 
-    // Paleta de colores moderna: azules suaves, morados, rosas pastel
-    const colors = [
-      { grad: "linear-gradient(45deg, #f0f0f0, #a8d0e6)" },
-      { grad: "linear-gradient(45deg, #e0f7fa, #7986cb)" },
-      { grad: "linear-gradient(45deg, #f3e5f5, #b39dca)" },
-      { grad: "linear-gradient(45deg, #e8f5e8, #a5d6a7)" },
-      { grad: "linear-gradient(45deg, #fff3e0, #ffcc80)" }
-    ];
-
-    // Animación principal con GSAP
-    function animateBackground() {
-      gsap.to(bg, {
-        duration: 8,
-        background: colors[0].grad,
-        ease: "sine.inOut",
-        onComplete: () => {
-          // Rotar colores
-          colors.push(colors.shift());
-          animateBackground();
-        }
-      });
-
-      // Pequeña pulsación (efecto respiración)
-      gsap.to(bg, {
-        duration: 4,
-        opacity: 0.6,
-        scale: 1.15,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: 1
-      });
+    function toggleMobileMenu() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
     }
 
-    // Iniciar animación al cargar
-    window.addEventListener("load", () => {
-      animateBackground();
+    function closeMobileMenu() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      menuOverlay.classList.remove('active');
+    }
 
-      // Opcional: animación sutil del logo al cargar
-      gsap.from(".logo", {
-        duration: 1.2,
-        opacity: 0,
-        y: 30,
-        ease: "back.out(1.2)"
-      });
+    // Event listeners
+    hamburger.addEventListener('click', toggleMobileMenu);
+    menuOverlay.addEventListener('click', closeMobileMenu);
+
+    // Close menu when clicking on menu links (smooth UX)
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close mobile menu on window resize to desktop size
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        closeMobileMenu();
+      }
     });
   </script>
 
