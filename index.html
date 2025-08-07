@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Mun</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- OwlCarousel CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -11,55 +13,252 @@
         body {
             background: url('tu-fondo-animado.gif') no-repeat center center fixed;
             background-size: cover;
+            padding-top: 20px;
         }
-        /* Agregar estilos responsivos según sea necesario */
+        
+        .carousel-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .owl-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 100%;
+        }
+        
+        .carousel-item-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .carousel-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .carousel-item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .placeholder-img-1 {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+        }
+        
+        .placeholder-img-2 {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+        }
+        
+        .placeholder-img-3 {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+        
+        .placeholder-img-4 {
+            background: linear-gradient(135deg, #fd7e14, #e55100);
+        }
+        
+        .placeholder-img-5 {
+            background: linear-gradient(135deg, #6f42c1, #5a32a3);
+        }
+        
+        .carousel-item-card h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .carousel-item-card p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .carousel-item-card .btn-comprar {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .carousel-item-card .btn-comprar:hover {
+            background: linear-gradient(45deg, #0056b3, #004085);
+            transform: scale(1.05);
+            color: white;
+        }
+        
+        .logo-central {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .logo-central img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .owl-nav button {
+            background: rgba(0, 123, 255, 0.8) !important;
+            color: white !important;
+            border-radius: 50% !important;
+            width: 50px !important;
+            height: 50px !important;
+            font-size: 18px !important;
+        }
+        
+        .owl-nav button:hover {
+            background: rgba(0, 123, 255, 1) !important;
+        }
+        
+        .owl-dots .owl-dot span {
+            background: #007bff !important;
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .owl-carousel {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .carousel-item-card {
+                margin: 0;
+                padding: 15px;
+            }
+            
+            .logo-central img {
+                max-width: 250px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .owl-carousel {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .owl-carousel {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <!-- Aquí va el header existente -->
-    </header>
-    <nav>
-        <!-- Aquí va el menú existente -->
-    </nav>
-    
-    <div class="carousel-container">
-        <div class="owl-carousel">
-            <div class="item">
-                <img src="imagen_paquete1.jpg" alt="Paquete 1">
-                <h3>Paquete de Seguidores 1</h3>
-                <p>Descripción del Paquete 1</p>
-                <button onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=123456789'">Pagar</button>
+    <div class="container-fluid">
+        <header>
+            <!-- Aquí va el header existente -->
+        </header>
+        <nav>
+            <!-- Aquí va el menú existente -->
+        </nav>
+        
+        <!-- Galería OwlCarousel con 5 ítems de venta -->
+        <div class="carousel-container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center mb-4 text-primary">Nuestros Productos Destacados</h2>
+                </div>
             </div>
-            <div class="item">
-                <img src="imagen_paquete2.jpg" alt="Paquete 2">
-                <h3>Paquete de Seguidores 2</h3>
-                <p>Descripción del Paquete 2</p>
-                <button onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=123456789'">Pagar</button>
+            <div class="owl-carousel owl-theme">
+                <div class="carousel-item-card">
+                    <div class="placeholder-img-1" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Seguidores Premium</div>
+                    <h3>Paquete Premium Seguidores</h3>
+                    <p>Aumenta tu presencia en redes sociales con nuestro paquete premium. Incluye 5000 seguidores reales y activos para tu cuenta.</p>
+                    <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=123456789" class="btn-comprar">Comprar Ahora - $2500</a>
+                </div>
+                <div class="carousel-item-card">
+                    <div class="placeholder-img-2" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Likes Boost</div>
+                    <h3>Boost de Likes Instantáneo</h3>
+                    <p>Dale el impulso que necesitas a tus publicaciones. Paquete de 1000 likes garantizados en menos de 24 horas.</p>
+                    <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=123456790" class="btn-comprar">Comprar Ahora - $850</a>
+                </div>
+                <div class="carousel-item-card">
+                    <div class="placeholder-img-3" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Visualizaciones</div>
+                    <h3>Mega Pack Visualizaciones</h3>
+                    <p>Haz viral tu contenido con 10,000 visualizaciones orgánicas. Perfecto para videos e historias de impacto.</p>
+                    <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=123456791" class="btn-comprar">Comprar Ahora - $1200</a>
+                </div>
+                <div class="carousel-item-card">
+                    <div class="placeholder-img-4" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Engagement Pro</div>
+                    <h3>Engagement Pro</h3>
+                    <p>Aumenta la interacción con comentarios reales y engagement auténtico. Incluye 200 comentarios personalizados.</p>
+                    <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=123456792" class="btn-comprar">Comprar Ahora - $650</a>
+                </div>
+                <div class="carousel-item-card">
+                    <div class="placeholder-img-5" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Todo Incluido</div>
+                    <h3>Paquete Todo Incluido</h3>
+                    <p>La solución completa para tu crecimiento digital. Seguidores, likes, visualizaciones y comentarios en un solo paquete.</p>
+                    <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=123456793" class="btn-comprar">Comprar Ahora - $4200</a>
+                </div>
             </div>
-            <!-- Agrega más paquetes según sea necesario -->
+        </div>
+
+        <div class="logo-central">
+            <img src="mun-logo.png" alt="Logo Tienda Mun" class="img-fluid">
         </div>
     </div>
 
-    <div class="logo-central">
-        <img src="logo.jpg" alt="Logo Central">
-    </div>
-
-    <!-- OwlCarousel JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- Fallback CSS Grid Gallery (replaces OwlCarousel when external resources are blocked) -->
     <script>
-        $(document).ready(function(){
-            $(".owl-carousel").owlCarousel({
-                items: 1,
-                loop: true,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                animateOut: 'fadeOut',
-                animateIn: 'fadeIn'
+        // Simple fallback animation for enhanced visual appeal
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.carousel-item-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'fadeInUp 0.6s ease-out forwards';
             });
         });
     </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .carousel-item-card {
+            opacity: 0;
+        }
+    </style>
 </body>
 </html>
