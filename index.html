@@ -4,62 +4,479 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Mun</title>
-    <!-- OwlCarousel CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    
     <style>
-        body {
-            background: url('tu-fondo-animado.gif') no-repeat center center fixed;
-            background-size: cover;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        /* Agregar estilos responsivos según sea necesario */
+
+        body {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #667eea;
+            padding: 1rem 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        /* Gallery Styles */
+        .gallery-section {
+            padding: 60px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-title h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-title p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 0 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 0 0 350px;
+            min-height: 400px;
+        }
+
+        .product-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .product-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .btn-purchase {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .btn-purchase:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Navigation Buttons */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-nav.prev {
+            left: 20px;
+        }
+
+        .carousel-nav.next {
+            right: 20px;
+        }
+
+        /* Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            padding: 80px 2rem;
+        }
+
+        .logo-central {
+            max-width: 300px;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-central:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navbar-nav {
+                gap: 1rem;
+            }
+
+            .gallery-title h2 {
+                font-size: 2rem;
+            }
+
+            .product-item {
+                flex: 0 0 280px;
+                margin: 0 10px;
+            }
+
+            .gallery-section {
+                padding: 40px 1rem;
+            }
+
+            .logo-section {
+                padding: 40px 1rem;
+            }
+
+            .logo-central {
+                max-width: 200px;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .carousel-nav.prev {
+                left: 10px;
+            }
+
+            .carousel-nav.next {
+                right: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <!-- Aquí va el header existente -->
+    <!-- Header Section -->
+    <header class="header-section">
+        <nav class="navbar">
+            <a class="navbar-brand" href="#inicio">🛍️ Tienda Mun</a>
+            <ul class="navbar-nav">
+                <li><a class="nav-link" href="#inicio">Inicio</a></li>
+                <li><a class="nav-link" href="#productos">Productos</a></li>
+                <li><a class="nav-link" href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <!-- Aquí va el menú existente -->
-    </nav>
-    
-    <div class="carousel-container">
-        <div class="owl-carousel">
-            <div class="item">
-                <img src="imagen_paquete1.jpg" alt="Paquete 1">
-                <h3>Paquete de Seguidores 1</h3>
-                <p>Descripción del Paquete 1</p>
-                <button onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=123456789'">Pagar</button>
-            </div>
-            <div class="item">
-                <img src="imagen_paquete2.jpg" alt="Paquete 2">
-                <h3>Paquete de Seguidores 2</h3>
-                <p>Descripción del Paquete 2</p>
-                <button onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=123456789'">Pagar</button>
-            </div>
-            <!-- Agrega más paquetes según sea necesario -->
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="productos">
+        <div class="gallery-title">
+            <h2>Nuestros Productos</h2>
+            <p>Descubre nuestros paquetes premium para hacer crecer tu presencia digital</p>
         </div>
-    </div>
+        
+        <div class="carousel-container">
+            <button class="carousel-nav prev" onclick="prevSlide()">‹</button>
+            <div class="carousel-wrapper" id="carousel">
+                <!-- Producto 1 -->
+                <div class="product-item">
+                    <div class="product-image">👥</div>
+                    <div class="product-content">
+                        <h3 class="product-title">Paquete Starter</h3>
+                        <p class="product-description">Perfecto para comenzar tu presencia digital. Incluye seguidores de calidad y engagement inicial para tu cuenta.</p>
+                        <div class="product-price">$2,999</div>
+                        <button class="btn-purchase" onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=starter123'">
+                            🛒 Comprar Ahora
+                        </button>
+                    </div>
+                </div>
 
-    <div class="logo-central">
-        <img src="logo.jpg" alt="Logo Central">
-    </div>
+                <!-- Producto 2 -->
+                <div class="product-item">
+                    <div class="product-image">🚀</div>
+                    <div class="product-content">
+                        <h3 class="product-title">Paquete Growth</h3>
+                        <p class="product-description">Acelera tu crecimiento con nuestro paquete intermedio. Mayor alcance y visibilidad garantizada.</p>
+                        <div class="product-price">$5,999</div>
+                        <button class="btn-purchase" onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=growth456'">
+                            💳 Pagar
+                        </button>
+                    </div>
+                </div>
 
-    <!-- OwlCarousel JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+                <!-- Producto 3 -->
+                <div class="product-item">
+                    <div class="product-image">👑</div>
+                    <div class="product-content">
+                        <h3 class="product-title">Paquete Premium</h3>
+                        <p class="product-description">La opción más popular para influencers y marcas que buscan un crecimiento sostenido y profesional.</p>
+                        <div class="product-price">$9,999</div>
+                        <button class="btn-purchase" onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=premium789'">
+                            ⭐ Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="product-item">
+                    <div class="product-image">🔥</div>
+                    <div class="product-content">
+                        <h3 class="product-title">Paquete Viral</h3>
+                        <p class="product-description">Maximiza tu potencial viral con estrategias avanzadas de engagement y crecimiento orgánico.</p>
+                        <div class="product-price">$15,999</div>
+                        <button class="btn-purchase" onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=viral101'">
+                            ⚡ Comprar Ahora
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="product-item">
+                    <div class="product-image">💎</div>
+                    <div class="product-content">
+                        <h3 class="product-title">Paquete Elite</h3>
+                        <p class="product-description">La experiencia definitiva para marcas establecidas. Servicio VIP con resultados garantizados.</p>
+                        <div class="product-price">$24,999</div>
+                        <button class="btn-purchase" onclick="location.href='https://www.mercadopago.com.ar/checkout/start?pref_id=elite202'">
+                            💎 Pagar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-nav next" onclick="nextSlide()">›</button>
+        </div>
+
+        <div class="carousel-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+        </div>
+    </section>
+
+    <!-- Logo Section -->
+    <section class="logo-section" id="inicio">
+        <img src="mun-logo.png" alt="Logo Central Tienda Mun" class="logo-central">
+    </section>
+
     <script>
-        $(document).ready(function(){
-            $(".owl-carousel").owlCarousel({
-                items: 1,
-                loop: true,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                animateOut: 'fadeOut',
-                animateIn: 'fadeIn'
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.product-item').length;
+        const itemWidth = 380; // 350px + 30px margin
+        let itemsVisible = getItemsVisible();
+        
+        function getItemsVisible() {
+            const width = window.innerWidth;
+            if (width < 768) return 1;
+            if (width < 1200) return 2;
+            return 3;
+        }
+
+        function updateCarousel() {
+            const carousel = document.getElementById('carousel');
+            const maxIndex = Math.max(0, items - itemsVisible);
+            
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+            
+            const translateX = -currentIndex * itemWidth;
+            carousel.style.transform = `translateX(${translateX}px)`;
+            
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === Math.floor(currentIndex)) {
+                    dot.classList.add('active');
+                }
             });
+        }
+
+        function nextSlide() {
+            const maxIndex = Math.max(0, items - itemsVisible);
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+            } else {
+                currentIndex = 0; // Loop back to start
+            }
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            const maxIndex = Math.max(0, items - itemsVisible);
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = maxIndex; // Loop to end
+            }
+            updateCarousel();
+        }
+
+        function currentSlide(n) {
+            const maxIndex = Math.max(0, items - itemsVisible);
+            currentIndex = Math.min(n - 1, maxIndex);
+            updateCarousel();
+        }
+
+        // Auto-play functionality
+        function autoPlay() {
+            nextSlide();
+        }
+
+        // Start autoplay
+        let autoPlayInterval = setInterval(autoPlay, 4000);
+
+        // Pause autoplay on hover
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoPlayInterval);
         });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            autoPlayInterval = setInterval(autoPlay, 4000);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            itemsVisible = getItemsVisible();
+            updateCarousel();
+        });
+
+        // Initialize carousel
+        updateCarousel();
     </script>
 </body>
 </html>
