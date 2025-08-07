@@ -10,16 +10,18 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow-x: hidden; /* Only hide horizontal scroll */
     }
 
     body {
-      height: 100vh;
+      min-height: 100vh; /* Allow content to extend beyond viewport */
       width: 100vw;
       display: flex;
+      flex-direction: column; /* Stack content vertically */
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start; /* Start from top */
       background: #f0f0f0; /* Fallback */
+      padding-top: 72px; /* Account for fixed header */
     }
 
     /* Fondo animado con capas de degradado */
@@ -137,6 +139,9 @@
         height: 60px;
         padding: 0 8px;
       }
+      body {
+        padding-top: 60px; /* Adjust for smaller header */
+      }
     }
     @media (max-width: 600px) {
       .logo-header {
@@ -150,19 +155,211 @@
         width: 170px;
         padding-top: 60px;
       }
+      body {
+        padding-top: 48px; /* Adjust for smallest header */
+      }
     }
     .logo {
       width: 320px;
       max-width: 80vw;
       height: auto;
       display: block;
-      margin: 0 auto;
+      margin: 20px auto 0; /* Add top margin for spacing */
       transition: filter 0.4s ease;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
     }
     /* Efecto sutil al pasar el mouse */
     .logo:hover {
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2)) brightness(1.05);
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding: 0 24px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .gallery-title {
+      text-align: center;
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 30px;
+      font-weight: 300;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Custom Carousel Styling */
+    .gallery-container {
+      position: relative;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .carousel-container {
+      display: flex;
+      transition: transform 0.6s ease;
+      gap: 20px;
+    }
+
+    .carousel-item {
+      min-width: calc(20% - 16px); /* 5 items on desktop */
+      flex-shrink: 0;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .carousel-item img:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Custom Navigation Arrows */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.9);
+      color: #555;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(255,255,255,1);
+      color: #0077c2;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-nav.prev {
+      left: -22px;
+    }
+
+    .carousel-nav.next {
+      right: -22px;
+    }
+
+    /* Custom Pagination Dots */
+    .carousel-dots {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .carousel-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: rgba(85,85,85,0.3);
+      border-radius: 50%;
+      margin: 0 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .carousel-dot.active {
+      background: #0077c2;
+      transform: scale(1.2);
+    }
+
+    .carousel-dot:hover {
+      background: rgba(0,119,194,0.7);
+      transform: scale(1.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .carousel-item {
+        min-width: calc(33.333% - 14px); /* 3 items on tablet */
+      }
+    }
+
+    @media (max-width: 800px) {
+      .gallery-section {
+        padding: 0 16px;
+        margin-top: 20px;
+      }
+      
+      .gallery-title {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+      }
+
+      .carousel-item img {
+        height: 160px;
+      }
+
+      .carousel-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+
+      .carousel-nav.prev {
+        left: -18px;
+      }
+
+      .carousel-nav.next {
+        right: -18px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .carousel-item {
+        min-width: calc(50% - 10px); /* 2 items on mobile */
+      }
+
+      .carousel-container {
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-container {
+        padding: 15px;
+        margin: 15px 0;
+      }
+
+      .carousel-item img {
+        height: 140px;
+      }
+
+      .gallery-title {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+      }
     }
   </style>
 </head>
@@ -192,6 +389,44 @@
 
   <!-- Logo principal centrado -->
   <img src="mun-logo.png" class="logo" alt="Logo Mun">
+
+  <!-- Gallery Section -->
+  <div class="gallery-section">
+    <h2 class="gallery-title">Nuestra Galería</h2>
+    <div class="gallery-container">
+      <div class="carousel-wrapper">
+        <button class="carousel-nav prev" aria-label="Imagen anterior">‹</button>
+        <button class="carousel-nav next" aria-label="Siguiente imagen">›</button>
+        <div class="carousel-container" id="carousel">
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjYThkMGU2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiAxPC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 1">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNzk4NmNiIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiAyPC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 2">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjYjM5ZGNhIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiAzPC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 3">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjYTVkNmE3Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiA0PC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 4">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZmZjYzgwIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiA1PC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 5">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjhhOWE5Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiA2PC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 6">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjOWNjNmZmIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiA3PC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 7">
+          </div>
+          <div class="carousel-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjBmNGY4Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zZW0iIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiPkltYWdlbiA4PC90ZXh0Pgo8L3N2Zz4K" alt="Imagen 8">
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+  </div>
 
   <script>
     // Selección del fondo
@@ -262,6 +497,186 @@
         spans[1].style.opacity = "1";
         spans[2].style.transform = "";
       }
+    });
+
+    // Custom Carousel Implementation
+    class CustomCarousel {
+      constructor() {
+        this.carousel = document.getElementById('carousel');
+        this.dotsContainer = document.getElementById('carousel-dots');
+        this.prevBtn = document.querySelector('.carousel-nav.prev');
+        this.nextBtn = document.querySelector('.carousel-nav.next');
+        this.items = document.querySelectorAll('.carousel-item');
+        this.currentIndex = 0;
+        this.autoplayInterval = null;
+        this.isAutoplayPaused = false;
+        
+        this.init();
+      }
+
+      init() {
+        this.updateItemsPerView();
+        this.createDots();
+        this.bindEvents();
+        this.startAutoplay();
+        this.updateCarousel();
+        
+        // Update on window resize
+        window.addEventListener('resize', () => {
+          this.updateItemsPerView();
+          this.updateCarousel();
+        });
+      }
+
+      updateItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 768) {
+          this.itemsPerView = 2; // Mobile
+        } else if (width <= 1024) {
+          this.itemsPerView = 3; // Tablet
+        } else {
+          this.itemsPerView = 5; // Desktop
+        }
+        this.maxIndex = Math.max(0, this.items.length - this.itemsPerView);
+        
+        // Adjust current index if needed
+        if (this.currentIndex > this.maxIndex) {
+          this.currentIndex = this.maxIndex;
+        }
+      }
+
+      createDots() {
+        this.dotsContainer.innerHTML = '';
+        const totalDots = this.maxIndex + 1;
+        
+        for (let i = 0; i < totalDots; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', `Ir a grupo ${i + 1}`);
+          dot.addEventListener('click', () => this.goToSlide(i));
+          this.dotsContainer.appendChild(dot);
+        }
+        this.updateDots();
+      }
+
+      updateDots() {
+        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === this.currentIndex);
+        });
+      }
+
+      updateCarousel() {
+        const itemWidth = 100 / this.itemsPerView;
+        const translateX = -this.currentIndex * itemWidth;
+        this.carousel.style.transform = `translateX(${translateX}%)`;
+        this.updateDots();
+      }
+
+      next() {
+        if (this.currentIndex < this.maxIndex) {
+          this.currentIndex++;
+        } else {
+          this.currentIndex = 0; // Loop back to start
+        }
+        this.updateCarousel();
+      }
+
+      prev() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+        } else {
+          this.currentIndex = this.maxIndex; // Loop to end
+        }
+        this.updateCarousel();
+      }
+
+      goToSlide(index) {
+        this.currentIndex = Math.max(0, Math.min(index, this.maxIndex));
+        this.updateCarousel();
+        this.resetAutoplay();
+      }
+
+      startAutoplay() {
+        this.autoplayInterval = setInterval(() => {
+          if (!this.isAutoplayPaused) {
+            this.next();
+          }
+        }, 4000); // 4 seconds
+      }
+
+      pauseAutoplay() {
+        this.isAutoplayPaused = true;
+      }
+
+      resumeAutoplay() {
+        this.isAutoplayPaused = false;
+      }
+
+      resetAutoplay() {
+        clearInterval(this.autoplayInterval);
+        this.startAutoplay();
+      }
+
+      bindEvents() {
+        this.nextBtn.addEventListener('click', () => {
+          this.next();
+          this.resetAutoplay();
+        });
+
+        this.prevBtn.addEventListener('click', () => {
+          this.prev();
+          this.resetAutoplay();
+        });
+
+        // Pause autoplay on hover
+        const galleryContainer = document.querySelector('.gallery-container');
+        galleryContainer.addEventListener('mouseenter', () => this.pauseAutoplay());
+        galleryContainer.addEventListener('mouseleave', () => this.resumeAutoplay());
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+
+        this.carousel.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          isDragging = true;
+          this.pauseAutoplay();
+        });
+
+        this.carousel.addEventListener('touchmove', (e) => {
+          if (!isDragging) return;
+          e.preventDefault();
+        });
+
+        this.carousel.addEventListener('touchend', (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          
+          const endX = e.changedTouches[0].clientX;
+          const endY = e.changedTouches[0].clientY;
+          const diffX = startX - endX;
+          const diffY = startY - endY;
+
+          // Only swipe horizontally if the horizontal movement is greater than vertical
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+            if (diffX > 0) {
+              this.next(); // Swipe left
+            } else {
+              this.prev(); // Swipe right
+            }
+            this.resetAutoplay();
+          }
+          this.resumeAutoplay();
+        });
+      }
+    }
+
+    // Initialize carousel when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      new CustomCarousel();
     });
   </script>
 
