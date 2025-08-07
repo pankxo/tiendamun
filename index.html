@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Mun</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- OwlCarousel CSS -->
@@ -11,15 +15,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <style>
         body {
-            background: url('tu-fondo-animado.gif') no-repeat center center fixed;
-            background-size: cover;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFF8DC, #FFFACD, #FFEFD5);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
             padding-top: 80px; /* Increased for navbar */
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .navbar {
             background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
         }
         
         .navbar-brand img {
@@ -29,21 +42,23 @@
         
         .navbar-nav .nav-link {
             font-weight: 500;
-            color: #333 !important;
+            color: #B8860B !important;
             margin: 0 10px;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .navbar-nav .nav-link:hover {
-            color: #007bff !important;
+            color: #DAA520 !important;
+            transform: translateY(-1px);
         }
         
         .carousel-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0 40px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 248, 220, 0.8));
+            border-radius: 20px;
+            padding: 35px;
+            margin: 25px 0 45px 0;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.1);
             overflow: hidden;
         }
         
@@ -55,18 +70,20 @@
         }
         
         .carousel-item-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #fffef7);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 12px;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.1), 0 3px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.08);
         }
         
         .carousel-item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2), 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.2);
         }
         
         .carousel-item-card img {
@@ -104,40 +121,47 @@
         }
         
         .carousel-item-card h3 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            font-weight: bold;
+            color: #B8860B;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         
         .carousel-item-card p {
-            color: #666;
+            color: #8B7355;
             font-size: 1rem;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
         
         .carousel-item-card .btn-comprar {
-            background: linear-gradient(45deg, #007bff, #0056b3);
+            background: linear-gradient(45deg, #DAA520, #F4A460);
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 14px 28px;
+            border-radius: 30px;
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1rem;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
         }
         
         .carousel-item-card .btn-comprar:hover {
-            background: linear-gradient(45deg, #0056b3, #004085);
-            transform: scale(1.05);
+            background: linear-gradient(45deg, #B8860B, #DAA520);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4);
             color: white;
         }
         
         .logo-central {
             text-align: center;
-            padding: 40px 0;
+            padding: 50px 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 248, 220, 0.6));
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.1);
         }
         
         .logo-central img {
@@ -207,7 +231,7 @@
             <div class="container">
                 <a class="navbar-brand" href="#inicio">
                     <img src="mun-logo.png" alt="Mun Logo" class="d-inline-block align-text-top">
-                    <span class="ms-2 fw-bold text-primary">Tienda Mun</span>
+                    <span class="ms-2 fw-bold text-golden">Tienda Mun</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -239,40 +263,40 @@
             <div class="carousel-container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center mb-4 text-primary">Nuestros Shampoos Sólidos</h2>
-                        <p class="text-center mb-4 text-muted">Descubre nuestra línea de shampoos sólidos naturales, libres de químicos y amigables con el planeta</p>
+                        <h2 class="text-center mb-4" style="color: #B8860B; font-weight: 600;">Nuestros Shampoos Sólidos</h2>
+                        <p class="text-center mb-4" style="color: #8B7355;">Descubre nuestra línea de shampoos sólidos naturales, libres de químicos y amigables con el planeta</p>
                     </div>
                 </div>
                 <div class="owl-carousel owl-theme">
                     <div class="carousel-item-card">
-                        <div class="placeholder-img-1" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Menta Refrescante</div>
+                        <img src="shampoo-menta.svg" alt="Shampoo Sólido de Menta" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
                         <h3>Shampoo Sólido de Menta</h3>
                         <p>Estimula la circulación del cuero cabelludo con aceite esencial de menta. Ideal para cabellos grasos y sensación refrescante.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Menta" class="btn-comprar">Consultar - $1200</a>
+                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Menta" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="carousel-item-card">
-                        <div class="placeholder-img-2" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Romero Nutritivo</div>
+                        <img src="shampoo-romero.svg" alt="Shampoo Sólido de Romero" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
                         <h3>Shampoo Sólido de Romero</h3>
                         <p>Fortalece y nutre el cabello con romero natural. Previene la caída y estimula el crecimiento saludable del cabello.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Romero" class="btn-comprar">Consultar - $1200</a>
+                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Romero" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="carousel-item-card">
-                        <div class="placeholder-img-3" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Aloe Vera Hidratante</div>
+                        <img src="shampoo-aloe.svg" alt="Shampoo Sólido de Aloe Vera" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
                         <h3>Shampoo Sólido de Aloe Vera</h3>
                         <p>Hidrata profundamente con aloe vera natural. Perfecto para cabellos secos y dañados, proporciona suavidad y brillo.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Aloe Vera" class="btn-comprar">Consultar - $1300</a>
+                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Aloe Vera" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="carousel-item-card">
-                        <div class="placeholder-img-4" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Carbón Activado</div>
+                        <img src="shampoo-carbon.svg" alt="Shampoo Sólido de Carbón Activado" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
                         <h3>Shampoo Sólido de Carbón Activado</h3>
                         <p>Desintoxica y purifica el cuero cabelludo. Ideal para eliminar impurezas y exceso de grasa de manera natural.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Carbón Activado" class="btn-comprar">Consultar - $1400</a>
+                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Carbón Activado" class="btn-comprar">Comprar</a>
                     </div>
                     <div class="carousel-item-card">
-                        <div class="placeholder-img-5" style="height: 200px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px;">Pack Completo</div>
+                        <img src="shampoo-pack.svg" alt="Pack Familiar Variado" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
                         <h3>Pack Familiar Variado</h3>
                         <p>Combo de 4 shampoos sólidos diferentes. Perfecto para toda la familia. Incluye menta, romero, aloe vera y carbón activado.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Pack Familiar" class="btn-comprar">Consultar - $4200</a>
+                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Pack Familiar" class="btn-comprar">Comprar</a>
                     </div>
                 </div>
             </div>
@@ -280,8 +304,8 @@
 
         <section id="inicio" class="logo-central">
             <img src="mun-logo.png" alt="Logo Tienda Mun" class="img-fluid">
-            <h1 class="text-center mt-4 text-primary">Shampoos Sólidos Naturales</h1>
-            <p class="text-center text-muted">Cuidado natural para tu cabello y el planeta</p>
+            <h1 class="text-center mt-4" style="color: #B8860B; font-weight: 600;">Shampoos Sólidos Naturales</h1>
+            <p class="text-center" style="color: #8B7355;">Cuidado natural para tu cabello y el planeta</p>
         </section>
 
         <!-- Sección de Beneficios -->
@@ -289,35 +313,35 @@
             <div class="carousel-container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¿Por qué elegir Shampoo Sólido?</h2>
+                        <h2 class="text-center mb-5 text-golden">¿Por qué elegir Shampoo Sólido?</h2>
                     </div>
                 </div>
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card h-100 text-center">
                             <div class="placeholder-img-2" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">🌱</div>
-                            <h4 class="text-primary">100% Natural</h4>
+                            <h4 class="text-golden">100% Natural</h4>
                             <p>Libre de sulfatos, parabenos y químicos agresivos. Solo ingredientes naturales para tu cabello.</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card h-100 text-center">
                             <div class="placeholder-img-1" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">🌍</div>
-                            <h4 class="text-primary">Eco-Friendly</h4>
+                            <h4 class="text-golden">Eco-Friendly</h4>
                             <p>Reduce el plástico y cuida el planeta. Un shampoo sólido equivale a 3 botellas de shampoo líquido.</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card h-100 text-center">
                             <div class="placeholder-img-4" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">✈️</div>
-                            <h4 class="text-primary">Práctico</h4>
+                            <h4 class="text-golden">Práctico</h4>
                             <p>Perfecto para viajar, no se derrama y dura hasta 80 lavadas. Compacto y resistente.</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card h-100 text-center">
                             <div class="placeholder-img-3" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">💰</div>
-                            <h4 class="text-primary">Económico</h4>
+                            <h4 class="text-golden">Económico</h4>
                             <p>Mayor duración y rendimiento. Ahorra dinero a largo plazo con productos de calidad superior.</p>
                         </div>
                     </div>
@@ -330,7 +354,7 @@
             <div class="carousel-container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¿Cómo usar tu Shampoo Sólido?</h2>
+                        <h2 class="text-center mb-5 text-golden">¿Cómo usar tu Shampoo Sólido?</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -341,14 +365,14 @@
                                     <div class="d-flex align-items-start mb-3">
                                         <div class="placeholder-img-1" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">1</div>
                                         <div>
-                                            <h5 class="text-primary">Moja tu cabello</h5>
+                                            <h5 class="text-golden">Moja tu cabello</h5>
                                             <p class="mb-0">Humedece completamente tu cabello con agua tibia.</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start">
                                         <div class="placeholder-img-2" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">2</div>
                                         <div>
-                                            <h5 class="text-primary">Frota el shampoo</h5>
+                                            <h5 class="text-golden">Frota el shampoo</h5>
                                             <p class="mb-0">Frota la barra directamente sobre el cabello húmedo o entre tus manos.</p>
                                         </div>
                                     </div>
@@ -357,14 +381,14 @@
                                     <div class="d-flex align-items-start mb-3">
                                         <div class="placeholder-img-4" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">3</div>
                                         <div>
-                                            <h5 class="text-primary">Masajea y enjuaga</h5>
+                                            <h5 class="text-golden">Masajea y enjuaga</h5>
                                             <p class="mb-0">Masajea el cuero cabelludo y enjuaga con abundante agua.</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-start">
                                         <div class="placeholder-img-5" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">4</div>
                                         <div>
-                                            <h5 class="text-primary">Deja secar</h5>
+                                            <h5 class="text-golden">Deja secar</h5>
                                             <p class="mb-0">Guarda la barra en un lugar seco para que dure más tiempo.</p>
                                         </div>
                                     </div>
@@ -381,32 +405,40 @@
             <div class="carousel-container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¡Contáctanos!</h2>
+                        <h2 class="text-center mb-5 text-golden">¡Contáctanos!</h2>
                     </div>
                 </div>
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-2" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">📱</div>
-                            <h4 class="text-primary">WhatsApp</h4>
+                            <img src="whatsapp-icon.svg" alt="WhatsApp" style="height: 60px; width: 60px; margin: 0 auto 20px;">
+                            <h4 class="text-golden">WhatsApp</h4>
                             <p class="mb-3">Consulta directa y pedidos</p>
                             <a href="https://wa.me/5491123456789?text=Hola! Me interesan los shampoos sólidos" class="btn-comprar">Enviar Mensaje</a>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-3" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">📸</div>
-                            <h4 class="text-primary">Instagram</h4>
+                            <img src="instagram-icon.svg" alt="Instagram" style="height: 60px; width: 60px; margin: 0 auto 20px;">
+                            <h4 class="text-golden">Instagram</h4>
                             <p class="mb-3">Síguenos @tienda_mun89</p>
                             <a href="https://instagram.com/tienda_mun89" target="_blank" class="btn-comprar">Seguir</a>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-3">
                         <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-1" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px;">💳</div>
-                            <h4 class="text-primary">MercadoPago</h4>
-                            <p class="mb-3">Pago seguro y fácil</p>
-                            <a href="https://www.mercadopago.com.ar/checkout/start?pref_id=tienda_mun_shampoo" class="btn-comprar">Ver Productos</a>
+                            <img src="facebook-icon.svg" alt="Facebook" style="height: 60px; width: 60px; margin: 0 auto 20px;">
+                            <h4 class="text-golden">Facebook</h4>
+                            <p class="mb-3">Síguenos en Facebook</p>
+                            <a href="https://facebook.com/tiendamun" target="_blank" class="btn-comprar">Seguir</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="carousel-item-card text-center">
+                            <img src="tiktok-icon.svg" alt="TikTok" style="height: 60px; width: 60px; margin: 0 auto 20px;">
+                            <h4 class="text-golden">TikTok</h4>
+                            <p class="mb-3">Videos y consejos</p>
+                            <a href="https://tiktok.com/@tienda_mun" target="_blank" class="btn-comprar">Seguir</a>
                         </div>
                     </div>
                 </div>
@@ -442,6 +474,15 @@
         
         .carousel-item-card {
             opacity: 0;
+        }
+        
+        .text-golden {
+            color: #B8860B !important;
+            font-weight: 600;
+        }
+        
+        .text-golden-light {
+            color: #8B7355 !important;
         }
     </style>
 </body>

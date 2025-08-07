@@ -1,0 +1,22 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aloeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#98FB98;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="3" dy="3" stdDeviation="3" style="flood-color:#000;flood-opacity:0.2"/>
+    </filter>
+  </defs>
+  <rect width="300" height="200" fill="url(#aloeGrad)"/>
+  <circle cx="150" cy="70" r="35" fill="#228B22" opacity="0.8" filter="url(#shadow)"/>
+  <circle cx="120" cy="110" r="25" fill="#90EE90" opacity="0.9"/>
+  <circle cx="180" cy="120" r="20" fill="#ADFF2F" opacity="0.7"/>
+  <text x="150" y="160" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Aloe Vera Hidratante</text>
+  <g transform="translate(125,35)">
+    <path d="M15,0 Q20,15 15,30 Q10,20 15,0 Z" fill="#006400" opacity="0.8"/>
+    <path d="M25,5 Q30,20 25,35 Q20,25 25,5 Z" fill="#006400" opacity="0.7"/>
+    <path d="M35,0 Q40,15 35,30 Q30,20 35,0 Z" fill="#006400" opacity="0.6"/>
+    <path d="M5,10 Q10,25 5,40 Q0,30 5,10 Z" fill="#006400" opacity="0.5"/>
+  </g>
+</svg>
