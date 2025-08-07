@@ -36,6 +36,121 @@
       transform: scale(1.2);
     }
 
+    /* Header fijo y responsivo */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      padding: 0 24px;
+    }
+    .header-content {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 100%;
+    }
+    .hamburger {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 11;
+    }
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      background: #555;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .logo-header {
+      height: 48px;
+      max-width: 180px;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.10));
+      transition: filter 0.4s;
+    }
+
+    /* Menú lateral */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -240px;
+      width: 220px;
+      height: 100vh;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+      z-index: 99;
+      transition: left 0.3s cubic-bezier(.77,.2,.05,1.0);
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+      font-family: inherit;
+    }
+    .side-menu.open {
+      left: 0;
+    }
+    .side-menu a {
+      text-decoration: none;
+      color: #333;
+      padding: 14px 32px;
+      font-size: 1.1em;
+      transition: background 0.18s;
+      border-radius: 6px;
+      margin: 0 12px;
+    }
+    .side-menu a:hover {
+      background: #eee;
+      color: #0077c2;
+    }
+    @media (max-width: 800px) {
+      .header-content {
+        max-width: 90vw;
+      }
+      .logo-header {
+        max-width: 130px;
+        height: 36px;
+      }
+      .header {
+        height: 60px;
+        padding: 0 8px;
+      }
+    }
+    @media (max-width: 600px) {
+      .logo-header {
+        max-width: 95px;
+        height: 28px;
+      }
+      .header {
+        height: 48px;
+      }
+      .side-menu {
+        width: 170px;
+        padding-top: 60px;
+      }
+    }
     .logo {
       width: 320px;
       max-width: 80vw;
@@ -45,7 +160,6 @@
       transition: filter 0.4s ease;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
     }
-
     /* Efecto sutil al pasar el mouse */
     .logo:hover {
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2)) brightness(1.05);
@@ -57,14 +171,32 @@
   <!-- Fondo animado -->
   <div class="bg-animation" id="bg"></div>
 
-  <!-- Logo -->
+  <!-- Header con logo y hamburguesa -->
+  <header class="header">
+    <div class="header-content">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <img src="mun-logo.png" class="logo-header" alt="Logo Mun" />
+    </div>
+  </header>
+
+  <!-- Menú lateral hamburguesa -->
+  <nav class="side-menu" id="sideMenu">
+    <a href="#">Inicio</a>
+    <a href="#">Colección</a>
+    <a href="#">Contacto</a>
+  </nav>
+
+  <!-- Logo principal centrado -->
   <img src="mun-logo.png" class="logo" alt="Logo Mun">
 
   <script>
     // Selección del fondo
     const bg = document.getElementById("bg");
-
-    // Paleta de colores moderna: azules suaves, morados, rosas pastel
+    // Animación fondo
     const colors = [
       { grad: "linear-gradient(45deg, #f0f0f0, #a8d0e6)" },
       { grad: "linear-gradient(45deg, #e0f7fa, #7986cb)" },
@@ -72,21 +204,16 @@
       { grad: "linear-gradient(45deg, #e8f5e8, #a5d6a7)" },
       { grad: "linear-gradient(45deg, #fff3e0, #ffcc80)" }
     ];
-
-    // Animación principal con GSAP
     function animateBackground() {
       gsap.to(bg, {
         duration: 8,
         background: colors[0].grad,
         ease: "sine.inOut",
         onComplete: () => {
-          // Rotar colores
           colors.push(colors.shift());
           animateBackground();
         }
       });
-
-      // Pequeña pulsación (efecto respiración)
       gsap.to(bg, {
         duration: 4,
         opacity: 0.6,
@@ -96,18 +223,45 @@
         repeat: 1
       });
     }
-
-    // Iniciar animación al cargar
     window.addEventListener("load", () => {
       animateBackground();
-
-      // Opcional: animación sutil del logo al cargar
       gsap.from(".logo", {
         duration: 1.2,
         opacity: 0,
         y: 30,
         ease: "back.out(1.2)"
       });
+    });
+
+    // Menú hamburguesa
+    const hamburger = document.getElementById("hamburger");
+    const sideMenu = document.getElementById("sideMenu");
+    let menuOpen = false;
+    hamburger.addEventListener("click", () => {
+      menuOpen = !menuOpen;
+      sideMenu.classList.toggle("open", menuOpen);
+      // Animación hamburguesa (cambiar a X)
+      const spans = hamburger.querySelectorAll("span");
+      if(menuOpen) {
+        spans[0].style.transform = "translateY(8px) rotate(45deg)";
+        spans[1].style.opacity = "0";
+        spans[2].style.transform = "translateY(-8px) rotate(-45deg)";
+      } else {
+        spans[0].style.transform = "";
+        spans[1].style.opacity = "1";
+        spans[2].style.transform = "";
+      }
+    });
+    // Cerrar menú al hacer click fuera
+    document.addEventListener("click", (e) => {
+      if(menuOpen && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        sideMenu.classList.remove("open");
+        menuOpen = false;
+        const spans = hamburger.querySelectorAll("span");
+        spans[0].style.transform = "";
+        spans[1].style.opacity = "1";
+        spans[2].style.transform = "";
+      }
     });
   </script>
 
