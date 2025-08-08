@@ -18,15 +18,15 @@
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            background: url('tu-fondo-animado.gif') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
             padding-top: 80px; /* Increased for navbar */
         }
         
         .navbar {
-            background: rgba(255, 251, 235, 0.95) !important; /* Soft yellow/cream background */
+            background: rgba(255, 255, 255, 0.95) !important; /* Clean white background */
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(244, 208, 63, 0.2);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
         
         .navbar-brand img {
@@ -36,21 +36,25 @@
         
         .navbar-nav .nav-link {
             font-weight: 500;
-            color: #8B4513 !important; /* Warm brown for contrast */
+            color: #2c3e50 !important; /* Dark blue-gray for better contrast */
             margin: 0 10px;
             transition: color 0.3s ease;
         }
         
         .navbar-nav .nav-link:hover {
-            color: #D4AF37 !important; /* Golden yellow on hover */
+            color: #3498db !important; /* Elegant blue on hover */
+        }
+        
+        .navbar-nav .nav-link i {
+            color: #e91e63; /* Instagram brand color */
         }
         
         .carousel-container {
-            background: rgba(255, 251, 235, 0.95); /* Soft yellow/cream background */
+            background: rgba(255, 255, 255, 0.95); /* Clean white background */
             border-radius: 15px;
             padding: 30px;
             margin: 20px 0 40px 0;
-            box-shadow: 0 10px 30px rgba(244, 208, 63, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
@@ -66,14 +70,14 @@
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
-            box-shadow: 0 5px 15px rgba(244, 208, 63, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
         }
         
         .carousel-item-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(244, 208, 63, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
         .carousel-item-card img {
@@ -91,27 +95,27 @@
         }
         
         .placeholder-img-1 {
-            background: linear-gradient(135deg, #F4D03F, #D4AF37); /* Soft to golden yellow */
+            background: linear-gradient(135deg, #667eea, #764ba2); /* Elegant purple-blue gradient */
         }
         
         .placeholder-img-2 {
-            background: linear-gradient(135deg, #F7DC6F, #F4D03F); /* Light to soft yellow */
+            background: linear-gradient(135deg, #f093fb, #f5576c); /* Pink gradient */
         }
         
         .placeholder-img-3 {
-            background: linear-gradient(135deg, #FDEAA7, #F7DC6F); /* Cream to light yellow */
+            background: linear-gradient(135deg, #4facfe, #00f2fe); /* Blue gradient */
         }
         
         .placeholder-img-4 {
-            background: linear-gradient(135deg, #D4AF37, #B7950B); /* Golden to darker gold */
+            background: linear-gradient(135deg, #43e97b, #38f9d7); /* Green gradient */
         }
         
         .placeholder-img-5 {
-            background: linear-gradient(135deg, #F4D03F, #B7950B); /* Soft yellow to darker gold */
+            background: linear-gradient(135deg, #fa709a, #fee140); /* Pink-yellow gradient */
         }
         
         .carousel-item-card h3 {
-            color: #8B4513; /* Warm brown */
+            color: #2c3e50; /* Dark blue-gray */
             font-size: 1.5rem;
             margin-bottom: 10px;
             font-weight: 600;
@@ -125,11 +129,11 @@
         }
         
         .carousel-item-card .btn-comprar {
-            background: linear-gradient(45deg, #F4D03F, #D4AF37); /* Soft to golden yellow */
+            background: linear-gradient(45deg, #667eea, #764ba2); /* Elegant purple-blue gradient */
             border: none;
             padding: 12px 25px;
             border-radius: 25px;
-            color: #8B4513; /* Warm brown text */
+            color: white; /* White text for better contrast */
             font-weight: 600;
             transition: all 0.3s ease;
             text-decoration: none;
@@ -137,7 +141,7 @@
         }
         
         .carousel-item-card .btn-comprar:hover {
-            background: linear-gradient(45deg, #D4AF37, #B7950B); /* Golden to darker gold */
+            background: linear-gradient(45deg, #764ba2, #667eea); /* Reversed gradient on hover */
             transform: scale(1.05);
             color: white;
         }
@@ -151,15 +155,15 @@
             max-width: 300px;
             height: auto;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(244, 208, 63, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .text-primary {
-            color: #D4AF37 !important; /* Golden yellow for primary text */
+            color: #3498db !important; /* Elegant blue for primary text */
         }
         
         .owl-nav button {
-            background: rgba(244, 208, 63, 0.8) !important; /* Soft yellow */
+            background: rgba(52, 152, 219, 0.8) !important; /* Elegant blue */
             color: white !important;
             border-radius: 50% !important;
             width: 50px !important;
@@ -168,7 +172,7 @@
         }
         
         .owl-nav button:hover {
-            background: rgba(212, 175, 55, 1) !important; /* Golden yellow */
+            background: rgba(52, 152, 219, 1) !important; /* Darker blue */
         }
         
         /* Fallback icon styles when Font Awesome is blocked */
@@ -187,7 +191,7 @@
         
         /* Image fallback styles */
         img[src*="unsplash"] {
-            background: linear-gradient(135deg, #F4D03F, #D4AF37);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -203,6 +207,10 @@
         img[alt*="Pack"]::after { content: "Pack Familiar"; }
         
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px; /* Reduced for mobile */
+            }
+            
             .carousel-container {
                 margin: 10px;
                 padding: 20px;
@@ -220,6 +228,38 @@
             
             .logo-central img {
                 max-width: 250px;
+            }
+            
+            /* Instagram link in navigation for mobile */
+            .navbar-nav .nav-link {
+                margin: 5px 0;
+            }
+            
+            .navbar-nav .nav-link i {
+                margin-right: 5px;
+            }
+        }
+        
+        /* iPhone specific optimizations */
+        @media only screen 
+        and (min-device-width: 375px) 
+        and (max-device-width: 812px) 
+        and (-webkit-min-device-pixel-ratio: 3) {
+            .carousel-item-card .btn-comprar {
+                padding: 15px 30px;
+                font-size: 16px; /* Prevent zoom on tap */
+                border-radius: 30px;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 16px; /* Prevent zoom */
+            }
+            
+            /* Ensure touch targets are at least 44px */
+            .nav-link {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
             }
         }
         
@@ -267,6 +307,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#contacto">Contacto</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://instagram.com/tienda_mun89" target="_blank" title="Síguenos en Instagram">
+                                <i class="fab fa-instagram"></i> @tienda_mun89
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -288,7 +333,7 @@
                         </div>
                         <h3>Shampoo Sólido de Menta</h3>
                         <p>Estimula la circulación del cuero cabelludo con aceite esencial de menta. Ideal para cabellos grasos y sensación refrescante.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Menta" class="btn-comprar">Comprar - $1200</a>
+                        <a href="https://wa.me/56979959311?text=Hola! Me interesa el Shampoo de Menta" class="btn-comprar">Lo quiero!</a>
                     </div>
                     <div class="carousel-item-card">
                         <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #F7DC6F, #F4D03F); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
@@ -296,7 +341,7 @@
                         </div>
                         <h3>Shampoo Sólido de Romero</h3>
                         <p>Fortalece y nutre el cabello con romero natural. Previene la caída y estimula el crecimiento saludable del cabello.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Romero" class="btn-comprar">Comprar - $1200</a>
+                        <a href="https://wa.me/56979959311?text=Hola! Me interesa el Shampoo de Romero" class="btn-comprar">Lo quiero!</a>
                     </div>
                     <div class="carousel-item-card">
                         <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #FDEAA7, #F7DC6F); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
@@ -304,7 +349,7 @@
                         </div>
                         <h3>Shampoo Sólido de Aloe Vera</h3>
                         <p>Hidrata profundamente con aloe vera natural. Perfecto para cabellos secos y dañados, proporciona suavidad y brillo.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Aloe Vera" class="btn-comprar">Comprar - $1300</a>
+                        <a href="https://wa.me/56979959311?text=Hola! Me interesa el Shampoo de Aloe Vera" class="btn-comprar">Lo quiero!</a>
                     </div>
                     <div class="carousel-item-card">
                         <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #D4AF37, #B7950B); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
@@ -312,7 +357,7 @@
                         </div>
                         <h3>Shampoo Sólido de Carbón Activado</h3>
                         <p>Desintoxica y purifica el cuero cabelludo. Ideal para eliminar impurezas y exceso de grasa de manera natural.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Shampoo de Carbón Activado" class="btn-comprar">Comprar - $1400</a>
+                        <a href="https://wa.me/56979959311?text=Hola! Me interesa el Shampoo de Carbón Activado" class="btn-comprar">Lo quiero!</a>
                     </div>
                     <div class="carousel-item-card">
                         <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #F4D03F, #B7950B); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
@@ -320,7 +365,7 @@
                         </div>
                         <h3>Pack Familiar Variado</h3>
                         <p>Combo de 4 shampoos sólidos diferentes. Perfecto para toda la familia. Incluye menta, romero, aloe vera y carbón activado.</p>
-                        <a href="https://wa.me/5491123456789?text=Hola! Me interesa el Pack Familiar" class="btn-comprar">Comprar - $4200</a>
+                        <a href="https://wa.me/56979959311?text=Hola! Me interesa el Pack Familiar" class="btn-comprar">Lo quiero!</a>
                     </div>
                 </div>
             </div>
@@ -424,6 +469,50 @@
             </div>
         </section>
 
+        <!-- Instagram Feed Section -->
+        <section id="instagram-feed" class="py-5">
+            <div class="carousel-container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center mb-5 text-primary">
+                            <i class="fab fa-instagram" style="color: #e91e63;"></i> 
+                            Lo que dicen nuestros clientes
+                        </h2>
+                        <p class="text-center mb-4 text-muted">Síguenos en @tienda_mun89 para más testimonios y tips</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="carousel-item-card">
+                            <div class="placeholder-img-2" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                                💖 Cliente Feliz
+                            </div>
+                            <p class="text-muted"><i>"¡Increíble! Mi cabello nunca había estado tan suave. El shampoo de aloe vera es mi favorito."</i></p>
+                            <small class="text-primary">- @maria_haircare</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="carousel-item-card">
+                            <div class="placeholder-img-4" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                                🌿 Eco-Friendly
+                            </div>
+                            <p class="text-muted"><i>"Me encanta poder cuidar mi cabello y el planeta al mismo tiempo. ¡El pack familiar es perfecto!"</i></p>
+                            <small class="text-primary">- @ecolife_chile</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="carousel-item-card">
+                            <div class="placeholder-img-1" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                                ✨ Resultados
+                            </div>
+                            <p class="text-muted"><i>"El shampoo de romero me ayudó muchísimo con la caída del cabello. ¡Recomendado 100%!"</i></p>
+                            <small class="text-primary">- @healthy_hair89</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Sección de Contacto -->
         <section id="contacto" class="py-5">
             <div class="carousel-container">
@@ -438,15 +527,7 @@
                             <div class="placeholder-img-2" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fab fa-whatsapp"></i></div>
                             <h4 class="text-primary">WhatsApp</h4>
                             <p class="mb-3">Consulta directa y pedidos</p>
-                            <a href="https://wa.me/5491123456789?text=Hola! Me interesan los shampoos sólidos" class="btn-comprar">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-3" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fab fa-instagram"></i></div>
-                            <h4 class="text-primary">Instagram</h4>
-                            <p class="mb-3">Síguenos @tienda_mun89</p>
-                            <a href="https://instagram.com/tienda_mun89" target="_blank" class="btn-comprar">Seguir</a>
+                            <a href="https://wa.me/56979959311?text=Hola! Me interesan los shampoos sólidos" class="btn-comprar">Enviar Mensaje</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4">
