@@ -175,6 +175,280 @@
             background: rgba(52, 152, 219, 1) !important; /* Darker blue */
         }
         
+        /* Shopping Cart Styles */
+        .cart-icon {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e91e63;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+        }
+
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-content {
+            padding: 20px;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info h5 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cart-item-info p {
+            margin: 0;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .cart-item-remove {
+            background: #e91e63;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .cart-item-remove:hover {
+            background: #c2185b;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .cart-footer {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-finalizar {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-finalizar:hover {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+        }
+
+        /* Featured Product Section */
+        .featured-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-selectors {
+            margin-bottom: 30px;
+        }
+
+        .selector-group {
+            margin-bottom: 25px;
+        }
+
+        .selector-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .product-type-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 15px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .product-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .product-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .presentation-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: #2c3e50;
+            transition: border-color 0.3s ease;
+        }
+
+        .presentation-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .product-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .product-info h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .product-info p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn-add-cart {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .btn-add-cart:hover {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+        }
+
+        .btn-add-cart:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Fallback icon styles when Font Awesome is blocked */
         .fa-whatsapp::before { content: "📱"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
         .fa-instagram::before { content: "📷"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
@@ -183,6 +457,8 @@
         .fa-globe-americas::before { content: "🌍"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
         .fa-suitcase-rolling::before { content: "✈️"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
         .fa-piggy-bank::before { content: "💰"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
+        .fa-shopping-cart::before { content: "🛒"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 24px; }
+        .fa-times::before { content: "✕"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 16px; }
 
         /* Fallback font stack in case Google Fonts is blocked */
         body {
@@ -238,6 +514,57 @@
             .navbar-nav .nav-link i {
                 margin-right: 5px;
             }
+
+            /* Mobile cart styles */
+            .cart-icon {
+                top: 80px;
+                right: 15px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .cart-panel.open {
+                right: 0;
+            }
+
+            /* Mobile featured section */
+            .featured-section {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            .product-type-buttons {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .product-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .product-display {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .product-image {
+                height: 200px;
+                font-size: 16px;
+            }
+
+            .product-info h3 {
+                font-size: 1.4rem;
+            }
+
+            .product-info p {
+                font-size: 1rem;
+            }
         }
         
         /* iPhone specific optimizations */
@@ -280,6 +607,33 @@
 </head>
 <body>
     <div class="container-fluid">
+        <!-- Shopping Cart Icon -->
+        <button class="cart-icon" id="cartIcon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+        <!-- Shopping Cart Panel -->
+        <div class="cart-panel" id="cartPanel">
+            <div class="cart-header">
+                <h4 style="margin: 0; font-size: 18px;">Mi Carrito</h4>
+                <button style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;" onclick="toggleCart()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-content" id="cartContent">
+                <div class="cart-empty" id="cartEmpty">
+                    <p>Tu carrito está vacío</p>
+                    <small>Agrega productos desde la sección destacada</small>
+                </div>
+            </div>
+            <div class="cart-footer" id="cartFooter" style="display: none;">
+                <button class="btn-finalizar" onclick="finalizePurchase()">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+
         <!-- Navigation Menu -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top">
             <div class="container">
@@ -375,6 +729,66 @@
             <img src="mun-logo.png" alt="Logo Tienda Mun" class="img-fluid">
             <h1 class="text-center mt-4 text-primary">Shampoos Sólidos Naturales</h1>
             <p class="text-center text-muted">Cuidado natural para tu cabello y el planeta</p>
+        </section>
+
+        <!-- Featured Product Selection Section -->
+        <section id="featured-selection" class="container">
+            <div class="featured-section">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4 text-primary">Elige tu Shampoo Sólido</h2>
+                        <p class="text-center mb-4 text-muted">Personaliza tu selección y agrégala al carrito</p>
+                    </div>
+                </div>
+                
+                <div class="product-selectors">
+                    <!-- Shampoo Type Selector -->
+                    <div class="selector-group">
+                        <label>Tipo de Shampoo:</label>
+                        <div class="product-type-buttons">
+                            <button class="product-btn" data-product="menta" onclick="selectProduct('menta')">
+                                Menta
+                            </button>
+                            <button class="product-btn" data-product="romero" onclick="selectProduct('romero')">
+                                Romero
+                            </button>
+                            <button class="product-btn" data-product="aloe" onclick="selectProduct('aloe')">
+                                Aloe Vera
+                            </button>
+                            <button class="product-btn" data-product="carbon" onclick="selectProduct('carbon')">
+                                Carbón Activado
+                            </button>
+                            <button class="product-btn" data-product="pack" onclick="selectProduct('pack')">
+                                Pack Familiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Presentation Selector -->
+                    <div class="selector-group">
+                        <label>Tipo de Presentación:</label>
+                        <select class="presentation-select" id="presentationSelect" onchange="updatePresentation()">
+                            <option value="">Seleccionar presentación</option>
+                            <option value="natural">Natural</option>
+                            <option value="color">Color</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Product Display -->
+                <div class="product-display" id="productDisplay" style="display: none;">
+                    <div class="product-image" id="productImage">
+                        Selecciona un producto
+                    </div>
+                    <div class="product-info">
+                        <h3 id="productName">Selecciona un Shampoo</h3>
+                        <p id="productDescription">Elige un tipo de shampoo y presentación para ver los detalles.</p>
+                        <button class="btn-add-cart" id="addToCartBtn" onclick="addToCart()" disabled>
+                            Añadir al Carro
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Sección de Beneficios -->
@@ -548,13 +962,242 @@
 
     <!-- Fallback CSS Grid Gallery (replaces OwlCarousel when external resources are blocked) -->
     <script>
-        // Simple fallback animation for enhanced visual appeal
+        // Product Data
+        const products = {
+            menta: {
+                name: "Shampoo Sólido de Menta",
+                description: "Estimula la circulación del cuero cabelludo con aceite esencial de menta. Ideal para cabellos grasos y sensación refrescante.",
+                images: {
+                    natural: "linear-gradient(135deg, #4facfe, #00f2fe)",
+                    color: "linear-gradient(135deg, #667eea, #764ba2)"
+                }
+            },
+            romero: {
+                name: "Shampoo Sólido de Romero",
+                description: "Fortalece y nutre el cabello con romero natural. Previene la caída y estimula el crecimiento saludable del cabello.",
+                images: {
+                    natural: "linear-gradient(135deg, #43e97b, #38f9d7)",
+                    color: "linear-gradient(135deg, #fa709a, #fee140)"
+                }
+            },
+            aloe: {
+                name: "Shampoo Sólido de Aloe Vera",
+                description: "Hidrata profundamente con aloe vera natural. Perfecto para cabellos secos y dañados, proporciona suavidad y brillo.",
+                images: {
+                    natural: "linear-gradient(135deg, #96fbc4, #f9f586)",
+                    color: "linear-gradient(135deg, #ffecd2, #fcb69f)"
+                }
+            },
+            carbon: {
+                name: "Shampoo Sólido de Carbón Activado",
+                description: "Desintoxica y purifica el cuero cabelludo. Ideal para eliminar impurezas y exceso de grasa de manera natural.",
+                images: {
+                    natural: "linear-gradient(135deg, #434343, #000000)",
+                    color: "linear-gradient(135deg, #667eea, #764ba2)"
+                }
+            },
+            pack: {
+                name: "Pack Familiar Variado",
+                description: "Combo de 4 shampoos sólidos diferentes. Perfecto para toda la familia. Incluye menta, romero, aloe vera y carbón activado.",
+                images: {
+                    natural: "linear-gradient(135deg, #f093fb, #f5576c)",
+                    color: "linear-gradient(135deg, #4facfe, #00f2fe)"
+                }
+            }
+        };
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('mun_cart') || '[]');
+        let selectedProduct = null;
+        let selectedPresentation = null;
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderCart();
+            
+            // Simple fallback animation for enhanced visual appeal
             const cards = document.querySelectorAll('.carousel-item-card');
             cards.forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.style.animation = 'fadeInUp 0.6s ease-out forwards';
             });
+        });
+
+        // Product selection
+        function selectProduct(productType) {
+            selectedProduct = productType;
+            
+            // Update button states
+            document.querySelectorAll('.product-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-product="${productType}"]`).classList.add('active');
+            
+            updateProductDisplay();
+        }
+
+        // Presentation selection
+        function updatePresentation() {
+            const select = document.getElementById('presentationSelect');
+            selectedPresentation = select.value;
+            updateProductDisplay();
+        }
+
+        // Update product display
+        function updateProductDisplay() {
+            const displayDiv = document.getElementById('productDisplay');
+            const imageDiv = document.getElementById('productImage');
+            const nameEl = document.getElementById('productName');
+            const descEl = document.getElementById('productDescription');
+            const addBtn = document.getElementById('addToCartBtn');
+            
+            if (selectedProduct && selectedPresentation) {
+                const product = products[selectedProduct];
+                const presentationText = selectedPresentation === 'natural' ? 'Natural' : 'Color';
+                
+                displayDiv.style.display = 'grid';
+                imageDiv.style.background = product.images[selectedPresentation];
+                imageDiv.innerHTML = `${product.name}<br><small>Presentación ${presentationText}</small>`;
+                nameEl.textContent = `${product.name} - ${presentationText}`;
+                descEl.textContent = product.description;
+                addBtn.disabled = false;
+            } else if (selectedProduct) {
+                displayDiv.style.display = 'grid';
+                const product = products[selectedProduct];
+                imageDiv.style.background = '#ddd';
+                imageDiv.innerHTML = 'Selecciona una presentación';
+                nameEl.textContent = product.name;
+                descEl.textContent = 'Selecciona una presentación para continuar.';
+                addBtn.disabled = true;
+            } else {
+                displayDiv.style.display = 'none';
+                addBtn.disabled = true;
+            }
+        }
+
+        // Cart functionality
+        function toggleCart() {
+            const panel = document.getElementById('cartPanel');
+            panel.classList.toggle('open');
+        }
+
+        function addToCart() {
+            if (!selectedProduct || !selectedPresentation) return;
+            
+            const product = products[selectedProduct];
+            const presentationText = selectedPresentation === 'natural' ? 'Natural' : 'Color';
+            
+            // Check if item already exists
+            const existingItem = cart.find(item => 
+                item.product === selectedProduct && item.presentation === selectedPresentation
+            );
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: Date.now(),
+                    product: selectedProduct,
+                    presentation: selectedPresentation,
+                    name: `${product.name} - ${presentationText}`,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('mun_cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            
+            // Show success feedback
+            const btn = document.getElementById('addToCartBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '¡Agregado! ✓';
+            btn.style.background = '#28a745';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('mun_cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            
+            // Hide count badge if cart is empty
+            const badge = document.getElementById('cartCount');
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+        function renderCart() {
+            const contentDiv = document.getElementById('cartContent');
+            const emptyDiv = document.getElementById('cartEmpty');
+            const footerDiv = document.getElementById('cartFooter');
+            
+            if (cart.length === 0) {
+                if (emptyDiv) emptyDiv.style.display = 'block';
+                if (footerDiv) footerDiv.style.display = 'none';
+                contentDiv.innerHTML = '<div class="cart-empty" id="cartEmpty"><p>Tu carrito está vacío</p><small>Agrega productos desde la sección destacada</small></div>';
+                return;
+            }
+            
+            if (emptyDiv) emptyDiv.style.display = 'none';
+            if (footerDiv) footerDiv.style.display = 'block';
+            
+            const cartHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <h5>${item.name}</h5>
+                        <p>Cantidad: ${item.quantity}</p>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Eliminar">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            contentDiv.innerHTML = cartHTML;
+        }
+
+        function finalizePurchase() {
+            if (cart.length === 0) return;
+            
+            // Create WhatsApp message
+            let message = "¡Hola! Me gustaría hacer el siguiente pedido:%0A%0A";
+            
+            cart.forEach(item => {
+                message += `• ${item.name} - Cantidad: ${item.quantity}%0A`;
+            });
+            
+            message += "%0A¿Podrían confirmarme el precio total y la disponibilidad?";
+            
+            // Open WhatsApp
+            window.open(`https://wa.me/56979959311?text=${message}`, '_blank');
+            
+            // Optional: Clear cart after purchase
+            // cart = [];
+            // localStorage.setItem('mun_cart', JSON.stringify(cart));
+            // updateCartCount();
+            // renderCart();
+            // toggleCart();
+        }
+
+        // Close cart when clicking outside
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('cartPanel');
+            const icon = document.getElementById('cartIcon');
+            
+            if (!panel.contains(e.target) && !icon.contains(e.target) && panel.classList.contains('open')) {
+                toggleCart();
+            }
         });
     </script>
     <style>
