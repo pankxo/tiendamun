@@ -226,6 +226,34 @@
             color: #3498db !important;
         }
         
+        /* Instagram Reviews Styling */
+        .text-instagram {
+            color: #e91e63 !important;
+        }
+        
+        .instagram-reviews {
+            border-top: 1px solid #e9ecef;
+            padding-top: 10px;
+        }
+        
+        .review-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid #e91e63;
+        }
+        
+        .product-details {
+            border-top: 1px solid #e9ecef;
+            padding-top: 15px;
+            display: none; /* Initially hidden */
+        }
+        
+        .product-card.selected .product-details {
+            display: block;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
@@ -322,7 +350,7 @@
                     </div>
                     
                     <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="product-card" data-product="menta" data-price="8000">
+                        <div class="product-card" data-product="menta">
                             <div class="d-flex align-items-center">
                                 <div class="product-image" style="background: linear-gradient(135deg, #F4D03F, #D4AF37);">
                                     Menta
@@ -330,14 +358,38 @@
                                 <div class="ms-3">
                                     <h5 class="mb-1">Menta Refrescante</h5>
                                     <p class="mb-1 text-muted small">Estimula la circulación</p>
-                                    <strong class="text-primary">$8.000</strong>
+                                    <strong class="text-primary">60g: $7.000 | 100g: $11.000</strong>
+                                </div>
+                            </div>
+                            <!-- Detailed Info -->
+                            <div class="product-details mt-3">
+                                <div class="product-info">
+                                    <h6 class="text-success">✨ Beneficios:</h6>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Estimula la circulación del cuero cabelludo</li>
+                                        <li>Sensación refrescante y energizante</li>
+                                        <li>Ideal para cabellos grasos</li>
+                                        <li>Aroma natural revitalizante</li>
+                                    </ul>
+                                    <h6 class="text-info">🌿 Ingredientes principales:</h6>
+                                    <p class="small text-muted">Aceite esencial de menta, aceite de coco, manteca de karité, arcilla verde</p>
+                                </div>
+                                <!-- Instagram Reviews -->
+                                <div class="instagram-reviews mt-3">
+                                    <h6 class="text-instagram">📷 Reseñas @tienda_mun89:</h6>
+                                    <div class="review-item small">
+                                        <em>"¡El shampoo de menta me despierta por las mañanas! Sensación increíble" - @carla_eco</em>
+                                    </div>
+                                    <div class="review-item small">
+                                        <em>"Mi cuero cabelludo graso ya no es problema. ¡Lo amo!" - @naturalhair_cl</em>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="product-card" data-product="romero" data-price="8000">
+                        <div class="product-card" data-product="romero">
                             <div class="d-flex align-items-center">
                                 <div class="product-image" style="background: linear-gradient(135deg, #F7DC6F, #F4D03F);">
                                     Romero
@@ -345,14 +397,38 @@
                                 <div class="ms-3">
                                     <h5 class="mb-1">Romero Nutritivo</h5>
                                     <p class="mb-1 text-muted small">Fortalece y nutre</p>
-                                    <strong class="text-primary">$8.000</strong>
+                                    <strong class="text-primary">60g: $7.000 | 100g: $11.000</strong>
+                                </div>
+                            </div>
+                            <!-- Detailed Info -->
+                            <div class="product-details mt-3">
+                                <div class="product-info">
+                                    <h6 class="text-success">✨ Beneficios:</h6>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Fortalece el cabello desde la raíz</li>
+                                        <li>Estimula el crecimiento capilar</li>
+                                        <li>Previene la caída del cabello</li>
+                                        <li>Aporta brillo natural</li>
+                                    </ul>
+                                    <h6 class="text-info">🌿 Ingredientes principales:</h6>
+                                    <p class="small text-muted">Extracto de romero, aceite de oliva, proteínas de trigo, vitamina E</p>
+                                </div>
+                                <!-- Instagram Reviews -->
+                                <div class="instagram-reviews mt-3">
+                                    <h6 class="text-instagram">📷 Reseñas @tienda_mun89:</h6>
+                                    <div class="review-item small">
+                                        <em>"Desde que uso romero, mi cabello crece más fuerte. ¡Increíble!" - @healthy_hair89</em>
+                                    </div>
+                                    <div class="review-item small">
+                                        <em>"Se nota menos caída después de 2 semanas. Súper recomendado" - @maria_natural</em>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="product-card" data-product="aloe" data-price="8000">
+                        <div class="product-card" data-product="aloe">
                             <div class="d-flex align-items-center">
                                 <div class="product-image" style="background: linear-gradient(135deg, #FDEAA7, #F7DC6F);">
                                     Aloe
@@ -360,14 +436,38 @@
                                 <div class="ms-3">
                                     <h5 class="mb-1">Aloe Vera</h5>
                                     <p class="mb-1 text-muted small">Hidrata profundamente</p>
-                                    <strong class="text-primary">$8.000</strong>
+                                    <strong class="text-primary">60g: $7.000 | 100g: $11.000</strong>
+                                </div>
+                            </div>
+                            <!-- Detailed Info -->
+                            <div class="product-details mt-3">
+                                <div class="product-info">
+                                    <h6 class="text-success">✨ Beneficios:</h6>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Hidratación profunda y duradera</li>
+                                        <li>Calma el cuero cabelludo irritado</li>
+                                        <li>Perfecto para cabello seco y dañado</li>
+                                        <li>Propiedades regenerativas naturales</li>
+                                    </ul>
+                                    <h6 class="text-info">🌿 Ingredientes principales:</h6>
+                                    <p class="small text-muted">Gel de aloe vera puro, aceite de argán, glicerina vegetal, algas marinas</p>
+                                </div>
+                                <!-- Instagram Reviews -->
+                                <div class="instagram-reviews mt-3">
+                                    <h6 class="text-instagram">📷 Reseñas @tienda_mun89:</h6>
+                                    <div class="review-item small">
+                                        <em>"Mi cabello seco ahora está súper hidratado. ¡Es magia!" - @sofia_curly</em>
+                                    </div>
+                                    <div class="review-item small">
+                                        <em>"El aloe vera me salvó el cuero cabelludo sensible" - @eco_lifestyle</em>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="product-card" data-product="carbon" data-price="8500">
+                        <div class="product-card" data-product="carbon">
                             <div class="d-flex align-items-center">
                                 <div class="product-image" style="background: linear-gradient(135deg, #D4AF37, #B7950B);">
                                     Carbón
@@ -375,26 +475,37 @@
                                 <div class="ms-3">
                                     <h5 class="mb-1">Carbón Activado</h5>
                                     <p class="mb-1 text-muted small">Desintoxica y purifica</p>
-                                    <strong class="text-primary">$8.500</strong>
+                                    <strong class="text-primary">60g: $7.000 | 100g: $11.000</strong>
+                                </div>
+                            </div>
+                            <!-- Detailed Info -->
+                            <div class="product-details mt-3">
+                                <div class="product-info">
+                                    <h6 class="text-success">✨ Beneficios:</h6>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Desintoxica profundamente</li>
+                                        <li>Elimina impurezas y exceso de grasa</li>
+                                        <li>Purifica el cuero cabelludo</li>
+                                        <li>Ideal para cabello muy graso</li>
+                                    </ul>
+                                    <h6 class="text-info">🌿 Ingredientes principales:</h6>
+                                    <p class="small text-muted">Carbón activado de bambú, arcilla bentonita, aceite de árbol de té, extracto de ortiga</p>
+                                </div>
+                                <!-- Instagram Reviews -->
+                                <div class="instagram-reviews mt-3">
+                                    <h6 class="text-instagram">📷 Reseñas @tienda_mun89:</h6>
+                                    <div class="review-item small">
+                                        <em>"¡Mi cabello graso nunca estuvo tan limpio! El carbón es increíble" - @cleanbeauty_ch</em>
+                                    </div>
+                                    <div class="review-item small">
+                                        <em>"Purifica como ningún otro. Perfecto para detox capilar" - @zerowastedaily</em>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="product-card" data-product="pack" data-price="28000">
-                            <div class="d-flex align-items-center">
-                                <div class="product-image" style="background: linear-gradient(135deg, #F4D03F, #B7950B);">
-                                    Pack
-                                </div>
-                                <div class="ms-3">
-                                    <h5 class="mb-1">Pack Familiar</h5>
-                                    <p class="mb-1 text-muted small">4 shampoos variados</p>
-                                    <strong class="text-primary">$28.000</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 
                 <!-- Step 2: Weight Selection -->
@@ -403,25 +514,19 @@
                         <h3 class="mb-3 text-primary">2. Selecciona el Peso</h3>
                     </div>
                     
-                    <div class="col-md-4 mb-2">
-                        <div class="weight-option" data-weight="50" data-multiplier="1">
-                            <h5 class="mb-1">50g</h5>
-                            <p class="mb-0 text-muted small">Tamaño viaje</p>
+                    <div class="col-md-6 mb-2">
+                        <div class="weight-option selected" data-weight="60" data-multiplier="1">
+                            <h5 class="mb-1">60g</h5>
+                            <p class="mb-0 text-muted small">$7.000</p>
+                            <small class="text-primary">Tamaño estándar</small>
                         </div>
                     </div>
                     
-                    <div class="col-md-4 mb-2">
-                        <div class="weight-option selected" data-weight="80" data-multiplier="1">
-                            <h5 class="mb-1">80g</h5>
-                            <p class="mb-0 text-muted small">Tamaño estándar</p>
-                            <small class="text-primary">Recomendado</small>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4 mb-2">
-                        <div class="weight-option" data-weight="120" data-multiplier="1.3">
-                            <h5 class="mb-1">120g</h5>
-                            <p class="mb-0 text-muted small">Tamaño familiar</p>
+                    <div class="col-md-6 mb-2">
+                        <div class="weight-option" data-weight="100" data-multiplier="1.57">
+                            <h5 class="mb-1">100g</h5>
+                            <p class="mb-0 text-muted small">$11.000</p>
+                            <small class="text-success">¡Mejor valor!</small>
                         </div>
                     </div>
                 </div>
@@ -476,7 +581,7 @@
                 <div class="price-display">
                     <h4 class="mb-2">Total a Pagar</h4>
                     <div class="price-amount" id="totalPrice">$0</div>
-                    <small class="text-muted">Precio por unidad de 80g</small>
+                    <small class="text-muted">Precio fijo por formato</small>
                 </div>
                 
                 <!-- Summary -->
@@ -503,10 +608,10 @@
         class ShampooStore {
             constructor() {
                 this.selectedProduct = null;
-                this.selectedWeight = { weight: 80, multiplier: 1 };
+                this.selectedWeight = { weight: 60, multiplier: 1 };
                 this.quantity = 1;
                 this.paymentMethod = 'whatsapp';
-                this.basePrice = 0;
+                this.basePrice = 7000; // Fixed base price for 60g
                 
                 this.init();
             }
@@ -550,11 +655,11 @@
                 
                 this.selectedProduct = {
                     name: card.dataset.product,
-                    price: parseInt(card.dataset.price),
                     displayName: card.querySelector('h5').textContent
                 };
                 
-                this.basePrice = this.selectedProduct.price;
+                // Use fixed base price for 60g
+                this.basePrice = 7000;
                 this.updateDisplay();
             }
             
@@ -603,7 +708,10 @@
             calculateTotal() {
                 if (!this.selectedProduct) return 0;
                 
-                return Math.round(this.basePrice * this.selectedWeight.multiplier * this.quantity);
+                // Fixed pricing: 60g = $7.000, 100g = $11.000
+                let unitPrice = this.selectedWeight.weight === 100 ? 11000 : 7000;
+                
+                return unitPrice * this.quantity;
             }
             
             updateDisplay() {
@@ -666,10 +774,12 @@ Pedido Tienda Mun:
                     const message = encodeURIComponent(`¡Hola! Me gustaría hacer este pedido:\n\n${orderDetails}\n\n¿Podrían confirmarme la disponibilidad?`);
                     window.open(`https://wa.me/56979959311?text=${message}`, '_blank');
                 } else if (this.paymentMethod === 'mercadopago') {
-                    // For MercadoPago, you would typically integrate with their API
-                    // For now, we'll redirect to a WhatsApp message asking for MercadoPago payment
-                    const message = encodeURIComponent(`¡Hola! Me gustaría hacer este pedido con MercadoPago:\n\n${orderDetails}\n\n¿Podrían enviarme el enlace de pago?`);
-                    window.open(`https://wa.me/56979959311?text=${message}`, '_blank');
+                    // Direct redirect to MercadoPago checkout
+                    // In a real implementation, you would generate a payment preference with the MercadoPago API
+                    // For now, we'll redirect to a generic MercadoPago link
+                    // You should replace this with actual MercadoPago integration
+                    alert(`Redirigiendo a MercadoPago para pagar $${total.toLocaleString('es-CL')}...\n\nEn una implementación real, aquí se redirigiría al checkout de MercadoPago.`);
+                    // Example: window.open('https://www.mercadopago.cl/checkout/v1/redirect?pref_id=YOUR_PREFERENCE_ID', '_blank');
                 }
             }
         }
