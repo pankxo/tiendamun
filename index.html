@@ -1,574 +1,385 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Mun</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- OwlCarousel CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            background-attachment: fixed;
-            padding-top: 80px; /* Increased for navbar */
-        }
-        
-        .navbar {
-            background: rgba(255, 255, 255, 0.95) !important; /* Clean white background */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar-brand img {
-            height: 40px;
-            width: auto;
-        }
-        
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            color: #2c3e50 !important; /* Dark blue-gray for better contrast */
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        
-        .navbar-nav .nav-link:hover {
-            color: #3498db !important; /* Elegant blue on hover */
-        }
-        
-        .navbar-nav .nav-link i {
-            color: #e91e63; /* Instagram brand color */
-        }
-        
-        .carousel-container {
-            background: rgba(255, 255, 255, 0.95); /* Clean white background */
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px 0 40px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .owl-carousel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 100%;
-        }
-        
-        .carousel-item-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-        
-        .carousel-item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .carousel-item-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .placeholder-img-1 {
-            background: linear-gradient(135deg, #667eea, #764ba2); /* Elegant purple-blue gradient */
-        }
-        
-        .placeholder-img-2 {
-            background: linear-gradient(135deg, #f093fb, #f5576c); /* Pink gradient */
-        }
-        
-        .placeholder-img-3 {
-            background: linear-gradient(135deg, #4facfe, #00f2fe); /* Blue gradient */
-        }
-        
-        .placeholder-img-4 {
-            background: linear-gradient(135deg, #43e97b, #38f9d7); /* Green gradient */
-        }
-        
-        .placeholder-img-5 {
-            background: linear-gradient(135deg, #fa709a, #fee140); /* Pink-yellow gradient */
-        }
-        
-        .carousel-item-card h3 {
-            color: #2c3e50; /* Dark blue-gray */
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .carousel-item-card p {
-            color: #666;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        
-        .carousel-item-card .btn-comprar {
-            background: linear-gradient(45deg, #667eea, #764ba2); /* Elegant purple-blue gradient */
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            color: white; /* White text for better contrast */
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .carousel-item-card .btn-comprar:hover {
-            background: linear-gradient(45deg, #764ba2, #667eea); /* Reversed gradient on hover */
-            transform: scale(1.05);
-            color: white;
-        }
-        
-        .logo-central {
-            text-align: center;
-            padding: 40px 0;
-        }
-        
-        .logo-central img {
-            max-width: 300px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .text-primary {
-            color: #3498db !important; /* Elegant blue for primary text */
-        }
-        
-        .owl-nav button {
-            background: rgba(52, 152, 219, 0.8) !important; /* Elegant blue */
-            color: white !important;
-            border-radius: 50% !important;
-            width: 50px !important;
-            height: 50px !important;
-            font-size: 18px !important;
-        }
-        
-        .owl-nav button:hover {
-            background: rgba(52, 152, 219, 1) !important; /* Darker blue */
-        }
-        
-        /* Fallback icon styles when Font Awesome is blocked */
-        .fa-whatsapp::before { content: "📱"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-instagram::before { content: "📷"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-credit-card::before { content: "💳"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-leaf::before { content: "🌱"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-globe-americas::before { content: "🌍"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-suitcase-rolling::before { content: "✈️"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
-        .fa-piggy-bank::before { content: "💰"; font-family: 'Apple Color Emoji', 'Segoe UI Emoji'; font-size: 30px; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MUN | Shampoo Sólido</title>
+  <meta name="description" content="Elige tu shampoo sólido por tipo de cabello, tamaño y cantidad. Paga seguro con Mercado Pago Checkout Pro." />
 
-        /* Fallback font stack in case Google Fonts is blocked */
-        body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        
-        /* Image fallback styles */
-        img[src*="unsplash"] {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        img[alt*="Menta"]::after { content: "Menta Refrescante"; }
-        img[alt*="Romero"]::after { content: "Romero Nutritivo"; }
-        img[alt*="Aloe"]::after { content: "Aloe Vera Hidratante"; }
-        img[alt*="Carbón"]::after { content: "Carbón Activado"; }
-        img[alt*="Pack"]::after { content: "Pack Familiar"; }
-        
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px; /* Reduced for mobile */
-            }
-            
-            .carousel-container {
-                margin: 10px;
-                padding: 20px;
-            }
-            
-            .owl-carousel {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .carousel-item-card {
-                margin: 0;
-                padding: 15px;
-            }
-            
-            .logo-central img {
-                max-width: 250px;
-            }
-            
-            /* Instagram link in navigation for mobile */
-            .navbar-nav .nav-link {
-                margin: 5px 0;
-            }
-            
-            .navbar-nav .nav-link i {
-                margin-right: 5px;
-            }
-        }
-        
-        /* iPhone specific optimizations */
-        @media only screen 
-        and (min-device-width: 375px) 
-        and (max-device-width: 812px) 
-        and (-webkit-min-device-pixel-ratio: 3) {
-            .carousel-item-card .btn-comprar {
-                padding: 15px 30px;
-                font-size: 16px; /* Prevent zoom on tap */
-                border-radius: 30px;
-            }
-            
-            .navbar-nav .nav-link {
-                font-size: 16px; /* Prevent zoom */
-            }
-            
-            /* Ensure touch targets are at least 44px */
-            .nav-link {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .owl-carousel {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        @media (min-width: 1200px) {
-            .owl-carousel {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                max-width: 1400px;
-                margin: 0 auto;
-            }
-        }
-    </style>
+  <!-- Mercado Pago SDK -->
+  <link rel="preconnect" href="https://sdk.mercadopago.com" />
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+  <style>
+    :root{
+      --bg: #f7f4ec;
+      --panel: #ffffff;
+      --panel-2: #faf6ee;
+      --text: #1f2328;
+      --muted: #6c6f76;
+      --primary: #2f855a;
+      --primary-pressed: #276749;
+      --accent: #b08968;
+      --border: #e7e2d6;
+      --shadow: 0 10px 24px rgba(0,0,0,.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --spacing: clamp(16px, 2.0vw, 28px);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: var(--font); color: var(--text);
+      background:
+        radial-gradient(900px 400px at 10% -150px, rgba(176,137,104,.12), transparent 60%),
+        radial-gradient(900px 400px at 90% -200px, rgba(47,133,90,.10), transparent 60%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    header{ position: sticky; top:0; z-index: 10; padding: calc(var(--spacing) - 6px) var(--spacing) 10px; background: linear-gradient(180deg, rgba(247,244,236,.85) 0%, rgba(247,244,236,.65) 65%, rgba(247,244,236,0) 100%); backdrop-filter: blur(8px); }
+    .container{ max-width: 1200px; margin: 0 auto; }
+
+    /* Search iOS-like */
+    .search-wrap{ display:flex; align-items:center; gap:12px; }
+    .search{ flex:1; display:flex; align-items:center; gap:10px; background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: 10px 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), var(--shadow); }
+    .search svg{width:18px;height:18px; opacity:.7; flex:0 0 auto}
+    .search input{ flex:1; border:0; outline:0; background:transparent; color: var(--text); font-size: 15px; }
+    .search input::placeholder{color: var(--muted)}
+
+    main{ padding: 8px var(--spacing) var(--spacing); }
+    .layout{ display:grid; gap: var(--spacing); grid-template-columns: 1.05fr 1fr; }
+    @media (max-width: 980px){ .layout{ grid-template-columns: 1fr; } }
+
+    .left{ background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
+    .product-visual{ display:grid; grid-template-columns: 1fr; gap: 14px; }
+    .img-wrap{ overflow:hidden; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--border); aspect-ratio: 16/12; display:flex; align-items:center; justify-content:center; }
+    .product-visual img{ width: 100%; height: 100%; object-fit: cover; display:block; }
+    .badge{ display:inline-flex; align-items:center; gap:8px; font-size:12px; color: var(--muted); background: #f3efe6; border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; }
+    .left h2{ margin: 6px 0 6px; font-size: clamp(18px, 2.1vw, 26px); }
+    .left p{ margin: 0; color: var(--muted); line-height: 1.6; }
+
+    .right{ background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
+    .right h1{ margin:0 0 4px; font-size: clamp(20px, 2.3vw, 28px);} 
+    .sub{ color: var(--muted); margin-bottom: 14px; }
+
+    .selector{ margin: 8px 0 6px; }
+    .selector label{ display:block; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+    .selector select{ width:100%; padding: 10px 12px; border:1px solid var(--border); border-radius: 10px; background: var(--panel-2); color: var(--text); }
+
+    .info-card{ background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; color: var(--text); line-height: 1.55; margin-top: 8px; }
+    .info-card h3{ margin: 8px 0 4px; font-size: 14px; color: #3d3f45; text-transform: uppercase; letter-spacing: .02em;}
+    .info-card p{ margin: 0 0 6px; color: var(--muted); }
+    .info-card ul{ margin: 4px 0 8px 18px; color: var(--muted); }
+
+    .size-row{ display:flex; align-items:center; gap:10px; flex-wrap: wrap; margin-top: 16px; }
+    .size-btn{ border-radius: 12px; background: #f3efe6; border: 1px solid var(--border); color: var(--text); padding: 10px 14px; font-size: 14px; cursor:pointer; min-width: 92px; text-align:center; transition: .15s ease; }
+    .size-btn.active{ background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 18%, #f3efe6), #f3efe6); border-color: color-mix(in oklab, var(--primary) 42%, var(--border)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent); }
+
+    .qty-row{ display:flex; align-items:center; gap: 12px; margin-top: 10px; }
+    .stepper{ display:inline-flex; align-items:center; gap: 8px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; }
+    .stepper button{ background: #f3efe6; border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 8px; display:grid; place-items:center; cursor: pointer; transition: .15s ease; }
+    .stepper button:hover{transform: translateY(-1px)}
+    .stepper input{ width: 50px; text-align:center; background: transparent; border:0; outline:0; color: var(--text); font-size: 15px; }
+
+    .price-line{ margin-left: auto; color: var(--text); font-weight: 700; font-size: clamp(16px, 1.8vw, 18px); display:flex; align-items: baseline; gap: 8px; }
+    .price-line small{ color: var(--muted); font-weight: 500;}
+
+    .price-table{ display:grid; grid-template-columns: auto auto; gap: 6px 16px; margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+    .actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn{ border-radius: 12px; border: 1px solid var(--border); background: #f3efe6; color: var(--text); padding: 12px 16px; cursor: pointer; font-weight: 600; transition: .15s ease; }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn-primary{ background: linear-gradient(180deg, var(--primary), var(--primary-pressed)); border-color: color-mix(in oklab, var(--primary), #000 15%); color: #fff; box-shadow: 0 8px 18px color-mix(in oklab, var(--primary) 25%, transparent); }
+    .btn-outline{ background: transparent; border-color: var(--border); color: var(--text); }
+
+    .meta{ display:flex; align-items:center; gap: 10px; color: var(--muted); margin-top: 8px; font-size: 13px; }
+
+    .banner{ margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: #fffaf0; border: 1px solid #f6e1b7; color: #8a6d3b; font-size: 13px; }
+    .sr-only{ position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; border:0; padding:0; margin:-1px; }
+  </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <!-- Navigation Menu -->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="#inicio">
-                    <img src="mun-logo.png" alt="Mun Logo" class="d-inline-block align-text-top">
-                    <span class="ms-2 fw-bold text-primary">Tienda Mun</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#inicio">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#productos">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#beneficios">Beneficios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#como-usar">Cómo usar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contacto">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-comprar" href="index2.html" style="margin: 0 10px; padding: 8px 16px; border-radius: 15px;">
-                                <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://instagram.com/tienda_mun89" target="_blank" title="Síguenos en Instagram">
-                                <i class="fab fa-instagram"></i> @tienda_mun89
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        
-        <!-- Galería OwlCarousel con Productos de Shampoo Sólido -->
-        <section id="productos">
-            <div class="carousel-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center mb-4 text-primary">Nuestros Shampoos Sólidos</h2>
-                        <p class="text-center mb-4 text-muted">Descubre nuestra línea de shampoos sólidos naturales, libres de químicos y amigables con el planeta</p>
-                    </div>
-                </div>
-                <div class="owl-carousel owl-theme">
-                    <div class="carousel-item-card">
-                        <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #F4D03F, #D4AF37); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
-                            <img src="https://images.unsplash.com/photo-1556229162-ab6d5b8734e2?w=400&h=300&fit=crop&auto=format" alt="Shampoo Sólido de Menta" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onError="this.style.display='none'; this.parentElement.innerHTML='Menta Refrescante';">
-                        </div>
-                        <h3>Shampoo Sólido de Menta</h3>
-                        <p>Estimula la circulación del cuero cabelludo con aceite esencial de menta. Ideal para cabellos grasos y sensación refrescante.</p>
-                        <a href="index2.html" class="btn-comprar">¡Comprar Ahora!</a>
-                    </div>
-                    <div class="carousel-item-card">
-                        <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #F7DC6F, #F4D03F); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
-                            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=300&fit=crop&auto=format" alt="Shampoo Sólido de Romero" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onError="this.style.display='none'; this.parentElement.innerHTML='Romero Nutritivo';">
-                        </div>
-                        <h3>Shampoo Sólido de Romero</h3>
-                        <p>Fortalece y nutre el cabello con romero natural. Previene la caída y estimula el crecimiento saludable del cabello.</p>
-                        <a href="index2.html" class="btn-comprar">¡Comprar Ahora!</a>
-                    </div>
-                    <div class="carousel-item-card">
-                        <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #FDEAA7, #F7DC6F); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
-                            <img src="https://images.unsplash.com/photo-1595348020851-d1e46a2b7e12?w=400&h=300&fit=crop&auto=format" alt="Shampoo Sólido de Aloe Vera" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onError="this.style.display='none'; this.parentElement.innerHTML='Aloe Vera Hidratante';">
-                        </div>
-                        <h3>Shampoo Sólido de Aloe Vera</h3>
-                        <p>Hidrata profundamente con aloe vera natural. Perfecto para cabellos secos y dañados, proporciona suavidad y brillo.</p>
-                        <a href="index2.html" class="btn-comprar">¡Comprar Ahora!</a>
-                    </div>
-                    <div class="carousel-item-card">
-                        <div style="height: 200px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #D4AF37, #B7950B); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">
-                            <img src="https://images.unsplash.com/photo-1623065002070-4fced5b8ee35?w=400&h=300&fit=crop&auto=format" alt="Shampoo Sólido de Carbón Activado" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onError="this.style.display='none'; this.parentElement.innerHTML='Carbón Activado';">
-                        </div>
-                        <h3>Shampoo Sólido de Carbón Activado</h3>
-                        <p>Desintoxica y purifica el cuero cabelludo. Ideal para eliminar impurezas y exceso de grasa de manera natural.</p>
-                        <a href="index2.html" class="btn-comprar">¡Comprar Ahora!</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="inicio" class="logo-central">
-            <img src="mun-logo.png" alt="Logo Tienda Mun" class="img-fluid">
-            <h1 class="text-center mt-4 text-primary">Shampoos Sólidos Naturales</h1>
-            <p class="text-center text-muted">Cuidado natural para tu cabello y el planeta</p>
-        </section>
-
-        <!-- Sección de Beneficios -->
-        <section id="beneficios" class="py-5">
-            <div class="carousel-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¿Por qué elegir Shampoo Sólido?</h2>
-                    </div>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="carousel-item-card h-100 text-center">
-                            <div class="placeholder-img-2" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fas fa-leaf"></i></div>
-                            <h4 class="text-primary">100% Natural</h4>
-                            <p>Libre de sulfatos, parabenos y químicos agresivos. Solo ingredientes naturales para tu cabello.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="carousel-item-card h-100 text-center">
-                            <div class="placeholder-img-1" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fas fa-globe-americas"></i></div>
-                            <h4 class="text-primary">Eco-Friendly</h4>
-                            <p>Reduce el plástico y cuida el planeta. Un shampoo sólido equivale a 3 botellas de shampoo líquido.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="carousel-item-card h-100 text-center">
-                            <div class="placeholder-img-4" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fas fa-suitcase-rolling"></i></div>
-                            <h4 class="text-primary">Práctico</h4>
-                            <p>Perfecto para viajar, no se derrama y dura hasta 80 lavadas. Compacto y resistente.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="carousel-item-card h-100 text-center">
-                            <div class="placeholder-img-3" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fas fa-piggy-bank"></i></div>
-                            <h4 class="text-primary">Económico</h4>
-                            <p>Mayor duración y rendimiento. Ahorra dinero a largo plazo con productos de calidad superior.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección Cómo Usar -->
-        <section id="como-usar" class="py-5">
-            <div class="carousel-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¿Cómo usar tu Shampoo Sólido?</h2>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="carousel-item-card">
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="placeholder-img-1" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">1</div>
-                                        <div>
-                                            <h5 class="text-primary">Moja tu cabello</h5>
-                                            <p class="mb-0">Humedece completamente tu cabello con agua tibia.</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start">
-                                        <div class="placeholder-img-2" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">2</div>
-                                        <div>
-                                            <h5 class="text-primary">Frota el shampoo</h5>
-                                            <p class="mb-0">Frota la barra directamente sobre el cabello húmedo o entre tus manos.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="placeholder-img-4" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">3</div>
-                                        <div>
-                                            <h5 class="text-primary">Masajea y enjuaga</h5>
-                                            <p class="mb-0">Masajea el cuero cabelludo y enjuaga con abundante agua.</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start">
-                                        <div class="placeholder-img-5" style="height: 50px; width: 50px; margin-right: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0;">4</div>
-                                        <div>
-                                            <h5 class="text-primary">Deja secar</h5>
-                                            <p class="mb-0">Guarda la barra en un lugar seco para que dure más tiempo.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Instagram Feed Section -->
-        <section id="instagram-feed" class="py-5">
-            <div class="carousel-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">
-                            <i class="fab fa-instagram" style="color: #e91e63;"></i> 
-                            Lo que dicen nuestros clientes
-                        </h2>
-                        <p class="text-center mb-4 text-muted">Síguenos en @tienda_mun89 para más testimonios y tips</p>
-                    </div>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="carousel-item-card">
-                            <div class="placeholder-img-2" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                                💖 Cliente Feliz
-                            </div>
-                            <p class="text-muted"><i>"¡Increíble! Mi cabello nunca había estado tan suave. El shampoo de aloe vera es mi favorito."</i></p>
-                            <small class="text-primary">- @maria_haircare</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="carousel-item-card">
-                            <div class="placeholder-img-4" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                                🌿 Eco-Friendly
-                            </div>
-                            <p class="text-muted"><i>"Me encanta poder cuidar mi cabello y el planeta al mismo tiempo. ¡Los shampoos sólidos son perfectos!"</i></p>
-                            <small class="text-primary">- @ecolife_chile</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="carousel-item-card">
-                            <div class="placeholder-img-1" style="height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-                                ✨ Resultados
-                            </div>
-                            <p class="text-muted"><i>"El shampoo de romero me ayudó muchísimo con la caída del cabello. ¡Recomendado 100%!"</i></p>
-                            <small class="text-primary">- @healthy_hair89</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Contacto -->
-        <section id="contacto" class="py-5">
-            <div class="carousel-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center mb-5 text-primary">¡Contáctanos!</h2>
-                    </div>
-                </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-2" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fab fa-whatsapp"></i></div>
-                            <h4 class="text-primary">WhatsApp</h4>
-                            <p class="mb-3">Consulta directa y pedidos</p>
-                            <a href="https://wa.me/56979959311?text=Hola! Me interesan los shampoos sólidos" class="btn-comprar">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="carousel-item-card text-center">
-                            <div class="placeholder-img-1" style="height: 80px; width: 80px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 30px;"><i class="fas fa-credit-card"></i></div>
-                            <h4 class="text-primary">MercadoPago</h4>
-                            <p class="mb-3">Pago seguro y fácil</p>
-                            <a href="index2.html" class="btn-comprar">Comprar Ahora</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <header>
+    <div class="container">
+      <div class="search-wrap">
+        <label class="sr-only" for="search">Buscar</label>
+        <div class="search">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M15.5 15.5l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <input id="search" type="search" placeholder="Buscar tipo de shampoo" autocomplete="off" />
+        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Bootstrap JavaScript Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <main>
+    <div class="container">
+      <div class="layout">
+        <!-- Left: Imagen + descripción -->
+        <section class="left" aria-live="polite">
+          <div class="product-visual">
+            <span class="badge" id="leftBadge">Recomendado</span>
+            <div class="img-wrap">
+              <img id="productImage" alt="Imagen del shampoo seleccionado" src="assets/mun_base.jpg" />
+            </div>
+            <div>
+              <h2 id="leftTitle">Shampoo Sólido</h2>
+              <p id="leftDesc">Selecciona un tipo para ver detalles, imagen y precios.</p>
+            </div>
+          </div>
+        </section>
 
-    <!-- Fallback CSS Grid Gallery (replaces OwlCarousel when external resources are blocked) -->
-    <script>
-        // Simple fallback animation for enhanced visual appeal
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.carousel-item-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.style.animation = 'fadeInUp 0.6s ease-out forwards';
-            });
-        });
-    </script>
-    <style>
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .carousel-item-card {
-            opacity: 0;
-        }
-    </style>
+        <!-- Right: Selector, info, tamaño, cantidad y acciones -->
+        <section class="right">
+          <h1>Elige tu shampoo</h1>
+          <div class="sub">Busca por tipo, revisa ingredientes y beneficios, elige gramos, cantidad y paga.</div>
+
+          <div class="selector">
+            <label for="tipoSelect">Tipo de shampoo</label>
+            <select id="tipoSelect" aria-label="Tipos de shampoo"></select>
+          </div>
+
+          <div class="info-card" id="infoCard">
+            Elige un tipo para ver su Descripción, Ingredientes y Beneficios.
+          </div>
+
+          <div class="size-row" role="group" aria-label="Selecciona tamaño">
+            <button class="size-btn" id="size60" data-size="60" type="button">60 g</button>
+            <button class="size-btn" id="size100" data-size="100" type="button">100 g</button>
+
+            <div class="qty-row" style="margin-left:auto">
+              <div class="stepper" aria-label="Cantidad">
+                <button type="button" id="decr" aria-label="Disminuir">−</button>
+                <input id="qty" type="text" value="1" inputmode="numeric" aria-live="off" readonly />
+                <button type="button" id="incr" aria-label="Aumentar">+</button>
+              </div>
+              <div class="price-line">
+                <span id="priceText">$0</span>
+                <small id="unitLabel">/ unidad</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-table" id="priceTable" aria-live="polite"></div>
+
+          <div class="actions">
+            <a id="whatsappBtn" class="btn btn-outline" target="_blank" rel="noopener">Contactar por WhatsApp</a>
+            <button id="checkoutBtn" class="btn btn-primary" type="button">Pagar con Mercado Pago</button>
+          </div>
+
+          <div class="meta">
+            <span id="shipText">Envíos a todo Chile</span> •
+            <span>Pagos 100% seguros con Checkout Pro</span>
+          </div>
+
+          <div class="banner" id="mpBanner" style="display:none">
+            Para habilitar el pago, configura el endpoint de preferencia de Mercado Pago.
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // CONFIGURACIÓN
+    const MERCADOPAGO_PUBLIC_KEY = "APP_USR-506be698-aa01-44e6-ae7f-cf9fd1437013"; // Key provista por el owner
+    const MERCADOPAGO_LOCALE = "es-CL";
+    const BACKEND_PREFERENCE_ENDPOINT = "/api/mercadopago/preference"; // Backend a agregar
+    const WHATSAPP_PHONE = "5491112345678";
+    const CURRENCY = "CLP";
+
+    const PLACEHOLDER_IMG = "assets/mun_base.jpg";
+
+    const norm = (s) => (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,'');
+
+    const SHAMPOOS = [
+      { id:"cabello_anticaida", nombre:"Cabello Anticaída", tags:["fortalecedor","caida","amla","ortiga"], breve:"Fortalece el cabello y estimula su crecimiento.", info:{ descripcion:"Fortalece el cabello y estimula su crecimiento.", ingredientes:["Amla en polvo (fortalece raíces)","Ortiga en polvo (estimula circulación)","Betaína de coco (limpieza suave)","Aceite de ricino (fortalece y acondiciona)"], beneficios:["Fortalece raíces","Mejora la circulación","Reduce caída","Acondiciona"] }, img:"assets/shampoo_anticaida.jpg", precios:{60: 7000, 100: 11000} },
+      { id:"cabello_con_caspa", nombre:"Cabello con Caspa", tags:["caspa","sensibilidad"], breve:"Ayuda a controlar la caspa y calmar el cuero cabelludo.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_graso", nombre:"Cabello Graso", tags:["graso","seborrea"], breve:"Equilibra la oleosidad sin resecar.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_mixto", nombre:"Cabello Mixto", tags:["mixto","raíces grasas puntas secas"], breve:"Balance para raíces grasas y puntas secas.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_muy_graso", nombre:"Cabello Muy Graso", tags:["muy graso"], breve:"Control intenso de grasa.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_muy_seco", nombre:"Cabello Muy Seco", tags:["muy seco","nutre"], breve:"Nutrición profunda y reparación.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_ninos", nombre:"Cabello Niños", tags:["niños","suave"], breve:"Fórmula suave para uso infantil.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_normal_limon", nombre:"Cabello Normal Limón", tags:["normal","limon","cítrico"], breve:"Frescura cítrica para cabello normal.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_normal_naranja", nombre:"Cabello Normal Naranja", tags:["normal","naranja","cítrico"], breve:"Aroma naranja para uso diario.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_rizado", nombre:"Cabello Rizado", tags:["rulos","rizado","definición"], breve:"Hidratación y definición para rizos.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_seco", nombre:"Cabello Seco", tags:["seco","hidratante"], breve:"Hidratación y suavidad.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_seco_danado", nombre:"Cabello Seco Dañado", tags:["dañado","reparación"], breve:"Reparación para puntas abiertas.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_sensible", nombre:"Cabello Sensible", tags:["sensible","suave"], breve:"Fórmula hipoalergénica y calmante.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_tinturado", nombre:"Cabello Tinturado", tags:["tinte","color"], breve:"Protege el color y aporta brillo.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"cabello_todo_tipo", nombre:"Cabello Todo Tipo", tags:["todo tipo","universal"], breve:"Apto para todo tipo de cabello.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+      { id:"nino_sensible", nombre:"Niño Sensible", tags:["niños","sensible"], breve:"Ultra suave para cuero cabelludo sensible.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} }
+    ];
+
+    // Estado UI
+    let selectedType = null;
+    let selectedSize = 60;
+    let qty = 1;
+
+    // Mercado Pago SDK
+    let mp = null;
+    let mpReady = false;
+    try {
+      if (MERCADOPAGO_PUBLIC_KEY && MERCADOPAGO_PUBLIC_KEY !== 'TEST-00000000-0000-0000-0000-000000000000') {
+        mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY, { locale: MERCADOPAGO_LOCALE });
+        mpReady = true;
+      }
+    } catch(err) {
+      console.warn("Mercado Pago SDK no disponible o falta PUBLIC_KEY.", err);
+    }
+
+    // Helpers UI
+    const $ = sel => document.querySelector(sel);
+    const tipoSelect = $('#tipoSelect');
+    const size60Btn = $('#size60');
+    const size100Btn = $('#size100');
+    const qtyInput = $('#qty');
+    const decrBtn = $('#decr');
+    const incrBtn = $('#incr');
+    const priceText = $('#priceText');
+    const unitLabel = $('#unitLabel');
+    const infoCard = $('#infoCard');
+    const priceTable = $('#priceTable');
+    const productImage = $('#productImage');
+    const leftTitle = $('#leftTitle');
+    const leftDesc = $('#leftDesc');
+    const leftBadge = $('#leftBadge');
+    const whatsappBtn = $('#whatsappBtn');
+    const checkoutBtn = $('#checkoutBtn');
+    const mpBanner = $('#mpBanner');
+
+    if (!mpReady) {
+      checkoutBtn.disabled = true;
+      mpBanner.style.display = 'block';
+    }
+
+    function fmtCurrency(value){
+      try { return new Intl.NumberFormat(MERCADOPAGO_LOCALE, { style:'currency', currency: CURRENCY, maximumFractionDigits: 0 }).format(value); }
+      catch { return "$" + Number(value).toFixed(0); }
+    }
+
+    function getCurrent(){
+      const type = SHAMPOOS.find(s => s.id === selectedType);
+      const unit = type ? (type.precios[selectedSize] || 0) : 0;
+      const total = unit * qty;
+      return { type, unit, total };
+    }
+
+    function renderInfo(item){
+      if (!item) { infoCard.textContent = "Elige un tipo para ver su Descripción, Ingredientes y Beneficios."; priceTable.innerHTML = ""; return; }
+      infoCard.innerHTML = `
+        <h3>Descripción</h3>
+        <p>${item.info?.descripcion || "Próximamente"}</p>
+        <h3>Ingredientes principales</h3>
+        <ul>${(item.info?.ingredientes||[]).map(i=>`<li>${i}</li>`).join('') || "<li>Próximamente</li>"}</ul>
+        <h3>Beneficios</h3>
+        <ul>${(item.info?.beneficios||[]).map(b=>`<li>${b}</li>`).join('') || "<li>Próximamente</li>"}</ul>
+      `;
+      priceTable.innerHTML = `
+        <div>60 g</div><div>${fmtCurrency(item.precios[60]||0)}</div>
+        <div>100 g</div><div>${fmtCurrency(item.precios[100]||0)}</div>
+      `;
+    }
+
+    function updatePrice(){
+      const { unit, total } = getCurrent();
+      priceText.textContent = fmtCurrency(total || 0);
+      unitLabel.textContent = unit ? `/ ${fmtCurrency(unit)} c/u` : '/ unidad';
+    }
+
+    function setSelectedType(id){
+      selectedType = id;
+      const item = SHAMPOOS.find(s => s.id === id);
+      if (!item) return;
+      renderInfo(item);
+      productImage.src = item.img || PLACEHOLDER_IMG;
+      productImage.alt = `${item.nombre} - imagen del producto`;
+      leftTitle.textContent = item.nombre;
+      leftDesc.textContent = item.breve || '';
+      leftBadge.textContent = (item.tags||[]).slice(0,2).join(" • ") || "Recomendado";
+      updatePrice();
+      updateWhatsAppLink();
+    }
+
+    function setSelectedSize(size){ selectedSize = size; document.getElementById('size60').classList.toggle('active', size === 60); document.getElementById('size100').classList.toggle('active', size === 100); updatePrice(); updateWhatsAppLink(); }
+    function setQty(n){ qty = Math.max(1, Math.min(99, n|0)); document.getElementById('qty').value = qty; updatePrice(); updateWhatsAppLink(); }
+
+    function updateWhatsAppLink(){
+      const { type, unit, total } = getCurrent();
+      const title = type ? `${type.nombre} ${selectedSize}g` : 'Shampoo';
+      const msg = `Hola! Quiero consultar por:\n- ${title}\n- Cantidad: ${qty}\n- Precio unitario: ${fmtCurrency(unit)}\n- Total estimado: ${fmtCurrency(total)}\n\n¿Tienen stock?`;
+      document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+    }
+
+    // Render de opciones + filtro por búsqueda
+    function renderOptions(filter=""){
+      const f = norm(filter);
+      const list = SHAMPOOS.filter(s => !f || norm(s.nombre).includes(f) || (s.tags||[]).some(t => norm(t).includes(f)));
+      tipoSelect.innerHTML = '';
+      if (list.length === 0){
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.disabled = true; opt.selected = true;
+        opt.textContent = 'Sin resultados';
+        tipoSelect.appendChild(opt);
+        renderInfo(null);
+        return;
+      }
+      list.forEach((s, idx) => {
+        const opt = document.createElement('option');
+        opt.value = s.id; opt.textContent = s.nombre; tipoSelect.appendChild(opt);
+      });
+      // Selección inicial o mantener la actual si está en la lista filtrada
+      if (!selectedType || !list.some(s => s.id === selectedType)){
+        setSelectedType(list[0].id);
+        tipoSelect.value = list[0].id;
+      } else {
+        tipoSelect.value = selectedType;
+      }
+    }
+
+    // Eventos
+    document.getElementById('search').addEventListener('input', (e) => renderOptions(e.target.value));
+    document.getElementById('size60').addEventListener('click', () => setSelectedSize(60));
+    document.getElementById('size100').addEventListener('click', () => setSelectedSize(100));
+    document.getElementById('decr').addEventListener('click', () => setQty(qty - 1));
+    document.getElementById('incr').addEventListener('click', () => setQty(qty + 1));
+    document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
+    document.getElementById('qty').addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    tipoSelect.addEventListener('change', (e) => setSelectedType(e.target.value));
+
+    async function createPreference(){
+      const { type, unit } = getCurrent();
+      if (!type || !unit) { alert("Selecciona un tipo y tamaño para continuar."); return null; }
+      const itemTitle = `${type.nombre} ${selectedSize}g`;
+      const payload = { title: itemTitle, quantity: qty, unit_price: unit, currency_id: CURRENCY, picture_url: type.img || PLACEHOLDER_IMG, category_id: "personal_care", description: (type.info?.descripcion || itemTitle).slice(0, 250) };
+      const res = await fetch(BACKEND_PREFERENCE_ENDPOINT, { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(payload) });
+      if (!res.ok) { throw new Error(`Error creando preferencia: ${res.status} ${await res.text()}`); }
+      const data = await res.json();
+      return data.id;
+    }
+
+    async function handleCheckout(){
+      if (!mp || !mpReady) { alert("Configura tu endpoint backend para habilitar el pago."); return; }
+      const btn = document.getElementById('checkoutBtn');
+      btn.disabled = true; btn.textContent = "Preparando pago...";
+      try {
+        const prefId = await createPreference();
+        if (!prefId) return;
+        mp.checkout({ preference: { id: prefId }, autoOpen: true, render: { container: null } });
+      } catch (err){ console.error(err); alert("No se pudo iniciar el pago. Intenta nuevamente."); }
+      finally { btn.disabled = false; btn.textContent = "Pagar con Mercado Pago"; }
+    }
+
+    // Inicialización
+    setSelectedSize(60);
+    renderOptions("");
+
+    (function setShipText(){
+      const el = document.getElementById('shipText');
+      const countryByLocale = { "es-AR": "Envíos a toda Argentina", "es-CL": "Envíos a todo Chile", "es-MX": "Envíos a todo México", "es-UY": "Envíos a todo Uruguay", "es-PE": "Envíos a todo Perú" };
+      el.textContent = countryByLocale[MERCADOPAGO_LOCALE] || "Envíos a todo el país";
+    })();
+  </script>
 </body>
 </html>
