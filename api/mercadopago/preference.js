@@ -32,9 +32,9 @@ export default async function handler(req, res) {
         }
       ],
       back_urls: {
-        success: 'https://tiendamun.example.com/?status=success',
-        failure: 'https://tiendamun.example.com/?status=failure',
-        pending: 'https://tiendamun.example.com/?status=pending'
+        success: 'https://tiendamun.cl/?status=success',
+        failure: 'https://tiendamun.cl/?status=failure',
+        pending: 'https://tiendamun.cl/?status=pending'
       },
       auto_return: 'approved'
     };
