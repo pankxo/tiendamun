@@ -68,6 +68,7 @@
     .selector select{ width:100%; padding: 10px 12px; border:1px solid var(--border); border-radius: 10px; background: var(--panel-2); color: var(--text); }
 
     .info-card{ background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; color: var(--text); line-height: 1.55; margin-top: 8px; }
+    .product-visual .info-card{ margin-top: 12px; }
     .info-card h3{ margin: 8px 0 4px; font-size: 14px; color: #3d3f45; text-transform: uppercase; letter-spacing: .02em;}
     .info-card p{ margin: 0 0 6px; color: var(--muted); }
     .info-card ul{ margin: 4px 0 8px 18px; color: var(--muted); }
@@ -120,11 +121,14 @@
           <div class="product-visual">
             <span class="badge" id="leftBadge">Recomendado</span>
             <div class="img-wrap">
-              <img id="productImage" alt="Imagen del shampoo seleccionado" src="assets/mun_base.jpg" />
+              <img id="productImage" alt="Imagen del shampoo seleccionado" src="assets/product_default.jpg" />
             </div>
             <div>
               <h2 id="leftTitle">Shampoo Sólido</h2>
               <p id="leftDesc">Selecciona un tipo para ver detalles, imagen y precios.</p>
+            </div>
+            <div class="info-card" id="infoCard">
+              Elige un tipo para ver su Descripción, Ingredientes y Beneficios.
             </div>
           </div>
         </section>
@@ -137,10 +141,6 @@
           <div class="selector">
             <label for="tipoSelect">Tipo de shampoo</label>
             <select id="tipoSelect" aria-label="Tipos de shampoo"></select>
-          </div>
-
-          <div class="info-card" id="infoCard">
-            Elige un tipo para ver su Descripción, Ingredientes y Beneficios.
           </div>
 
           <div class="size-row" role="group" aria-label="Selecciona tamaño">
@@ -188,7 +188,7 @@
     const WHATSAPP_PHONE = "5491112345678";
     const CURRENCY = "CLP";
 
-    const PLACEHOLDER_IMG = "assets/mun_base.jpg";
+    const PLACEHOLDER_IMG = "assets/product_default.jpg";
 
     const norm = (s) => (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,'');
 
