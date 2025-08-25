@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tienda Mun | Shampoo Sólido artesanal para todo tipo de cabello</title>
+  <title>MUN | Shampoo Sólido artesanal para todo tipo de cabello</title>
   <meta name="description" content="Shampoo sólido artesanal MUN. Elige por tipo de cabello, gramos y cantidad. Envíos a todo Chile. Finaliza por WhatsApp de forma rápida y segura." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://tiendamun.cl/" />
@@ -181,6 +181,11 @@
   .type-item .actions{ display:flex; gap:6px; }
   .type-item .info-icon{ width:28px; height:28px; border-radius: 8px; border:1px solid var(--border); background:#fff; display:grid; place-items:center; color: var(--text); cursor: pointer; }
   .type-item .info-icon:hover{ background: #f8f6f0; }
+
+  /* Category switch (Shampoo / Acondicionador) */
+  .category-switch{ display:flex; gap:8px; background: var(--panel-2); border:1px solid var(--border); padding:6px; border-radius: 12px; margin: 8px 0 10px; }
+  .category-switch .cat-btn{ flex:1; text-align:center; background:#fff; border:1px solid var(--border); color: var(--text); padding: 10px; border-radius: 10px; cursor:pointer; transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  .category-switch .cat-btn.active{ background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 10%, #fff), #fff); border-color: color-mix(in oklab, var(--primary) 35%, var(--border)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent); }
 
     .info-card{ background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; color: var(--text); line-height: 1.55; margin-top: 8px; }
     .product-visual .info-card{ margin-top: 12px; }
@@ -373,28 +378,32 @@
               <span class="img-caption" aria-hidden="true">imagen referencial</span>
             </div>
             <div>
-              <h2 id="leftTitle">Shampoo Sólido</h2>
-              <p id="leftDesc">Selecciona un tipo para ver detalles, imagen y precios.</p>
+              <h2 id="leftTitle">Producto</h2>
+              <p id="leftDesc">Selecciona Shampoo o Acondicionador y un tipo para ver detalles, imagen y precios.</p>
             </div>
             <div class="info-card" id="infoCard">
-              Elige un tipo para ver su Descripción, Ingredientes y Beneficios.
+              Elige un tipo para ver su Breve Descripción, Ingredientes Principales (con función) y Beneficios Principales.
             </div>
           </div>
         </section>
 
         <!-- Right: Selector, info, tamaño, cantidad y acciones -->
         <section class="right">
-          <h1>Elige tu shampoo</h1>
-          <div class="sub">Busca por tipo, revisa ingredientes y beneficios, elige gramos, cantidad y paga.</div>
+          <h1>Elige tu producto</h1>
+          <div class="sub">Primero selecciona Shampoo o Acondicionador, luego el tipo. Revisa ingredientes y beneficios, elige gramos, cantidad y paga.</div>
 
           <div class="selector">
-            <label for="tipoSelect">Tipo de shampoo</label>
+            <label for="tipoSelect">Tipo de producto</label>
+            <div class="category-switch" id="categorySwitch" role="tablist" aria-label="Tipo de producto">
+              <button type="button" class="cat-btn active" data-cat="shampoo" role="tab" aria-selected="true">Shampoo</button>
+              <button type="button" class="cat-btn" data-cat="acondicionador" role="tab" aria-selected="false">Acondicionador</button>
+            </div>
             <div class="dropdown" id="typeDropdown">
               <button type="button" class="dropdown-toggle" id="typeToggle" aria-haspopup="listbox" aria-expanded="false">Selecciona un tipo</button>
               <div class="dropdown-menu" id="typeMenu" role="listbox" aria-labelledby="typeToggle"></div>
             </div>
             <!-- Select nativo oculto para compatibilidad -->
-            <select id="tipoSelect" aria-label="Tipos de shampoo" style="position:absolute; opacity:0; pointer-events:none; height:0; width:0;"></select>
+            <select id="tipoSelect" aria-label="Tipos de producto" style="position:absolute; opacity:0; pointer-events:none; height:0; width:0;"></select>
           </div>
 
           <div class="size-row" role="group" aria-label="Selecciona tamaño y cantidades">
@@ -542,15 +551,15 @@
         <div class="text">
           <h4 id="infoModalTitle">Shampoo</h4>
           <div class="section">
-            <h5>Descripción</h5>
+            <h5>Breve Descripción</h5>
             <p id="infoModalDesc">—</p>
           </div>
           <div class="section">
-            <h5>Ingredientes</h5>
+            <h5>Ingredientes Principales (con función)</h5>
             <ul id="infoModalIngr"></ul>
           </div>
           <div class="section">
-            <h5>Beneficios</h5>
+            <h5>Beneficios Principales</h5>
             <ul id="infoModalBene"></ul>
           </div>
         </div>
@@ -570,6 +579,8 @@
   const PLACEHOLDER_IMG = "assets/red.png";
   // Imagen fija para la vista izquierda
   const FIXED_PRODUCT_IMG = "assets/red.png";
+  // Imagen fija para acondicionadores en la vista izquierda
+  const FIXED_CONDITIONER_IMG = "assets/acondicionador.png";
 
     // Regiones de Chile (abreviado) para select
     const REGIONES_CL = [
@@ -608,7 +619,7 @@
     const norm = (s) => (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,'');
 
     const SHAMPOOS = [
-  { id:"cabello_anticaida", nombre:"Cabello Anticaída", tags:["fortalecedor","caida","amla","ortiga"], breve:"Fortalece el cabello y estimula su crecimiento.", info:{ descripcion:"Fortalece el cabello y estimula su crecimiento.", ingredientes:["Amla en polvo (fortalece raíces)","Ortiga en polvo (estimula circulación)","Betaína de coco (limpieza suave)","Aceite de ricino (fortalece y acondiciona)"], beneficios:["Fortalece raíces","Mejora la circulación","Reduce caída","Acondiciona"] }, img:"assets/shampoo_anticaida.jpg", gallery:["assets/shampoo_anticaida.jpg"], precios:{60: 7000, 100: 11000} },
+  { id:"cabello_anticaida", nombre:"Cabello Anticaída", tags:["fortalecedor","caida","amla","ortiga"], breve:"Fortalece el cabello y estimula su crecimiento.", info:{ descripcion:"Fortalece el cabello y estimula su crecimiento.", ingredientes:["Amla en polvo (fortalece raíces)","Ortiga en polvo (estimula circulación)","Betaína de coco (limpieza suave)","Aceite de ricino (fortalece y acondiciona)"], beneficios:["Fortalece raíces","Mejora la circulación","Reduce caída","Acondiciona"] }, img:"assets/shampoo_anticaida.png", gallery:["assets/shampoo_anticaida.png"], precios:{60: 7000, 100: 11000} },
   { id:"cabello_con_caspa", nombre:"Cabello con Caspa", tags:["caspa","sensibilidad"], breve:"Combate la caspa y calma el cuero cabelludo irritado.", info:{ descripcion:"Combate la caspa y calma el cuero cabelludo irritado.", ingredientes:["Neem (antifúngico y antibacteriano)","Arcilla negra (purifica y absorbe grasa)","Betaína de coco (limpia suavemente)","Agua de hamamelis (calma e hidrata)"], beneficios:["Antifúngico","Purifica","Calma irritación","Reduce descamación"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
   { id:"cabello_graso", nombre:"Cabello Graso", tags:["graso","seborrea"], breve:"Controla el exceso de grasa y limpia profundamente.", info:{ descripcion:"Controla el exceso de grasa y limpia profundamente.", ingredientes:["Arcilla verde (absorbe grasa y limpia)","Arcilla amarilla (equilibra grasa)","Betaína de coco (limpieza suave)","Aceite de jojoba (equilibra producción de grasa)"] , beneficios:["Absorbe grasa","Equilibra producción de sebo","Acondiciona"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
   { id:"cabello_mixto", nombre:"Cabello Mixto", tags:["mixto","raíces grasas puntas secas"], breve:"Equilibra raíces grasas y puntas secas sin resecar.", info:{ descripcion:"Equilibra raíces grasas y puntas secas sin resecar.", ingredientes:["Cáscara de naranja (limpia y elimina grasa)","Arcilla amarilla (absorbe grasa sin resecar)","Betaína de coco (limpia suavemente)","Aceite de jojoba (equilibra grasa y acondiciona)"] , beneficios:["Limpia grasa","Hidrata puntas","Regula el cuero cabelludo"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
@@ -626,7 +637,19 @@
   { id:"nino_sensible", nombre:"Niño Sensible", tags:["niños","sensible"], breve:"Limpieza suave que protege y calma el cuero cabelludo delicado de los niños.", info:{ descripcion:"Limpieza suave que protege y calma el cuero cabelludo delicado de los niños.", ingredientes:["Caléndula (calma y alivia irritaciones)","Agua de manzanilla (suaviza y conforta)","Avena coloidal (hidrata y suaviza)","Aceite de almendras (nutre y facilita el peinado)"] , beneficios:["Calma irritaciones","Hidrata","Nutre","Deja el cabello sedoso y fácil de peinar. Ideal para piel sensible"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} }
     ];
 
+    // Nuevo catálogo: Acondicionadores
+    const ACONDICIONADORES = [
+  { id:"acond_danado", categoria:"acondicionador", nombre:"Acondicionador Reparador", tags:["dañado","reparación","frágil"], breve:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", info:{ descripcion:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", ingredientes:["Hibisco (fortalece y suaviza)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y protege)","Aceite de rosa mosqueta (regenera)","Manteca de cacao (nutre y suaviza)"], beneficios:["Acondiciona profundamente, reduce sequedad y fragilidad, mejora suavidad y manejabilidad."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_tinturado_canoso", categoria:"acondicionador", nombre:"Acondicionador Tinturado o Canoso", tags:["tinturado","canoso","color"], breve:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", info:{ descripcion:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", ingredientes:["Henna en polvo (fortalece y da brillo)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y previene daño)","Aceite de ricino (fortalece)","Manteca de cacao (hidrata)"] , beneficios:["Protege color, mejora brillo, suaviza y acondiciona, previene rotura y daño."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_brillo", categoria:"acondicionador", nombre:"Acondicionador Brillo", tags:["brillo","suavidad"], breve:"Acondicionador que aporta brillo y suavidad al cabello.", info:{ descripcion:"Acondicionador que aporta brillo y suavidad al cabello.", ingredientes:["Cáscara de naranja (vitamina C y aroma fresco)","Silicona vegetal (suaviza y protege)","Aceite Monoi (hidrata y suaviza)","Aceite de argán (nutre y aporta brillo)","Manteca de cacao (hidrata)"] , beneficios:["Mejora el brillo natural, suaviza la cutícula y nutre intensamente el cabello."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_seco_danado_frizz", categoria:"acondicionador", nombre:"Acondicionador Fortalecedor", tags:["seco","frizz","hidratación"], breve:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", info:{ descripcion:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", ingredientes:["Pétalos de rosas (suavizan y aromatizan)","Silicona vegetal (protege y reduce frizz)","Aceite de coco (hidrata profundamente)","Aceite Monoi (suaviza y aromatiza)","Manteca de cacao (hidrata y nutre)"] , beneficios:["Hidratación profunda, reducción del frizz, suavidad y mejor textura del cabello."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_verano_feliz", categoria:"acondicionador", nombre:"Acondicionador Protección Summer", tags:["verano","protección solar"], breve:"Acondicionador que protege y acondiciona el cabello durante el verano.", info:{ descripcion:"Acondicionador que protege y acondiciona el cabello durante el verano.", ingredientes:["Plantas ayurvédicas (calman y nutren)","Silicona vegetal (protege)","Aceite de coco (hidrata y protege)","Aceite de jojoba (equilibra y acondiciona)","Cacao y karité (hidratan)"] , beneficios:["Protege contra daños solares, hidrata intensamente y mantiene el cabello saludable y suave."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_ninos", categoria:"acondicionador", nombre:"Acondicionador Niños", tags:["niños","suave","sensible"], breve:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", info:{ descripcion:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", ingredientes:["Inulina (hidrata y suaviza)","Avena en polvo (calma)","Silicona vegetal (protege y facilita el peinado)","Aceite de coco","Aceite de almendras","Manteca de cacao","Manteca de karité"], beneficios:["Hidratación, suavidad, fácil peinado, protección y nutrición para cabello sensible infantil."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} }
+    ];
+
     // Estado UI
+  // Catálogo y selección
+  let selectedCategory = 'shampoo'; // 'shampoo' | 'acondicionador'
   let selectedType = null;
   // cart: { [typeId]: {60: number, 100: number} }
   let cart = {};
@@ -645,7 +668,8 @@
 
     // Helpers UI
     const $ = sel => document.querySelector(sel);
-    const tipoSelect = $('#tipoSelect');
+  const tipoSelect = $('#tipoSelect');
+  const categorySwitch = document.getElementById('categorySwitch');
     const typeDropdown = document.getElementById('typeDropdown');
     const typeToggle = document.getElementById('typeToggle');
     const typeMenu = document.getElementById('typeMenu');
@@ -722,7 +746,7 @@
     }
 
     function getCurrent(){
-      const type = SHAMPOOS.find(s => s.id === selectedType);
+      const type = findProductById(selectedType);
       const p60 = type ? (type.precios[60] || 0) : 0;
       const p100 = type ? (type.precios[100] || 0) : 0;
       const q = cart[selectedType] || {60:0, 100:0};
@@ -735,7 +759,7 @@
     function getCartItems(){
       const items = [];
       for (const [typeId, sizes] of Object.entries(cart)){
-        const type = SHAMPOOS.find(s => s.id === typeId);
+        const type = findProductById(typeId);
         if (!type) continue;
         const p60 = type.precios[60] || 0;
         const p100 = type.precios[100] || 0;
@@ -867,24 +891,30 @@
     }
 
     function renderInfo(item){
-  if (!item) { infoCard.textContent = "Elige un tipo para ver su Descripción, Ingredientes y Beneficios."; return; }
+      if (!item) { infoCard.textContent = "Elige un tipo para ver su Breve Descripción, Ingredientes Principales (con función) y Beneficios Principales."; return; }
       infoCard.innerHTML = `
-        <h3>Descripción</h3>
-        <p>${item.info?.descripcion || "Próximamente"}</p>
-        <h3>Ingredientes principales</h3>
+        <h3>Breve Descripción</h3>
+        <p>${item.breve || item.info?.descripcion || "Próximamente"}</p>
+        <h3>Ingredientes Principales (con función)</h3>
         <ul>${(item.info?.ingredientes||[]).map(i=>`<li>${i}</li>`).join('') || "<li>Próximamente</li>"}</ul>
-        <h3>Beneficios</h3>
+        <h3>Beneficios Principales</h3>
         <ul>${(item.info?.beneficios||[]).map(b=>`<li>${b}</li>`).join('') || "<li>Próximamente</li>"}</ul>
       `;
       // Tabla de precios removida; los precios por tamaño se muestran bajo cada botón.
     }
 
     function updateSizePrices(){
-      const type = SHAMPOOS.find(s => s.id === selectedType);
+      const type = findProductById(selectedType);
       const p60 = type?.precios?.[60] || 0;
       const p100 = type?.precios?.[100] || 0;
       if (price60El) price60El.textContent = p60 ? fmtCurrency(p60) : '—';
       if (price100El) price100El.textContent = p100 ? fmtCurrency(p100) : '—';
+    }
+
+    // Imagen principal según categoría (mantiene rojo para shampoo y acondicionador.png para acondicionadores)
+    function mainImageFor(item){
+      if (selectedCategory === 'acondicionador') return FIXED_CONDITIONER_IMG || item?.img || PLACEHOLDER_IMG;
+      return FIXED_PRODUCT_IMG || item?.img || PLACEHOLDER_IMG;
     }
 
     function updatePrice(){
@@ -922,17 +952,17 @@
 
     function setSelectedType(id){
       selectedType = id;
-      const item = SHAMPOOS.find(s => s.id === id);
+      const item = findProductById(id);
       if (!item) return;
       renderInfo(item);
       updateSizePrices();
-  productImage.src = FIXED_PRODUCT_IMG || item.img || PLACEHOLDER_IMG;
+      productImage.src = mainImageFor(item);
       productImage.alt = `${item.nombre} - imagen del producto`;
-  // Fallback si la imagen fija no existe
-  productImage.onerror = () => { productImage.onerror = null; productImage.src = item?.img || PLACEHOLDER_IMG; };
+      // Fallback si la imagen seleccionada no existe
+      productImage.onerror = () => { productImage.onerror = null; productImage.src = item?.img || (selectedCategory === 'acondicionador' ? FIXED_CONDITIONER_IMG : FIXED_PRODUCT_IMG) || PLACEHOLDER_IMG; };
       leftTitle.textContent = item.nombre;
       leftDesc.textContent = item.breve || '';
-      leftBadge.textContent = (item.tags||[]).slice(0,2).join(" • ") || "Recomendado";
+  leftBadge.textContent = (item.tags||[]).slice(0,2).join(" • ") || (selectedCategory === 'acondicionador' ? 'Acondicionador' : 'Shampoo');
       // Ensure cart entry exists for this type
       if (!cart[selectedType]) cart[selectedType] = {60:0, 100:0};
       // Reflect quantities for this type in the inputs
@@ -992,9 +1022,17 @@
     }
 
     // Render de opciones + filtro por búsqueda
+    function getCatalog(){
+      return selectedCategory === 'acondicionador' ? ACONDICIONADORES : SHAMPOOS;
+    }
+    function findProductById(id){
+      if (!id) return null;
+      return SHAMPOOS.find(s=>s.id===id) || ACONDICIONADORES.find(s=>s.id===id) || null;
+    }
     function renderOptions(filter=""){
       const f = norm(filter);
-      const list = SHAMPOOS.filter(s => !f || norm(s.nombre).includes(f) || (s.tags||[]).some(t => norm(t).includes(f)));
+      const catalog = getCatalog();
+      const list = catalog.filter(s => !f || norm(s.nombre).includes(f) || (s.tags||[]).some(t => norm(t).includes(f)));
       // Sincroniza select oculto (fallback)
       tipoSelect.innerHTML = '';
       if (list.length === 0){
@@ -1036,13 +1074,28 @@
       } else {
         tipoSelect.value = selectedType;
         updateSizePrices();
-        const curr = SHAMPOOS.find(s => s.id === selectedType);
+        const curr = findProductById(selectedType);
         if (typeToggle && curr) typeToggle.textContent = curr.nombre;
       }
     }
 
     // Eventos
   document.getElementById('search').addEventListener('input', (e) => renderOptions(e.target.value));
+  // Category interactions
+  categorySwitch?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cat-btn');
+    if (!btn) return;
+    const cat = btn.getAttribute('data-cat');
+    if (!cat || (cat !== 'shampoo' && cat !== 'acondicionador')) return;
+    selectedCategory = cat;
+    categorySwitch.querySelectorAll('.cat-btn').forEach(b => {
+      const isActive = b.getAttribute('data-cat') === cat;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', String(isActive));
+    });
+    // Re-render list for selected category and reset type to the first item
+    renderOptions( document.getElementById('search')?.value || '' );
+  });
   decr60Btn.addEventListener('click', () => setQtyFor(60, ((cart[selectedType]?.[60]||0) - 1)));
   incr60Btn.addEventListener('click', () => setQtyFor(60, ((cart[selectedType]?.[60]||0) + 1)));
   decr100Btn.addEventListener('click', () => setQtyFor(100, ((cart[selectedType]?.[100]||0) - 1)));
@@ -1050,11 +1103,13 @@
   // MP UI oculta: no bind
   // Info modal open/close
   function openInfo(item){
-    const it = item || SHAMPOOS.find(s => s.id === selectedType);
+    const it = item || findProductById(selectedType);
     if (!it) return;
     infoModalTitle.textContent = it.nombre || 'Shampoo';
-    infoModalDesc.textContent = it.info?.descripcion || '—';
-  infoModalImg.src = FIXED_PRODUCT_IMG || PLACEHOLDER_IMG;
+    infoModalDesc.textContent = it.breve || it.info?.descripcion || '—';
+  // Preferir imagen específica del producto en el modal; fallback a imagen fija o placeholder
+  infoModalImg.src = it.img || FIXED_PRODUCT_IMG || PLACEHOLDER_IMG;
+  infoModalImg.onerror = () => { infoModalImg.onerror = null; infoModalImg.src = FIXED_PRODUCT_IMG || PLACEHOLDER_IMG; };
     infoModalImg.alt = it.nombre || 'Shampoo';
     infoModalIngr.innerHTML = (it.info?.ingredientes||[]).map(x=>`<li>${x}</li>`).join('');
     infoModalBene.innerHTML = (it.info?.beneficios||[]).map(x=>`<li>${x}</li>`).join('');
@@ -1076,7 +1131,8 @@
   productImage.addEventListener('click', () => {
     try {
       const caption = (leftTitle?.textContent || 'Vista ampliada').trim();
-      const src = FIXED_PRODUCT_IMG || productImage.src;
+      const current = findProductById(selectedType);
+      const src = mainImageFor(current) || productImage.src;
       viewerList = [{ src, caption }];
       viewerIndex = 0;
       setViewerContent();
@@ -1468,5 +1524,4 @@
     })();
   </script>
 </body>
-
 </html>
