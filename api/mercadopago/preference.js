@@ -20,21 +20,32 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Falta MP_ACCESS_TOKEN en el servidor' });
     }
 
-    const {
-      title,
-      quantity,
-      unit_price,
-      currency_id = 'CLP',
-      picture_url,
-      description,
-      category_id = 'personal_care',
-    } = req.body || {};
-
-    if (!title || !quantity || !unit_price) {
-      return res.status(400).json({ error: 'title, quantity y unit_price son requeridos' });
-    }
-
+  const { items, description, shipping, payer, metadata } = req.body || {};
     const origin = req.headers.origin || '';
+    const host = req.headers.host || '';
+    const baseUrl = origin || (host ? `https://${host}` : '');
+    const single = req.body || {};
+    let prefItems = [];
+    if (Array.isArray(items) && items.length > 0) {
+      prefItems = items.map(it => ({
+        title: it.title,
+        quantity: Number(it.quantity || 0),
+        currency_id: it.currency_id || 'CLP',
+        unit_price: Number(it.unit_price || 0),
+        picture_url: it.picture_url,
+        description: it.description || description,
+        category_id: it.category_id || 'personal_care',
+      })).filter(it => it.title && it.quantity > 0 && it.unit_price > 0);
+      if (prefItems.length === 0) {
+        return res.status(400).json({ error: 'Items inválidos' });
+      }
+    } else {
+      const { title, quantity, unit_price, currency_id = 'CLP', picture_url, category_id = 'personal_care' } = single;
+      if (!title || !quantity || !unit_price) {
+        return res.status(400).json({ error: 'title, quantity y unit_price son requeridos' });
+      }
+      prefItems = [{ title, quantity: Number(quantity), currency_id, unit_price: Number(unit_price), picture_url, description, category_id }];
+    }
     const back_urls = {
       success: `${origin}/?status=success`,
       failure: `${origin}/?status=failure`,
@@ -42,20 +53,45 @@ export default async function handler(req, res) {
     };
 
     const prefBody = {
-      items: [
-        {
-          title,
-          quantity: Number(quantity),
-          currency_id,
-          unit_price: Number(unit_price),
-          picture_url,
-          description,
-          category_id,
-        },
-      ],
+      items: prefItems,
       back_urls,
       auto_return: 'approved',
     };
+
+    // Payer
+    if (payer && (payer.name || payer.email || payer.phone)){
+      prefBody.payer = {
+        name: payer.name,
+        email: payer.email,
+        phone: payer.phone ? { number: payer.phone } : undefined,
+      };
+    }
+
+    // Shipments
+    if (shipping){
+      if (shipping.local_pickup){
+        prefBody.shipments = { local_pickup: true, cost: 0, mode: 'not_specified' };
+      } else {
+        const addr = shipping.address || {};
+        prefBody.shipments = {
+          mode: 'not_specified', // we provide our own shipping cost
+          cost: Number(shipping.cost || 0),
+          local_pickup: false,
+          receiver_address: {
+            zip_code: addr.zip || '',
+            street_name: `${addr.street || ''} ${addr.number || ''}`.trim(),
+            street_number: Number(addr.number) || undefined,
+            apartment: addr.apartment || undefined,
+            city_name: addr.city || '',
+            state_name: addr.region || '',
+          }
+        };
+      }
+    }
+
+    if (metadata){
+      prefBody.metadata = metadata;
+    }
 
     const mpRes = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',

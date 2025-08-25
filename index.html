@@ -22,8 +22,8 @@
       --accent: #b08968;
       --border: #e7e2d6;
       --shadow: 0 10px 24px rgba(0,0,0,.08);
-      --radius-lg: 16px;
-      --radius-md: 12px;
+      --radius-lg: 20px; /* iOS-like softer corners */
+      --radius-md: 14px;
       --spacing: clamp(16px, 2.0vw, 28px);
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
@@ -37,35 +37,101 @@
         var(--bg);
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
-    header{ position: sticky; top:0; z-index: 10; padding: calc(var(--spacing) - 6px) var(--spacing) 10px; background: linear-gradient(180deg, rgba(247,244,236,.85) 0%, rgba(247,244,236,.65) 65%, rgba(247,244,236,0) 100%); backdrop-filter: blur(8px); }
+  header{ position: sticky; top:0; z-index: 10; padding: calc(var(--spacing) - 6px) var(--spacing) calc(10px + env(safe-area-inset-top)); background: linear-gradient(180deg, rgba(247,244,236,.85) 0%, rgba(247,244,236,.65) 65%, rgba(247,244,236,0) 100%); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     .container{ max-width: 1200px; margin: 0 auto; }
 
-    /* Search iOS-like */
-    .search-wrap{ display:flex; align-items:center; gap:12px; }
+  /* Header: brand + search + socials */
+  .search-wrap{ display:flex; align-items:center; gap:12px; }
+  .brand{ display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  /* Estilo específico para el logo del header */
+  header .brand{ background:#802091; padding:10px; border-radius:50%; }
+  .brand img{ height: 34px; width:auto; display:block; }
     .search{ flex:1; display:flex; align-items:center; gap:10px; background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: 10px 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), var(--shadow); }
     .search svg{width:18px;height:18px; opacity:.7; flex:0 0 auto}
     .search input{ flex:1; border:0; outline:0; background:transparent; color: var(--text); font-size: 15px; }
     .search input::placeholder{color: var(--muted)}
+  .social{ display:flex; align-items:center; gap:10px; margin-left: 6px; flex:0 0 auto; }
+  .social a{ width:36px; height:36px; border-radius: 999px; background:#fff; border:1px solid var(--border); display:grid; place-items:center; color: var(--text); box-shadow: var(--shadow); }
+  .social a:hover{ transform: translateY(-1px); }
+  .social svg{ width:18px; height:18px; }
 
-    main{ padding: 8px var(--spacing) var(--spacing); }
-    .layout{ display:grid; gap: var(--spacing); grid-template-columns: 1.05fr 1fr; }
-    @media (max-width: 980px){ .layout{ grid-template-columns: 1fr; } }
+    /* Responsive tweaks for header */
+    @media (max-width: 720px){
+      header{ padding-top: calc(8px + env(safe-area-inset-top)); }
+      .brand img{ height: 30px; }
+      .social a{ width:34px; height:34px; }
+    }
+    @media (max-width: 560px){
+      /* Mantener todo en una sola fila */
+      .search-wrap{ flex-wrap: nowrap; gap:8px; }
+      .brand{ order:0; }
+      header .brand{ padding: 9px; }
+      .search{ order:0; flex: 1 1 auto; min-width: 0; padding: 8px 10px; }
+      .search svg{ width:16px; height:16px; }
+      .search input{ font-size: 14px; }
+      .social{ order:0; gap:8px; flex: 0 0 auto; }
+      .brand img{ height: 28px; }
+      .social a{ width:30px; height:30px; }
+      .social svg{ width:16px; height:16px; }
+    }
+    @media (max-width: 380px){
+      .brand img{ height: 26px; }
+      header .brand{ padding: 8px; }
+      .social a{ width:30px; height:30px; }
+      .social svg{ width:14px; height:14px; }
+    }
 
-    .left{ background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
+  /* Footer */
+  .site-footer{ background: #f0f2f5; border-top: 1px solid var(--border); padding: 18px var(--spacing); color: var(--muted); }
+  .site-footer .inner{ max-width: 900px; margin: 0 auto; display:flex; flex-direction: column; align-items:center; gap:10px; text-align:center; }
+  .site-footer .brand img{ height: 40px; width:auto; display:block; }
+  .site-footer .contact{ font-size: 14px; color: #595e66; }
+  .site-footer .contact a{ color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(0,0,0,.15); }
+  .site-footer .contact a:hover{ color: var(--text); border-bottom-color: var(--text); }
+  .site-footer small{ color: #6c6f76; }
+    @media (max-width: 560px){
+      .site-footer .brand img{ height: 34px; }
+      .site-footer .contact{ font-size: 13px; }
+    }
+    @media (max-width: 820px){
+      /* Evita solaparse con la barra CTA fija en mobile */
+      .site-footer{ padding-bottom: calc(18px + 74px + env(safe-area-inset-bottom)); }
+    }
+
+  main{ padding: 8px var(--spacing) var(--spacing); }
+  /* Left column 40% of container, right takes remaining 60% accounting for gap */
+  .layout{ display:grid; gap: var(--spacing); grid-template-columns: minmax(0, 40%) minmax(0, calc(60% - var(--spacing))); grid-template-areas: 'left right'; }
+    @media (max-width: 980px){ .layout{ grid-template-columns: 1fr; grid-template-areas: 'right' 'left'; } }
+
+  .left{ grid-area: left; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
     .product-visual{ display:grid; grid-template-columns: 1fr; gap: 14px; }
-    .img-wrap{ overflow:hidden; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--border); aspect-ratio: 16/12; display:flex; align-items:center; justify-content:center; }
+  .img-wrap{ position: relative; overflow:hidden; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--border); width: 60%; aspect-ratio: 16 / 16; display:flex; align-items:center; justify-content:center; margin-inline: auto; }
     .product-visual img{ width: 100%; height: 100%; object-fit: cover; display:block; }
+  .img-caption{ position: absolute; left: 10px; bottom: 10px; background: rgba(0,0,0,.55); color:#fff; padding: 6px 10px; border-radius: 999px; font-size: 12px; line-height: 1; letter-spacing: .02em; pointer-events: none; backdrop-filter: blur(2px); }
     .badge{ display:inline-flex; align-items:center; gap:8px; font-size:12px; color: var(--muted); background: #f3efe6; border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; }
     .left h2{ margin: 6px 0 6px; font-size: clamp(18px, 2.1vw, 26px); }
     .left p{ margin: 0; color: var(--muted); line-height: 1.6; }
 
-    .right{ background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
+  .right{ grid-area: right; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--spacing); box-shadow: var(--shadow); }
     .right h1{ margin:0 0 4px; font-size: clamp(20px, 2.3vw, 28px);} 
     .sub{ color: var(--muted); margin-bottom: 14px; }
 
     .selector{ margin: 8px 0 6px; }
     .selector label{ display:block; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
     .selector select{ width:100%; padding: 10px 12px; border:1px solid var(--border); border-radius: 10px; background: var(--panel-2); color: var(--text); }
+  /* Custom dropdown with inline info icon */
+  /* Keep dropdown below sticky header (header z-index:10) */
+  .dropdown{ position: relative; z-index: 5; }
+  .dropdown-toggle{ width:100%; text-align:left; background: var(--panel-2); border:1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: var(--text); display:flex; align-items:center; justify-content: space-between; gap:10px; }
+  .dropdown-toggle::after{ content:"▼"; font-size: 10px; opacity:.55; }
+  .dropdown-menu{ position:absolute; z-index:15; top: calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); display:none; max-height: 320px; overflow:auto; padding: 6px; }
+  .dropdown.open .dropdown-menu{ display:block; }
+  .type-item{ display:flex; align-items:center; gap:10px; justify-content: space-between; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
+  .type-item:hover{ background: var(--panel-2); }
+  .type-item .name{ flex:1 1 auto; min-width:0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .type-item .actions{ display:flex; gap:6px; }
+  .type-item .info-icon{ width:28px; height:28px; border-radius: 8px; border:1px solid var(--border); background:#fff; display:grid; place-items:center; color: var(--text); cursor: pointer; }
+  .type-item .info-icon:hover{ background: #f8f6f0; }
 
     .info-card{ background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; color: var(--text); line-height: 1.55; margin-top: 8px; }
     .product-visual .info-card{ margin-top: 12px; }
@@ -73,41 +139,174 @@
     .info-card p{ margin: 0 0 6px; color: var(--muted); }
     .info-card ul{ margin: 4px 0 8px 18px; color: var(--muted); }
 
-    .size-row{ display:flex; align-items:center; gap:10px; flex-wrap: wrap; margin-top: 16px; }
-    .size-btn{ border-radius: 12px; background: #f3efe6; border: 1px solid var(--border); color: var(--text); padding: 10px 14px; font-size: 14px; cursor:pointer; min-width: 92px; text-align:center; transition: .15s ease; }
+    .size-row{ display:flex; align-items:flex-start; gap:10px; flex-wrap: wrap; margin-top: 16px; }
+  .size-btn{ border-radius: 12px; background: #f3efe6; border: 1px solid var(--border); color: var(--text); padding: 10px 14px; font-size: 14px; min-width: 120px; text-align:center; transition: .15s ease; display:flex; flex-direction: column; align-items: center; gap: 6px; }
     .size-btn.active{ background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 18%, #f3efe6), #f3efe6); border-color: color-mix(in oklab, var(--primary) 42%, var(--border)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent); }
+  .size-btn .subprice{ color: var(--muted); font-weight: 600; font-size: 12px; line-height: 1; }
+
+    /* Mini stepper inside size cards */
+    .mini-stepper{ display:inline-flex; align-items:center; gap: 6px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 4px; }
+  .mini-stepper button{ background: #f3efe6; border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 6px; display:grid; place-items:center; cursor: pointer; transition: .15s ease; touch-action: manipulation; }
+  .mini-stepper input{ width: 34px; text-align:center; background: transparent; border:0; outline:0; color: var(--text); font-size: 16px; }
 
     .qty-row{ display:flex; align-items:center; gap: 12px; margin-top: 10px; }
     .stepper{ display:inline-flex; align-items:center; gap: 8px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; }
-    .stepper button{ background: #f3efe6; border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 8px; display:grid; place-items:center; cursor: pointer; transition: .15s ease; }
+  .stepper button{ background: #f3efe6; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 10px; display:grid; place-items:center; cursor: pointer; transition: .15s ease; touch-action: manipulation; }
     .stepper button:hover{transform: translateY(-1px)}
     .stepper input{ width: 50px; text-align:center; background: transparent; border:0; outline:0; color: var(--text); font-size: 15px; }
 
     .price-line{ margin-left: auto; color: var(--text); font-weight: 700; font-size: clamp(16px, 1.8vw, 18px); display:flex; align-items: baseline; gap: 8px; }
     .price-line small{ color: var(--muted); font-weight: 500;}
 
-    .price-table{ display:grid; grid-template-columns: auto auto; gap: 6px 16px; margin-top: 8px; color: var(--muted); font-size: 13px; }
+  .price-table{ display:none; }
 
-    .actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-    .btn{ border-radius: 12px; border: 1px solid var(--border); background: #f3efe6; color: var(--text); padding: 12px 16px; cursor: pointer; font-weight: 600; transition: .15s ease; }
+  .total-row{ display:flex; align-items:center; justify-content:flex-end; margin-top: 12px; }
+
+    /* Cart list */
+    .cart-list{ margin-top: 12px; background: var(--panel-2); border:1px solid var(--border); border-radius: 10px; padding: 10px; color: var(--text); }
+    .cart-list h3{ margin: 0 0 8px; font-size: 14px; color: #3d3f45; text-transform: uppercase; letter-spacing:.02em }
+    .cart-item{ display:flex; align-items:center; justify-content: space-between; gap:10px; padding:6px 0; border-bottom:1px dashed var(--border); }
+    .cart-item:last-child{ border-bottom:0 }
+    .cart-item small{ color: var(--muted); }
+    .cart-empty{ color: var(--muted); font-style: italic; }
+  .cart-actions{ display:flex; align-items:center; gap:8px; }
+  .remove-btn{ background: transparent; border: 1px solid var(--border); color: #b42318; width: 26px; height: 26px; border-radius: 6px; display:grid; place-items:center; cursor:pointer; }
+  .remove-btn:hover{ background: rgba(180,35,24,.08); }
+
+  .actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; justify-content: flex-end; }
+  .btn{ border-radius: 14px; border: 1px solid var(--border); background: #f3efe6; color: var(--text); padding: 12px 16px; cursor: pointer; font-weight: 600; transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease; -webkit-tap-highlight-color: transparent; display:inline-flex; align-items:center; gap:10px; }
+  .btn .icon{ width:18px; height:18px; display:inline-block; }
     .btn:hover{ transform: translateY(-1px); }
     .btn-primary{ background: linear-gradient(180deg, var(--primary), var(--primary-pressed)); border-color: color-mix(in oklab, var(--primary), #000 15%); color: #fff; box-shadow: 0 8px 18px color-mix(in oklab, var(--primary) 25%, transparent); }
     .btn-outline{ background: transparent; border-color: var(--border); color: var(--text); }
+  .btn[disabled]{ opacity:.55; cursor:not-allowed; filter: grayscale(.1); }
+  .btn-whatsapp{ background: linear-gradient(180deg, #25d366, #1ebc57); border-color: #1e9e4a; color:#fff; box-shadow: 0 8px 18px rgba(37,211,102,.25); }
+  .btn-whatsapp:hover{ transform: translateY(-1px); }
+  .mp-cta{ display:flex; flex-direction: column; gap:4px; }
+  .soon{ font-size:12px; color: var(--muted); }
+
+    /* Mobile sticky CTA bar (iPhone friendly) */
+    .mobile-cta{ position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; display: none; align-items: center; gap: 10px; padding: 10px calc(var(--spacing)) calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(180deg, rgba(247,244,236,.85) 0%, rgba(247,244,236,.98) 100%); border-top: 1px solid var(--border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .mobile-cta .total{ margin-right: auto; display:flex; flex-direction: column; line-height: 1.1; }
+    .mobile-cta .total small{ color: var(--muted); }
+    .mobile-cta .total strong{ font-size: 18px; }
+    .mobile-cta .btn{ min-height: 44px; padding: 12px 18px; border-radius: 999px; }
+    @media (max-width: 820px){
+      .mobile-cta{ display:flex; }
+      /* Prevent content underlap with sticky bar */
+      main{ padding-bottom: calc(var(--spacing) + 74px + env(safe-area-inset-bottom)); }
+    }
+
+    /* iOS-like inputs */
+    .ship-row .field input, .ship-row .field select{
+      -webkit-appearance: none; appearance: none;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background:#fff;
+      box-shadow: inset 0 1px 0 rgba(0,0,0,.02), 0 1px 0 rgba(255,255,255,.8);
+      font-size: 16px; /* evita zoom en iOS */
+      transition: box-shadow .18s ease, border-color .18s ease;
+    }
+    .ship-row .field input:focus, .ship-row .field select:focus{
+      outline: none;
+      border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 15%, transparent);
+    }
+
+    /* iOS-like segmented control for delivery */
+    .ship-methods{ display:flex; gap: 8px; margin-bottom: 8px; background: var(--panel-2); border:1px solid var(--border); padding:6px; border-radius: 12px; }
+    .ship-methods .radio{ flex:1; justify-content: center; text-align: center; border-radius: 10px; border:1px solid var(--border); background:#fff; transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, border-color .15s ease; }
+    .ship-methods .radio input{ position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events:none; }
+    .ship-methods .radio.active{ background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 10%, #fff), #fff); border-color: color-mix(in oklab, var(--primary) 35%, var(--border)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent); color: var(--text); }
 
     .meta{ display:flex; align-items:center; gap: 10px; color: var(--muted); margin-top: 8px; font-size: 13px; }
 
     .banner{ margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: #fffaf0; border: 1px solid #f6e1b7; color: #8a6d3b; font-size: 13px; }
     .sr-only{ position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; border:0; padding:0; margin:-1px; }
+
+    /* Mobile-specific adjustments: smaller left container and square image */
+    @media (max-width: 980px){
+      .left{ padding: calc(var(--spacing) - 10px); }
+      .product-visual{ gap: 10px; }
+      .img-wrap{ aspect-ratio: 1 / 1; max-width: 360px; margin-inline: auto; }
+    }
+    /* En mobile: botones de gramaje en una fila */
+    @media (max-width: 560px){
+      .size-row{ flex-wrap: nowrap; }
+      .size-btn{ flex: 1 1 0; min-width: auto; padding: 10px 10px; }
+    }
+
+    /* Image viewer (lightbox) */
+    .viewer{ position: fixed; inset: 0; z-index: 100; display: none; }
+    .viewer.open{ display: block; }
+    .viewer .backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.75); }
+    .viewer .body{ position: absolute; inset: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; display:grid; place-items:center; }
+    .viewer .stage{ position: relative; width: 100%; height: 100%; touch-action: none; overflow: hidden; }
+    .viewer img{ max-width: none; transform-origin: 50% 50%; will-change: transform; user-select: none; -webkit-user-drag: none; }
+    .viewer .close{ position: absolute; top: calc(10px + env(safe-area-inset-top)); right: 12px; z-index: 2; background: rgba(255,255,255,.9); border: 1px solid rgba(0,0,0,.1); color: #111; border-radius: 999px; width: 40px; height: 40px; display:grid; place-items:center; font-size: 20px; cursor: pointer; }
+  .viewer .nav{ position: absolute; inset: 0; pointer-events: none; }
+  .viewer .nav button{ pointer-events: auto; position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.9); border: 1px solid rgba(0,0,0,.1); color:#111; width: 44px; height: 44px; border-radius: 999px; display:grid; place-items:center; font-size: 18px; cursor:pointer; }
+  .viewer .nav .prev{ left: 12px; }
+  .viewer .nav .next{ right: 12px; }
+  .viewer .caption{ position: absolute; bottom: calc(14px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.55); color:#fff; padding: 8px 12px; border-radius: 999px; font-size: 14px; max-width: calc(100% - 40px); text-align: center; backdrop-filter: blur(2px); }
+
+    /* Info Modal (slide-in reader) */
+    .modal{ position: fixed; inset: 0; z-index: 90; display: none; }
+    .modal.open{ display: block; }
+    .modal-backdrop{ position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+    .modal-dialog{ position: absolute; top: 0; right: 0; bottom: 0; width: min(92vw, 480px); background: var(--panel); border-left: 1px solid var(--border); box-shadow: -12px 0 28px rgba(0,0,0,.12); transform: translateX(100%); transition: transform .28s ease; display: grid; grid-template-rows: auto 1fr; }
+    .modal.open .modal-dialog{ transform: translateX(0); }
+    .modal-close{ position: absolute; top: 10px; right: 10px; z-index: 2; background: #fff; border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 10px; display:grid; place-items:center; cursor: pointer; box-shadow: var(--shadow); }
+    .modal-content{ padding: 18px 16px 16px; overflow: auto; }
+    .modal-content .thumb{ width: 72px; height: 72px; border-radius: 12px; overflow: hidden; border:1px solid var(--border); background: var(--panel-2); margin-bottom: 10px; }
+    .modal-content .thumb img{ width: 100%; height: 100%; object-fit: cover; display:block; }
+    .modal-content .text h4{ margin: 4px 0 10px; font-size: 18px; }
+    .modal-content .section{ margin: 12px 0; }
+    .modal-content .section h5{ margin: 0 0 6px; font-size: 13px; color:#3d3f45; text-transform: uppercase; letter-spacing: .02em; }
+    .modal-content p, .modal-content li{ color: var(--muted); line-height: 1.6; }
+    @media (max-width: 560px){
+      .modal-dialog{ width: 100%; border-left: 0; border-top: 1px solid var(--border); bottom: 0; left: 0; right: 0; height: min(78vh, 640px); transform: translateY(100%); }
+      .modal.open .modal-dialog{ transform: translateY(0); }
+      .modal-close{ top: 8px; right: 8px; }
+    }
+    body.no-scroll{ overflow: hidden; }
+
+    /* Shipping form */
+    .section{ margin-top: 16px; }
+    .section h3{ margin: 0 0 8px; font-size: 14px; color: #3d3f45; text-transform: uppercase; letter-spacing:.02em }
+    .ship-box{ background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    .ship-row{ display:flex; flex-wrap: wrap; gap: 10px; }
+    .ship-row .field{ flex: 1 1 180px; min-width: 140px; display:flex; flex-direction: column; gap:6px; }
+    .ship-row .field label{ font-size: 13px; color: var(--muted); }
+    .ship-row .field input, .ship-row .field select{ padding: 10px 12px; border:1px solid var(--border); border-radius: 10px; background: #fff; color: var(--text); }
+    .ship-methods{ display:flex; gap: 10px; margin-bottom: 8px; }
+    .radio{ display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--border); padding:8px 10px; border-radius: 10px; cursor:pointer; }
+    .ship-note{ color: var(--muted); font-size: 13px; margin-top: 6px; }
+    .totals{ display:flex; flex-direction: column; gap:4px; margin-left:auto; text-align:right; }
+    .totals .line{ display:flex; gap: 10px; justify-content:flex-end; }
+    .totals .line .label{ color: var(--muted); }
+    .totals .line .value{ font-weight: 600; }
   </style>
 </head>
 <body>
   <header>
     <div class="container">
       <div class="search-wrap">
-        <label class="sr-only" for="search">Buscar</label>
+        <a class="brand" href="/" aria-label="Inicio">
+          <img src="mun-logo.png" alt="MUN" />
+        </a>
         <div class="search">
+          <label class="sr-only" for="search">Buscar</label>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M15.5 15.5l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.6"/></svg>
-          <input id="search" type="search" placeholder="Buscar tipo de shampoo" autocomplete="off" />
+          <input id="search" type="search" placeholder="Buscar" autocomplete="off" />
+        </div>
+        <div class="social">
+          <a href="https://www.instagram.com/tienda_mun89/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+          </a>
+          <a href="mailto:mun.info89@gmail.com" aria-label="Enviar correo">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l7.2 5c.5.35 1.1.35 1.6 0L20 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -121,7 +320,8 @@
           <div class="product-visual">
             <span class="badge" id="leftBadge">Recomendado</span>
             <div class="img-wrap">
-              <img id="productImage" alt="Imagen del shampoo seleccionado" src="assets/product_default.jpg" />
+              <img id="productImage" alt="Imagen del shampoo seleccionado" src="assets/red.png" />
+              <span class="img-caption" aria-hidden="true">imagen referencial</span>
             </div>
             <div>
               <h2 id="leftTitle">Shampoo Sólido</h2>
@@ -140,31 +340,87 @@
 
           <div class="selector">
             <label for="tipoSelect">Tipo de shampoo</label>
-            <select id="tipoSelect" aria-label="Tipos de shampoo"></select>
+            <div class="dropdown" id="typeDropdown">
+              <button type="button" class="dropdown-toggle" id="typeToggle" aria-haspopup="listbox" aria-expanded="false">Selecciona un tipo</button>
+              <div class="dropdown-menu" id="typeMenu" role="listbox" aria-labelledby="typeToggle"></div>
+            </div>
+            <!-- Select nativo oculto para compatibilidad -->
+            <select id="tipoSelect" aria-label="Tipos de shampoo" style="position:absolute; opacity:0; pointer-events:none; height:0; width:0;"></select>
           </div>
 
-          <div class="size-row" role="group" aria-label="Selecciona tamaño">
-            <button class="size-btn" id="size60" data-size="60" type="button">60 g</button>
-            <button class="size-btn" id="size100" data-size="100" type="button">100 g</button>
-
-            <div class="qty-row" style="margin-left:auto">
-              <div class="stepper" aria-label="Cantidad">
-                <button type="button" id="decr" aria-label="Disminuir">−</button>
-                <input id="qty" type="text" value="1" inputmode="numeric" aria-live="off" readonly />
-                <button type="button" id="incr" aria-label="Aumentar">+</button>
+          <div class="size-row" role="group" aria-label="Selecciona tamaño y cantidades">
+            <div class="size-btn" id="size60" data-size="60" role="group" aria-label="Cantidad 60 g">
+              <span>60 g</span>
+              <small class="subprice" id="price60">—</small>
+              <div class="mini-stepper" aria-label="Cantidad 60 g">
+                <button type="button" id="decr60" aria-label="Disminuir 60 g">−</button>
+                <input id="qty60" type="text" value="1" inputmode="numeric" aria-live="off" readonly />
+                <button type="button" id="incr60" aria-label="Aumentar 60 g">+</button>
               </div>
-              <div class="price-line">
-                <span id="priceText">$0</span>
-                <small id="unitLabel">/ unidad</small>
+            </div>
+            <div class="size-btn" id="size100" data-size="100" role="group" aria-label="Cantidad 100 g">
+              <span>100 g</span>
+              <small class="subprice" id="price100">—</small>
+              <div class="mini-stepper" aria-label="Cantidad 100 g">
+                <button type="button" id="decr100" aria-label="Disminuir 100 g">−</button>
+                <input id="qty100" type="text" value="0" inputmode="numeric" aria-live="off" readonly />
+                <button type="button" id="incr100" aria-label="Aumentar 100 g">+</button>
               </div>
             </div>
           </div>
 
-          <div class="price-table" id="priceTable" aria-live="polite"></div>
+          <div id="cartList" class="cart-list" aria-live="polite"></div>
+
+          <div class="section">
+            <h3>Envío</h3>
+            <div class="ship-box">
+              <div class="ship-methods" role="radiogroup" aria-label="Método de entrega">
+                <label class="radio" id="pickupHeader"><input type="radio" name="delivery" id="pickupRadio" value="pickup"> Retiro</label>
+                <label class="radio" id="shipHeader"><input type="radio" name="delivery" id="shipRadio" value="shipping" checked> Envío a domicilio</label>
+              </div>
+              <div id="shipForm" style="display:none">
+                <!-- Datos de contacto: visibles para envío y retiro -->
+                <div class="ship-row" id="contactBlock">
+                  <div class="field"><label for="nameInput">Nombre y Apellido</label><input id="nameInput" type="text" autocomplete="name" placeholder="Tu nombre" /></div>
+                  <div class="field"><label for="emailInput">Email</label><input id="emailInput" type="email" autocomplete="email" placeholder="tucorreo@dominio.com" /></div>
+                  <div class="field"><label for="phoneInput">Teléfono</label><input id="phoneInput" type="tel" autocomplete="tel" placeholder="9 1234 5678" /></div>
+                </div>
+                <!-- Bloque de dirección: visible solo si es envío a domicilio; colapsado por defecto -->
+                <div id="addressBlock" style="display:none">
+                  <div class="ship-row">
+                    <div class="field">
+                      <label for="regionSelect">Región</label>
+                      <select id="regionSelect"></select>
+                    </div>
+                    <div class="field"><label for="comunaSelect">Comuna</label><select id="comunaSelect"><option value="">Selecciona comuna</option></select></div>
+                    <div class="field"><label for="zipInput">Código Postal (opcional)</label><input id="zipInput" type="text" placeholder="ZIP" /></div>
+                  </div>
+                  <div class="ship-row">
+                    <div class="field"><label for="streetInput">Calle</label><input id="streetInput" type="text" placeholder="Calle" /></div>
+                    <div class="field"><label for="numberInput">Número</label><input id="numberInput" type="text" placeholder="N°" /></div>
+                    <div class="field"><label for="deptInput">Depto/Piso (opcional)</label><input id="deptInput" type="text" placeholder="Depto o piso" /></div>
+                  </div>
+                </div>
+                <div class="ship-note" id="shippingNote">Calcularemos el costo con Bluexpress según tu región y peso del pedido.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="total-row">
+            <div class="totals">
+              <div class="line"><span class="label">Productos</span> <span class="value" id="itemsSubtotal">$0</span></div>
+              <div class="line"><span class="label">Envío</span> <span class="value" id="shippingAmount">$0</span></div>
+              <div class="line" style="margin-top:4px"><span class="label">Total</span> <span class="value" id="grandTotal">$0</span></div>
+            </div>
+          </div>
 
           <div class="actions">
-            <a id="whatsappBtn" class="btn btn-outline" target="_blank" rel="noopener">Contactar por WhatsApp</a>
-            <button id="checkoutBtn" class="btn btn-primary" type="button">Pagar con Mercado Pago</button>
+            <a id="whatsappBtn" class="btn btn-primary btn-whatsapp" target="_blank" rel="noopener" aria-label="Finalizar compra por WhatsApp">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 6L0 24l6.15-1.6A12 12 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.48-8.52ZM12 22a9.88 9.88 0 0 1-5.05-1.37l-.36-.21-3.62.95.97-3.53-.23-.37A10 10 0 1 1 22 12c0 5.52-4.48 10-10 10Zm5.55-7.57c-.3-.15-1.78-.88-2.06-.98-.28-.1-.49-.15-.7.15-.21.3-.8.98-.98 1.18-.18.2-.36.22-.66.07-.3-.15-1.25-.46-2.38-1.46-.88-.78-1.48-1.74-1.65-2.04-.17-.3-.02-.47.13-.62.13-.13.3-.36.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.7-1.7-.96-2.33-.25-.6-.5-.52-.7-.53h-.6c-.2 0-.53.08-.8.38-.27.3-1.05 1.02-1.05 2.48 0 1.46 1.08 2.88 1.23 3.08.15.2 2.13 3.24 5.16 4.54.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.08-.13-.27-.2-.57-.35Z"/></svg>
+              </span>
+              <span>Finalizar compra</span>
+            </a>
           </div>
 
           <div class="meta">
@@ -172,49 +428,159 @@
             <span>Pagos 100% seguros con Checkout Pro</span>
           </div>
 
-          <div class="banner" id="mpBanner" style="display:none">
-            Para habilitar el pago, configura el endpoint de preferencia de Mercado Pago.
-          </div>
+          
         </section>
       </div>
     </div>
   </main>
+
+  <!-- Mobile sticky CTA (iPhone) -->
+  <div class="mobile-cta" id="mobileCta">
+    <div class="total"><small>Total</small><strong id="mobileGrandTotal">$0</strong></div>
+    <a id="mobileWhatsappBtn" class="btn btn-primary btn-whatsapp" target="_blank" rel="noopener" aria-label="Finalizar compra por WhatsApp">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 6L0 24l6.15-1.6A12 12 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.48-8.52ZM12 22a9.88 9.88 0 0 1-5.05-1.37l-.36-.21-3.62.95.97-3.53-.23-.37A10 10 0 1 1 22 12c0 5.52-4.48 10-10 10Zm5.55-7.57c-.3-.15-1.78-.88-2.06-.98-.28-.1-.49-.15-.7.15-.21.3-.8.98-.98 1.18-.18.2-.36.22-.66.07-.3-.15-1.25-.46-2.38-1.46-.88-.78-1.48-1.74-1.65-2.04-.17-.3-.02-.47.13-.62.13-.13.3-.36.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.7-1.7-.96-2.33-.25-.6-.5-.52-.7-.53h-.6c-.2 0-.53.08-.8.38-.27.3-1.05 1.02-1.05 2.48 0 1.46 1.08 2.88 1.23 3.08.15.2 2.13 3.24 5.16 4.54.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.08-.13-.27-.2-.57-.35Z"/></svg>
+      </span>
+      <span>Finalizar compra</span>
+    </a>
+  </div>
+
+  <!-- Fullscreen Image Viewer -->
+  <div class="viewer" id="imgViewer" aria-hidden="true">
+    <div class="backdrop" id="viewerBackdrop"></div>
+    <div class="body">
+      <button class="close" id="viewerClose" aria-label="Cerrar">×</button>
+      <div class="stage" id="viewerStage">
+        <img id="viewerImg" alt="Vista ampliada" />
+        <div class="nav">
+          <button class="prev" id="viewerPrev" aria-label="Anterior">‹</button>
+          <button class="next" id="viewerNext" aria-label="Siguiente">›</button>
+        </div>
+        <div class="caption" id="viewerCaption"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Datos embebidos de regiones y comunas para funcionar sin fetch/servidor -->
+  <script id="regionesComunasData" type="application/json">
+{
+  "Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
+  "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
+  "Antofagasta": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
+  "Atacama": ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+  "Coquimbo": ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paihuano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
+  "Valparaíso": ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Quilpué", "Villa Alemana", "Limache", "Olmué", "Quillota", "La Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "Isla de Pascua", "Petorca", "Cabildo", "La Ligua", "Papudo", "Zapallar", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Los Andes", "Calle Larga", "Rinconada", "San Esteban"],
+  "Región Metropolitana": ["Santiago", "Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Vitacura", "Puente Alto", "Pirque", "San José de Maipo", "Colina", "Lampa", "Tiltil", "San Bernardo", "Buin", "Paine", "Calera de Tango", "Melipilla", "Alhué", "Curacaví", "María Pinto", "San Pedro", "Talagante", "El Monte", "Isla de Maipo", "Padre Hurtado", "Peñaflor"],
+  "O'Higgins": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente", "Pichilemu", "La Estrella", "Litueche", "Marchigüe", "Navidad", "Paredones", "San Fernando", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "Santa Cruz"],
+  "Maule": ["Talca", "Constitución", "Curepto", "Empedrado", "Maule", "Pencahue", "Río Claro", "San Clemente", "San Rafael", "Cauquenes", "Chanco", "Pelluhue", "Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén", "Linares", "Colbún", "Longaví", "Parral", "Retiro", "San Javier", "Villa Alegre", "Yerbas Buenas"],
+  "Ñuble": ["Chillán", "Chillán Viejo", "Bulnes", "Quillón", "San Ignacio", "El Carmen", "Pemuco", "Yungay", "Pinto", "Coihueco", "San Carlos", "Ñiquén", "San Fabián", "Portezuelo", "Ránquil", "Treguaco", "Cobquecura", "Coelemu", "Ninhue"],
+  "Biobío": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualpén", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé", "Arauco", "Cañete", "Contulmo", "Curanilahue", "Lebu", "Los Álamos", "Tirúa", "Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel", "Alto Biobío"],
+  "La Araucanía": ["Temuco", "Carahue", "Cholchol", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre Las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Angol", "Collipulli", "Curacautín", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria"],
+  "Los Ríos": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli", "La Unión", "Futrono", "Lago Ranco", "Río Bueno"],
+  "Los Lagos": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "Frutillar", "Los Muermos", "Llanquihue", "Maullín", "Puerto Varas", "Castro", "Ancud", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quellón", "Quemchi", "Quinchao", "Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo", "Chaitén", "Futaleufú", "Hualaihué", "Palena"],
+  "Aysén": ["Coyhaique", "Lago Verde", "Aysén", "Cisnes", "Guaitecas", "Cochrane", "O'Higgins", "Tortel", "Chile Chico", "Río Ibáñez"],
+  "Magallanes": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
+}
+  </script>
+
+  <!-- Info Modal -->
+  <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="infoModalTitle">
+    <div class="modal-backdrop" id="infoModalBackdrop"></div>
+    <div class="modal-dialog" role="document">
+      <button class="modal-close" id="infoModalClose" aria-label="Cerrar">×</button>
+      <div class="modal-content">
+        <div class="thumb"><img id="infoModalImg" alt="Miniatura"/></div>
+        <div class="text">
+          <h4 id="infoModalTitle">Shampoo</h4>
+          <div class="section">
+            <h5>Descripción</h5>
+            <p id="infoModalDesc">—</p>
+          </div>
+          <div class="section">
+            <h5>Ingredientes</h5>
+            <ul id="infoModalIngr"></ul>
+          </div>
+          <div class="section">
+            <h5>Beneficios</h5>
+            <ul id="infoModalBene"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // CONFIGURACIÓN
     const MERCADOPAGO_PUBLIC_KEY = "APP_USR-506be698-aa01-44e6-ae7f-cf9fd1437013"; // Key provista por el owner
     const MERCADOPAGO_LOCALE = "es-CL";
     const BACKEND_PREFERENCE_ENDPOINT = "/api/mercadopago/preference"; // Backend a agregar
-    const WHATSAPP_PHONE = "5491112345678";
+  const WHATSAPP_PHONE = "56979959311"; // +56979959311 (formato wa.me sin '+')
     const CURRENCY = "CLP";
+  const BLUEXPRESS_QUOTE_ENDPOINT = "/api/shipping/bluexpress-quote";
 
-    const PLACEHOLDER_IMG = "assets/product_default.jpg";
+  const PLACEHOLDER_IMG = "assets/red.png";
+  // Imagen fija para la vista izquierda
+  const FIXED_PRODUCT_IMG = "assets/red.png";
+
+    // Regiones de Chile (abreviado) para select
+    const REGIONES_CL = [
+      'Región Metropolitana', 'Valparaíso', 'O\'Higgins', 'Maule', 'Ñuble', 'Biobío', 'La Araucanía', 'Los Ríos', 'Los Lagos', 'Aysén', 'Magallanes', 'Coquimbo', 'Atacama', 'Antofagasta', 'Tarapacá', 'Arica y Parinacota'
+    ];
+    // Tarifas aproximadas Bluexpress por región (hasta 1 kg) y extra por kg
+    const BLUEXPRESS_RATES = {
+      'Región Metropolitana': { base1: 3490, extraKg: 2000 },
+      'Valparaíso': { base1: 4990, extraKg: 2200 },
+      "O'Higgins": { base1: 4990, extraKg: 2200 },
+      'Maule': { base1: 5490, extraKg: 2500 },
+      'Ñuble': { base1: 5490, extraKg: 2500 },
+      'Biobío': { base1: 5490, extraKg: 2500 },
+      'La Araucanía': { base1: 5990, extraKg: 2800 },
+      'Los Ríos': { base1: 5990, extraKg: 2800 },
+      'Los Lagos': { base1: 6490, extraKg: 3000 },
+      'Aysén': { base1: 7490, extraKg: 3200 },
+      'Magallanes': { base1: 7990, extraKg: 3500 },
+      'Coquimbo': { base1: 5490, extraKg: 2500 },
+      'Atacama': { base1: 5990, extraKg: 2800 },
+      'Antofagasta': { base1: 6490, extraKg: 3000 },
+      'Tarapacá': { base1: 6490, extraKg: 3000 },
+      'Arica y Parinacota': { base1: 6990, extraKg: 3200 }
+    };
+
+    // Optional: per-commune override rates (lightweight). If present, they will be used over regional rates.
+    let BLUEXPRESS_COMMUNE_RATES = null;
+    try {
+      // Try to fetch local JSON. If running file:// it may fail; ignore silently.
+      fetch('assets/bluexpress-rates-by-commune.json', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(j => { BLUEXPRESS_COMMUNE_RATES = j || null; })
+        .catch(() => {});
+    } catch(_) {}
 
     const norm = (s) => (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,'');
 
     const SHAMPOOS = [
-      { id:"cabello_anticaida", nombre:"Cabello Anticaída", tags:["fortalecedor","caida","amla","ortiga"], breve:"Fortalece el cabello y estimula su crecimiento.", info:{ descripcion:"Fortalece el cabello y estimula su crecimiento.", ingredientes:["Amla en polvo (fortalece raíces)","Ortiga en polvo (estimula circulación)","Betaína de coco (limpieza suave)","Aceite de ricino (fortalece y acondiciona)"], beneficios:["Fortalece raíces","Mejora la circulación","Reduce caída","Acondiciona"] }, img:"assets/shampoo_anticaida.jpg", precios:{60: 7000, 100: 11000} },
-      { id:"cabello_con_caspa", nombre:"Cabello con Caspa", tags:["caspa","sensibilidad"], breve:"Ayuda a controlar la caspa y calmar el cuero cabelludo.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_graso", nombre:"Cabello Graso", tags:["graso","seborrea"], breve:"Equilibra la oleosidad sin resecar.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_mixto", nombre:"Cabello Mixto", tags:["mixto","raíces grasas puntas secas"], breve:"Balance para raíces grasas y puntas secas.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_muy_graso", nombre:"Cabello Muy Graso", tags:["muy graso"], breve:"Control intenso de grasa.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_muy_seco", nombre:"Cabello Muy Seco", tags:["muy seco","nutre"], breve:"Nutrición profunda y reparación.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_ninos", nombre:"Cabello Niños", tags:["niños","suave"], breve:"Fórmula suave para uso infantil.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_normal_limon", nombre:"Cabello Normal Limón", tags:["normal","limon","cítrico"], breve:"Frescura cítrica para cabello normal.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_normal_naranja", nombre:"Cabello Normal Naranja", tags:["normal","naranja","cítrico"], breve:"Aroma naranja para uso diario.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_rizado", nombre:"Cabello Rizado", tags:["rulos","rizado","definición"], breve:"Hidratación y definición para rizos.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_seco", nombre:"Cabello Seco", tags:["seco","hidratante"], breve:"Hidratación y suavidad.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_seco_danado", nombre:"Cabello Seco Dañado", tags:["dañado","reparación"], breve:"Reparación para puntas abiertas.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_sensible", nombre:"Cabello Sensible", tags:["sensible","suave"], breve:"Fórmula hipoalergénica y calmante.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_tinturado", nombre:"Cabello Tinturado", tags:["tinte","color"], breve:"Protege el color y aporta brillo.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"cabello_todo_tipo", nombre:"Cabello Todo Tipo", tags:["todo tipo","universal"], breve:"Apto para todo tipo de cabello.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
-      { id:"nino_sensible", nombre:"Niño Sensible", tags:["niños","sensible"], breve:"Ultra suave para cuero cabelludo sensible.", info:{descripcion:"Descripción pendiente.", ingredientes:["Próximamente"], beneficios:["Próximamente"]}, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} }
+  { id:"cabello_anticaida", nombre:"Cabello Anticaída", tags:["fortalecedor","caida","amla","ortiga"], breve:"Fortalece el cabello y estimula su crecimiento.", info:{ descripcion:"Fortalece el cabello y estimula su crecimiento.", ingredientes:["Amla en polvo (fortalece raíces)","Ortiga en polvo (estimula circulación)","Betaína de coco (limpieza suave)","Aceite de ricino (fortalece y acondiciona)"], beneficios:["Fortalece raíces","Mejora la circulación","Reduce caída","Acondiciona"] }, img:"assets/shampoo_anticaida.jpg", gallery:["assets/shampoo_anticaida.jpg"], precios:{60: 7000, 100: 11000} },
+  { id:"cabello_con_caspa", nombre:"Cabello con Caspa", tags:["caspa","sensibilidad"], breve:"Combate la caspa y calma el cuero cabelludo irritado.", info:{ descripcion:"Combate la caspa y calma el cuero cabelludo irritado.", ingredientes:["Neem (antifúngico y antibacteriano)","Arcilla negra (purifica y absorbe grasa)","Betaína de coco (limpia suavemente)","Agua de hamamelis (calma e hidrata)"], beneficios:["Antifúngico","Purifica","Calma irritación","Reduce descamación"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_graso", nombre:"Cabello Graso", tags:["graso","seborrea"], breve:"Controla el exceso de grasa y limpia profundamente.", info:{ descripcion:"Controla el exceso de grasa y limpia profundamente.", ingredientes:["Arcilla verde (absorbe grasa y limpia)","Arcilla amarilla (equilibra grasa)","Betaína de coco (limpieza suave)","Aceite de jojoba (equilibra producción de grasa)"] , beneficios:["Absorbe grasa","Equilibra producción de sebo","Acondiciona"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_mixto", nombre:"Cabello Mixto", tags:["mixto","raíces grasas puntas secas"], breve:"Equilibra raíces grasas y puntas secas sin resecar.", info:{ descripcion:"Equilibra raíces grasas y puntas secas sin resecar.", ingredientes:["Cáscara de naranja (limpia y elimina grasa)","Arcilla amarilla (absorbe grasa sin resecar)","Betaína de coco (limpia suavemente)","Aceite de jojoba (equilibra grasa y acondiciona)"] , beneficios:["Limpia grasa","Hidrata puntas","Regula el cuero cabelludo"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_muy_graso", nombre:"Cabello Muy Graso", tags:["muy graso"], breve:"Limpieza intensa y refrescante para controlar grasa excesiva.", info:{ descripcion:"Limpieza intensa y refrescante para controlar grasa excesiva.", ingredientes:["Arcilla negra (absorbe y purifica)","Menta (refresca y regula grasa)","Betaína de coco (limpia sin eliminar aceites)","Aceite de jojoba (equilibra y acondiciona)"] , beneficios:["Elimina grasa","Refresca","Regula sebo","Acondiciona"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_muy_seco", nombre:"Cabello Muy Seco", tags:["muy seco","nutre"], breve:"Nutre intensamente y repara cabellos muy secos y dañados.", info:{ descripcion:"Nutre intensamente y repara cabellos muy secos y dañados.", ingredientes:["Linaza en polvo (fortalece y suaviza)","Avena en polvo (calma e hidrata)","Rosa mosqueta (nutre y revitaliza)","Manteca de karité (hidrata y reduce frizz)"] , beneficios:["Hidrata","Calma irritación","Fortalece y suaviza"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_ninos", nombre:"Cabello Niños", tags:["niños","suave"], breve:"Limpieza suave y cuidado para cuero cabelludo delicado infantil.", info:{ descripcion:"Limpieza suave y cuidado para cuero cabelludo delicado infantil.", ingredientes:["Arcilla rosa (limpia suavemente)","Avena coloidal (calma e hidrata)","Betaína de coco (espuma suave)","Aceite de almendras (nutre y suaviza)"] , beneficios:["Suaviza","Calma irritación","Nutre","Facilita el peinado"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_normal_limon", nombre:"Cabello Normal Limón", tags:["normal","limon","cítrico"], breve:"Limpieza refrescante que mantiene equilibrio e hidratación.", info:{ descripcion:"Limpieza refrescante que mantiene equilibrio e hidratación.", ingredientes:["Cáscara de limón (aroma y vitamina C)","Fécula de maíz (limpia suavemente)","Betaína de coco (mantiene aceites naturales)","Vinagre de manzana (equilibra pH y brillo)"] , beneficios:["Equilibra pH","Limpia suavemente","Aporta brillo y frescura"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_normal_naranja", nombre:"Cabello Normal Naranja", tags:["normal","naranja","cítrico"], breve:"Limpieza suave y nutrición con aroma cítrico fresco.", info:{ descripcion:"Limpieza suave y nutrición con aroma cítrico fresco.", ingredientes:["Cáscara de naranja (aroma fresco)","Fécula de maíz (absorbe suciedad y grasa)","Betaína de coco (limpieza suave)","Agua de hamamelis (calma y controla grasa)"] , beneficios:["Limpia sin resecar","Hidrata","Controla grasa","Aroma fresco"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_rizado", nombre:"Cabello Rizado", tags:["rulos","rizado","definición"], breve:"Hidrata y define rizos, reduciendo el encrespamiento.", info:{ descripcion:"Hidrata y define rizos, reduciendo el encrespamiento.", ingredientes:["Fitoqueratina (fortalece y repara)","Agua de rosas (hidrata y suaviza)","Betaína de coco (limpia suavemente)","Aceite de ricino (hidrata y acondiciona)"] , beneficios:["Fortalece","Hidrata","Define rizos","Previene quiebre"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_seco", nombre:"Cabello Seco", tags:["seco","hidratante"], breve:"Hidrata y protege el cabello seco para restaurar suavidad.", info:{ descripcion:"Hidrata y protege el cabello seco para restaurar suavidad.", ingredientes:["Betaína de coco (limpia sin resecar)","Agua de rosas (hidrata y suaviza)","Manteca de karité (hidrata profundamente)","Aceite de monoi (nutre y protege)"] , beneficios:["Hidratación profunda","Suaviza y protege","Reduce el encrespamiento"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_seco_danado", nombre:"Cabello Seco Dañado", tags:["dañado","reparación"], breve:"Repara y fortalece el cabello dañado, mejorando su textura.", info:{ descripcion:"Repara y fortalece el cabello dañado, mejorando su textura.", ingredientes:["Hibisco en polvo (fortalece y estimula crecimiento)","Fécula de maíz (absorbe sin resecar)","Betaína de coco (limpia suavemente)","Aceite de almendras (nutre y repara)"] , beneficios:["Fortalece","Repara puntas","Reduce frizz","Mejora textura"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_sensible", nombre:"Cabello Sensible", tags:["sensible","suave"], breve:"Limpieza suave que calma irritaciones y mantiene hidratación.", info:{ descripcion:"Limpieza suave que calma irritaciones y mantiene hidratación.", ingredientes:["Arcilla rosa (limpia sin irritar)","Avena en polvo (calma y suaviza)","Agua de caléndula (antiinflamatoria)","Betaína de coco (limpieza suave)"] , beneficios:["Calma irritación","Limpia delicadamente","Hidrata y protege"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_tinturado", nombre:"Cabello Tinturado", tags:["tinte","color"], breve:"Protege el color y mantiene la salud del cabello teñido.", info:{ descripcion:"Protege el color y mantiene la salud del cabello teñido.", ingredientes:["Henna neutra incolora (acondiciona y fortalece)","Betaína de coco (limpia sin eliminar color)","Agua de rosas (hidrata y suaviza)","Aceite de jojoba (equilibra y aporta brillo)"] , beneficios:["Preserva color","Hidrata","Suaviza","Aporta brillo"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"cabello_todo_tipo", nombre:"Cabello Todo Tipo", tags:["todo tipo","universal"], breve:"Limpieza equilibrada y cuidado para cualquier tipo de cabello.", info:{ descripcion:"Limpieza equilibrada y cuidado para cualquier tipo de cabello.", ingredientes:["Arcilla blanca (limpieza profunda sin resecar)","Avena en polvo (calma e hidrata)","Fécula de maíz (absorbe sin resecar)","Betaína de coco (limpia suavemente)"] , beneficios:["Limpieza profunda sin resecar","Calma irritación","Hidrata"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} },
+  { id:"nino_sensible", nombre:"Niño Sensible", tags:["niños","sensible"], breve:"Limpieza suave que protege y calma el cuero cabelludo delicado de los niños.", info:{ descripcion:"Limpieza suave que protege y calma el cuero cabelludo delicado de los niños.", ingredientes:["Caléndula (calma y alivia irritaciones)","Agua de manzanilla (suaviza y conforta)","Avena coloidal (hidrata y suaviza)","Aceite de almendras (nutre y facilita el peinado)"] , beneficios:["Calma irritaciones","Hidrata","Nutre","Deja el cabello sedoso y fácil de peinar. Ideal para piel sensible"] }, img:PLACEHOLDER_IMG, precios:{60: 7000, 100: 11000} }
     ];
 
     // Estado UI
-    let selectedType = null;
-    let selectedSize = 60;
-    let qty = 1;
+  let selectedType = null;
+  // cart: { [typeId]: {60: number, 100: number} }
+  let cart = {};
 
     // Mercado Pago SDK
     let mp = null;
@@ -231,27 +597,75 @@
     // Helpers UI
     const $ = sel => document.querySelector(sel);
     const tipoSelect = $('#tipoSelect');
+    const typeDropdown = document.getElementById('typeDropdown');
+    const typeToggle = document.getElementById('typeToggle');
+    const typeMenu = document.getElementById('typeMenu');
     const size60Btn = $('#size60');
     const size100Btn = $('#size100');
-    const qtyInput = $('#qty');
-    const decrBtn = $('#decr');
-    const incrBtn = $('#incr');
+    const price60El = document.getElementById('price60');
+    const price100El = document.getElementById('price100');
+    const qty60Input = document.getElementById('qty60');
+    const qty100Input = document.getElementById('qty100');
+    const decr60Btn = document.getElementById('decr60');
+    const incr60Btn = document.getElementById('incr60');
+    const decr100Btn = document.getElementById('decr100');
+    const incr100Btn = document.getElementById('incr100');
     const priceText = $('#priceText');
     const unitLabel = $('#unitLabel');
-    const infoCard = $('#infoCard');
-    const priceTable = $('#priceTable');
+  const infoCard = $('#infoCard');
+    const cartList = document.getElementById('cartList');
     const productImage = $('#productImage');
     const leftTitle = $('#leftTitle');
     const leftDesc = $('#leftDesc');
     const leftBadge = $('#leftBadge');
+    // Viewer elements
+    const imgViewer = document.getElementById('imgViewer');
+    const viewerImg = document.getElementById('viewerImg');
+    const viewerClose = document.getElementById('viewerClose');
+    const viewerBackdrop = document.getElementById('viewerBackdrop');
+    const viewerStage = document.getElementById('viewerStage');
+    const viewerCaption = document.getElementById('viewerCaption');
+    const viewerPrev = document.getElementById('viewerPrev');
+    const viewerNext = document.getElementById('viewerNext');
+    let viewerList = [];
+    let viewerIndex = 0;
     const whatsappBtn = $('#whatsappBtn');
-    const checkoutBtn = $('#checkoutBtn');
+  // Mercado Pago UI removida
     const mpBanner = $('#mpBanner');
+  // Shipping elements
+  const pickupRadio = document.getElementById('pickupRadio');
+  const shipRadio = document.getElementById('shipRadio');
+  const regionSelect = document.getElementById('regionSelect');
+  const comunaSelect = document.getElementById('comunaSelect');
+  const zipInput = document.getElementById('zipInput');
+  const streetInput = document.getElementById('streetInput');
+  const numberInput = document.getElementById('numberInput');
+  const deptInput = document.getElementById('deptInput');
+  const nameInput = document.getElementById('nameInput');
+  const emailInput = document.getElementById('emailInput');
+  const phoneInput = document.getElementById('phoneInput');
+  const shippingNote = document.getElementById('shippingNote');
+  const pickupHeader = document.getElementById('pickupHeader');
+  const shipHeader = document.getElementById('shipHeader');
+  const itemsSubtotalEl = document.getElementById('itemsSubtotal');
+  const shippingAmountEl = document.getElementById('shippingAmount');
+  const grandTotalEl = document.getElementById('grandTotal');
+  // Mobile CTA elements
+  const mobileCta = document.getElementById('mobileCta');
+  const mobileGrandTotal = document.getElementById('mobileGrandTotal');
+  const mobileWhatsappBtn = document.getElementById('mobileWhatsappBtn');
+  // Info Modal elements
+  const infoBtn = document.getElementById('infoBtn');
+  const infoModal = document.getElementById('infoModal');
+  const infoModalBackdrop = document.getElementById('infoModalBackdrop');
+  const infoModalClose = document.getElementById('infoModalClose');
+  const infoModalImg = document.getElementById('infoModalImg');
+  const infoModalTitle = document.getElementById('infoModalTitle');
+  const infoModalDesc = document.getElementById('infoModalDesc');
+  const infoModalIngr = document.getElementById('infoModalIngr');
+  const infoModalBene = document.getElementById('infoModalBene');
 
-    if (!mpReady) {
-      checkoutBtn.disabled = true;
-      mpBanner.style.display = 'block';
-    }
+  // Mercado Pago oculto por ahora (sin UI)
 
     function fmtCurrency(value){
       try { return new Intl.NumberFormat(MERCADOPAGO_LOCALE, { style:'currency', currency: CURRENCY, maximumFractionDigits: 0 }).format(value); }
@@ -260,13 +674,151 @@
 
     function getCurrent(){
       const type = SHAMPOOS.find(s => s.id === selectedType);
-      const unit = type ? (type.precios[selectedSize] || 0) : 0;
-      const total = unit * qty;
-      return { type, unit, total };
+      const p60 = type ? (type.precios[60] || 0) : 0;
+      const p100 = type ? (type.precios[100] || 0) : 0;
+      const q = cart[selectedType] || {60:0, 100:0};
+      const q60 = q[60] || 0;
+      const q100 = q[100] || 0;
+      const total = getCartTotal();
+      return { type, p60, p100, q60, q100, total };
+    }
+
+    function getCartItems(){
+      const items = [];
+      for (const [typeId, sizes] of Object.entries(cart)){
+        const type = SHAMPOOS.find(s => s.id === typeId);
+        if (!type) continue;
+        const p60 = type.precios[60] || 0;
+        const p100 = type.precios[100] || 0;
+        const q60 = sizes[60] || 0;
+        const q100 = sizes[100] || 0;
+        if (q60>0) items.push({ type, typeId, size:60, qty:q60, unit:p60, subtotal: p60*q60 });
+        if (q100>0) items.push({ type, typeId, size:100, qty:q100, unit:p100, subtotal: p100*q100 });
+      }
+      return items;
+    }
+
+    function getCartTotal(){
+      return getCartItems().reduce((sum, it) => sum + it.subtotal, 0);
+    }
+
+    function getCartWeightKg(){
+      // Peso estimado: 60g => 0.06 kg; 100g => 0.10 kg; empaques +0.05 kg si hay pedido
+      const items = getCartItems();
+      let w = 0;
+      for (const it of items){
+        const per = it.size === 60 ? 0.06 : 0.10;
+        w += per * it.qty;
+      }
+      if (items.length > 0) w += 0.05;
+      return Math.max(0, Number(w.toFixed(3)));
+    }
+
+    function calcBluexpressCostLocal(region, weightKg, comuna){
+      if (!region) return 0;
+      let base1, extraKg;
+      // Prefer per-commune rate if available
+      if (comuna && BLUEXPRESS_COMMUNE_RATES && BLUEXPRESS_COMMUNE_RATES[region] && BLUEXPRESS_COMMUNE_RATES[region][comuna]){
+        ({ base1, extraKg } = BLUEXPRESS_COMMUNE_RATES[region][comuna]);
+      } else if (BLUEXPRESS_RATES[region]) {
+        ({ base1, extraKg } = BLUEXPRESS_RATES[region]);
+      } else {
+        return 0;
+      }
+      if (weightKg <= 0) return 0;
+      if (weightKg <= 1) return base1;
+      const extra = Math.ceil(weightKg - 1);
+      return base1 + extra * extraKg;
+    }
+
+    let lastShipCost = 0;
+    let lastShipRegion = '';
+    let lastShipComuna = '';
+    let lastShipWeight = 0;
+
+    async function quoteBluexpress(region, comuna){
+      const isPickup = pickupRadio?.checked;
+      if (isPickup) { lastShipCost = 0; return 0; }
+      const weightRaw = getCartWeightKg();
+      // Use a minimal effective weight to show at least the base cost when cart is empty
+      const weight = (!region || !comuna) ? 0 : (weightRaw > 0 ? weightRaw : 0.01);
+      if (!region || !comuna) { lastShipCost = 0; return 0; }
+      // Avoid unnecessary calls
+      if (region === lastShipRegion && comuna === lastShipComuna && Math.abs(weight - lastShipWeight) < 0.001) return lastShipCost;
+      try {
+        const body = {
+          region,
+          city: comuna,
+          zip: zipInput.value.trim() || '',
+          street: streetInput.value.trim() || 'S/N',
+          number: numberInput.value.trim() || '0',
+          apartment: deptInput.value.trim() || '',
+          weightKg: weight
+        };
+        const res = await fetch(BLUEXPRESS_QUOTE_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        lastShipRegion = region; lastShipComuna = comuna; lastShipWeight = weight; lastShipCost = Number(data.cost || 0);
+        return lastShipCost;
+      } catch (e){
+        // Fallback to local formula
+        lastShipRegion = region; lastShipComuna = comuna; lastShipWeight = weight; lastShipCost = calcBluexpressCostLocal(region, weight, comuna);
+        return lastShipCost;
+      }
+    }
+
+    async function populateRegions(){
+      if (!regionSelect) return;
+      regionSelect.innerHTML = '<option value="">Selecciona región</option>' + REGIONES_CL.map(r=>`<option value="${r}">${r}</option>`).join('');
+      // Preferir datos embebidos para evitar problemas de fetch en file://
+      if (!window.__REGIONES_COMUNAS__) {
+        try {
+          const embedded = document.getElementById('regionesComunasData');
+          const raw = embedded && embedded.textContent ? embedded.textContent.trim() : '';
+          if (raw) {
+            window.__REGIONES_COMUNAS__ = JSON.parse(raw);
+          } else {
+            const res = await fetch('assets/chile-regiones-comunas.json', { cache: 'no-store' });
+            if (res.ok) {
+              window.__REGIONES_COMUNAS__ = await res.json();
+            }
+          }
+        } catch(e) {
+          console.warn('No se pudo cargar el JSON de comunas (embebido/fetch)', e);
+        }
+      }
+    }
+
+    function populateComunasFor(region){
+      if (!comunaSelect) return;
+      const map = window.__REGIONES_COMUNAS__ || {};
+      const list = map[region] || [];
+      comunaSelect.innerHTML = '<option value="">Selecciona comuna</option>' + list.map(c=>`<option value="${c}">${c}</option>`).join('');
+    }
+
+    function renderCart(){
+      const items = getCartItems();
+      if (!cartList) return;
+      if (items.length === 0){
+        cartList.innerHTML = '<h3>Seleccionado</h3><div class="cart-empty">Aún no has agregado cantidades.</div>';
+        return;
+      }
+      cartList.innerHTML = '<h3>Seleccionado</h3>' + items.map(it => `
+        <div class="cart-item">
+          <div>
+            <div>${it.type.nombre} <small>${it.size} g</small></div>
+            <small>x ${it.qty} • ${fmtCurrency(it.unit)} c/u</small>
+          </div>
+          <div class="cart-actions">
+            <strong>${fmtCurrency(it.subtotal)}</strong>
+            <button type="button" class="remove-btn" data-type="${it.typeId}" data-size="${it.size}" aria-label="Eliminar ${it.type.nombre} ${it.size} g">×</button>
+          </div>
+        </div>
+      `).join('');
     }
 
     function renderInfo(item){
-      if (!item) { infoCard.textContent = "Elige un tipo para ver su Descripción, Ingredientes y Beneficios."; priceTable.innerHTML = ""; return; }
+  if (!item) { infoCard.textContent = "Elige un tipo para ver su Descripción, Ingredientes y Beneficios."; return; }
       infoCard.innerHTML = `
         <h3>Descripción</h3>
         <p>${item.info?.descripcion || "Próximamente"}</p>
@@ -275,16 +827,48 @@
         <h3>Beneficios</h3>
         <ul>${(item.info?.beneficios||[]).map(b=>`<li>${b}</li>`).join('') || "<li>Próximamente</li>"}</ul>
       `;
-      priceTable.innerHTML = `
-        <div>60 g</div><div>${fmtCurrency(item.precios[60]||0)}</div>
-        <div>100 g</div><div>${fmtCurrency(item.precios[100]||0)}</div>
-      `;
+      // Tabla de precios removida; los precios por tamaño se muestran bajo cada botón.
+    }
+
+    function updateSizePrices(){
+      const type = SHAMPOOS.find(s => s.id === selectedType);
+      const p60 = type?.precios?.[60] || 0;
+      const p100 = type?.precios?.[100] || 0;
+      if (price60El) price60El.textContent = p60 ? fmtCurrency(p60) : '—';
+      if (price100El) price100El.textContent = p100 ? fmtCurrency(p100) : '—';
     }
 
     function updatePrice(){
-      const { unit, total } = getCurrent();
-      priceText.textContent = fmtCurrency(total || 0);
-      unitLabel.textContent = unit ? `/ ${fmtCurrency(unit)} c/u` : '/ unidad';
+      const { q60, q100 } = getCurrent();
+      size60Btn.classList.toggle('active', (q60||0) > 0);
+      size100Btn.classList.toggle('active', (q100||0) > 0);
+      updateTotals();
+    }
+
+    async function updateTotals(){
+      const itemsSubtotal = getCartTotal();
+      const isPickup = !!pickupRadio?.checked;
+      const region = regionSelect?.value || '';
+      const comuna = comunaSelect?.value || '';
+      let shipCost = 0;
+      let shipText = '—';
+      if (isPickup) {
+        shipCost = 0;
+        shipText = 'Gratis';
+      } else {
+        if (!region || !comuna || itemsSubtotal <= 0) {
+          shipCost = 0;
+          shipText = fmtCurrency(0);
+        } else {
+          shipCost = await quoteBluexpress(region, comuna);
+          shipText = fmtCurrency(shipCost);
+        }
+      }
+      const grand = itemsSubtotal + shipCost;
+      if (itemsSubtotalEl) itemsSubtotalEl.textContent = fmtCurrency(itemsSubtotal);
+      if (shippingAmountEl) shippingAmountEl.textContent = shipText;
+      if (grandTotalEl) grandTotalEl.textContent = fmtCurrency(grand);
+      if (mobileGrandTotal) mobileGrandTotal.textContent = fmtCurrency(grand);
     }
 
     function setSelectedType(id){
@@ -292,29 +876,77 @@
       const item = SHAMPOOS.find(s => s.id === id);
       if (!item) return;
       renderInfo(item);
-      productImage.src = item.img || PLACEHOLDER_IMG;
+      updateSizePrices();
+  productImage.src = FIXED_PRODUCT_IMG || item.img || PLACEHOLDER_IMG;
       productImage.alt = `${item.nombre} - imagen del producto`;
+  // Fallback si la imagen fija no existe
+  productImage.onerror = () => { productImage.onerror = null; productImage.src = item?.img || PLACEHOLDER_IMG; };
       leftTitle.textContent = item.nombre;
       leftDesc.textContent = item.breve || '';
       leftBadge.textContent = (item.tags||[]).slice(0,2).join(" • ") || "Recomendado";
+      // Ensure cart entry exists for this type
+      if (!cart[selectedType]) cart[selectedType] = {60:0, 100:0};
+      // Reflect quantities for this type in the inputs
+      if (qty60Input) qty60Input.value = cart[selectedType][60] || 0;
+      if (qty100Input) qty100Input.value = cart[selectedType][100] || 0;
       updatePrice();
       updateWhatsAppLink();
     }
 
-    function setSelectedSize(size){ selectedSize = size; document.getElementById('size60').classList.toggle('active', size === 60); document.getElementById('size100').classList.toggle('active', size === 100); updatePrice(); updateWhatsAppLink(); }
-    function setQty(n){ qty = Math.max(1, Math.min(99, n|0)); document.getElementById('qty').value = qty; updatePrice(); updateWhatsAppLink(); }
+    function setQtyFor(size, n){
+      const clamped = Math.max(0, Math.min(99, n|0));
+      if (!selectedType) return;
+      if (!cart[selectedType]) cart[selectedType] = {60:0, 100:0};
+      cart[selectedType][size] = clamped;
+      if (size === 60 && qty60Input) qty60Input.value = clamped;
+      if (size === 100 && qty100Input) qty100Input.value = clamped;
+      updatePrice();
+      renderCart();
+      updateWhatsAppLink();
+    }
 
     function updateWhatsAppLink(){
-      const { type, unit, total } = getCurrent();
-      const title = type ? `${type.nombre} ${selectedSize}g` : 'Shampoo';
-      const msg = `Hola! Quiero consultar por:\n- ${title}\n- Cantidad: ${qty}\n- Precio unitario: ${fmtCurrency(unit)}\n- Total estimado: ${fmtCurrency(total)}\n\n¿Tienen stock?`;
-      document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+      const items = getCartItems();
+      const subtotal = getCartTotal();
+      const buyerName = (nameInput?.value || '').trim();
+      const greeting = buyerName ? `Hola, soy ${buyerName}` : 'Hola';
+      const listLines = items.map(it => `- ${it.type.nombre} ${it.size} g x ${it.qty}: ${fmtCurrency(it.subtotal)} (${fmtCurrency(it.unit)} c/u)`);
+      const listText = listLines.length ? listLines.join('\n') : '- Sin selección';
+      const isPickup = !!pickupRadio?.checked;
+      const region = regionSelect?.value || '';
+      const comuna = comunaSelect?.value || '';
+      const street = (streetInput?.value || '').trim();
+      const number = (numberInput?.value || '').trim();
+      const dept = (deptInput?.value || '').trim();
+  const shipCost = isPickup ? 0 : (comuna ? (lastShipCost || calcBluexpressCostLocal(region, getCartWeightKg(), comuna)) : 0);
+      const addressLine = [street, number].filter(Boolean).join(' ');
+      const deptLine = dept ? `, ${dept}` : '';
+      const shippingBlock = isPickup
+        ? `Entrega: Retiro en tienda — Acordar con vendedor.`
+        : `Envío a: ${region}${comuna ? ' > ' + comuna : ''}\nDirección: ${addressLine}${deptLine}\n${comuna ? `Costo de envío (Bluexpress): ${fmtCurrency(shipCost)}` : 'Costo de envío: $0 (temporal hasta elegir región y comuna)'}`;
+
+      const msg = [
+        `${greeting}`,
+        '',
+        'Necesito:',
+        `${listText}`,
+        `Total productos: ${fmtCurrency(subtotal)}`,
+        '',
+        shippingBlock,
+        '',
+        `Total final: ${fmtCurrency(subtotal + shipCost)}`
+      ].join('\n');
+
+      const href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+      document.getElementById('whatsappBtn').href = href;
+      if (mobileWhatsappBtn) mobileWhatsappBtn.href = href;
     }
 
     // Render de opciones + filtro por búsqueda
     function renderOptions(filter=""){
       const f = norm(filter);
       const list = SHAMPOOS.filter(s => !f || norm(s.nombre).includes(f) || (s.tags||[]).some(t => norm(t).includes(f)));
+      // Sincroniza select oculto (fallback)
       tipoSelect.innerHTML = '';
       if (list.length === 0){
         const opt = document.createElement('option');
@@ -322,37 +954,317 @@
         opt.disabled = true; opt.selected = true;
         opt.textContent = 'Sin resultados';
         tipoSelect.appendChild(opt);
+        // Dropdown vacío
+        if (typeMenu) typeMenu.innerHTML = '<div class="type-item" aria-disabled="true">Sin resultados</div>';
+        if (typeToggle) typeToggle.textContent = 'Sin resultados';
         renderInfo(null);
+        // Sin resultados: limpiar precios en botones
+        if (price60El) price60El.textContent = '—';
+        if (price100El) price100El.textContent = '—';
         return;
       }
-      list.forEach((s, idx) => {
+      // Construye opciones en select oculto
+      list.forEach((s) => {
         const opt = document.createElement('option');
         opt.value = s.id; opt.textContent = s.nombre; tipoSelect.appendChild(opt);
       });
+      // Construye dropdown visual
+      if (typeMenu){
+        typeMenu.innerHTML = list.map(s => `
+          <div class="type-item" role="option" data-id="${s.id}">
+            <div class="name">${s.nombre}</div>
+            <div class="actions">
+              <button type="button" class="info-icon" data-info-id="${s.id}" aria-label="Ver información de ${s.nombre}">i</button>
+            </div>
+          </div>
+        `).join('');
+      }
       // Selección inicial o mantener la actual si está en la lista filtrada
       if (!selectedType || !list.some(s => s.id === selectedType)){
         setSelectedType(list[0].id);
         tipoSelect.value = list[0].id;
+        if (typeToggle) typeToggle.textContent = list[0].nombre;
       } else {
         tipoSelect.value = selectedType;
+        updateSizePrices();
+        const curr = SHAMPOOS.find(s => s.id === selectedType);
+        if (typeToggle && curr) typeToggle.textContent = curr.nombre;
       }
     }
 
     // Eventos
-    document.getElementById('search').addEventListener('input', (e) => renderOptions(e.target.value));
-    document.getElementById('size60').addEventListener('click', () => setSelectedSize(60));
-    document.getElementById('size100').addEventListener('click', () => setSelectedSize(100));
-    document.getElementById('decr').addEventListener('click', () => setQty(qty - 1));
-    document.getElementById('incr').addEventListener('click', () => setQty(qty + 1));
-    document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
-    document.getElementById('qty').addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
-    tipoSelect.addEventListener('change', (e) => setSelectedType(e.target.value));
+  document.getElementById('search').addEventListener('input', (e) => renderOptions(e.target.value));
+  decr60Btn.addEventListener('click', () => setQtyFor(60, ((cart[selectedType]?.[60]||0) - 1)));
+  incr60Btn.addEventListener('click', () => setQtyFor(60, ((cart[selectedType]?.[60]||0) + 1)));
+  decr100Btn.addEventListener('click', () => setQtyFor(100, ((cart[selectedType]?.[100]||0) - 1)));
+  incr100Btn.addEventListener('click', () => setQtyFor(100, ((cart[selectedType]?.[100]||0) + 1)));
+  // MP UI oculta: no bind
+  // Info modal open/close
+  function openInfo(item){
+    const it = item || SHAMPOOS.find(s => s.id === selectedType);
+    if (!it) return;
+    infoModalTitle.textContent = it.nombre || 'Shampoo';
+    infoModalDesc.textContent = it.info?.descripcion || '—';
+  infoModalImg.src = FIXED_PRODUCT_IMG || PLACEHOLDER_IMG;
+    infoModalImg.alt = it.nombre || 'Shampoo';
+    infoModalIngr.innerHTML = (it.info?.ingredientes||[]).map(x=>`<li>${x}</li>`).join('');
+    infoModalBene.innerHTML = (it.info?.beneficios||[]).map(x=>`<li>${x}</li>`).join('');
+    infoModal.classList.add('open');
+    infoModal.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    // Move focus to close button for accessibility
+    setTimeout(() => { infoModalClose?.focus?.(); }, 10);
+  }
+  function closeInfo(){
+    infoModal.classList.remove('open');
+    infoModal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  }
+  infoBtn?.addEventListener('click', openInfo);
+  infoModalClose?.addEventListener('click', closeInfo);
+  infoModalBackdrop?.addEventListener('click', closeInfo);
+  // Open viewer on product image tap/click
+  productImage.addEventListener('click', () => {
+    try {
+      const caption = (leftTitle?.textContent || 'Vista ampliada').trim();
+      const src = FIXED_PRODUCT_IMG || productImage.src;
+      viewerList = [{ src, caption }];
+      viewerIndex = 0;
+      setViewerContent();
+      openViewer();
+    } catch(_) {}
+  });
+  // Validación para WhatsApp en caso de retiro en tienda
+  document.getElementById('whatsappBtn').addEventListener('click', (e) => {
+    const isPickup = !!pickupRadio?.checked;
+    if (isPickup) {
+      const nameOk = !!(nameInput?.value || '').trim();
+      const emailOk = !!(emailInput?.value || '').trim();
+      const phoneOk = !!(phoneInput?.value || '').trim();
+      if (!nameOk || !emailOk || !phoneOk) {
+        e.preventDefault();
+        alert('Para retiro en tienda, ingresa tu nombre, email y teléfono.');
+        if (!nameOk) { nameInput?.focus(); return; }
+        if (!emailOk) { emailInput?.focus(); return; }
+        if (!phoneOk) { phoneInput?.focus(); return; }
+      }
+    }
+  });
+  if (mobileWhatsappBtn) {
+    mobileWhatsappBtn.addEventListener('click', (e) => {
+      const isPickup = !!pickupRadio?.checked;
+      if (isPickup) {
+        const nameOk = !!(nameInput?.value || '').trim();
+        const emailOk = !!(emailInput?.value || '').trim();
+        const phoneOk = !!(phoneInput?.value || '').trim();
+        if (!nameOk || !emailOk || !phoneOk) {
+          e.preventDefault();
+          alert('Para retiro en tienda, ingresa tu nombre, email y teléfono.');
+          if (!nameOk) { nameInput?.focus(); return; }
+          if (!emailOk) { emailInput?.focus(); return; }
+          if (!phoneOk) { phoneInput?.focus(); return; }
+        }
+      }
+    });
+  }
+  // Dropdown interactions
+  function closeTypeMenu(){ typeDropdown?.classList.remove('open'); typeToggle?.setAttribute('aria-expanded','false'); }
+  function openTypeMenu(){ typeDropdown?.classList.add('open'); typeToggle?.setAttribute('aria-expanded','true'); }
+  typeToggle?.addEventListener('click', () => {
+    if (typeDropdown?.classList.contains('open')) closeTypeMenu(); else openTypeMenu();
+  });
+  document.addEventListener('click', (e) => {
+    if (!typeDropdown) return;
+    if (!typeDropdown.contains(e.target)) closeTypeMenu();
+  });
+  typeMenu?.addEventListener('click', (e) => {
+    const infoButton = e.target.closest('.info-icon');
+    if (infoButton){
+      e.preventDefault();
+      e.stopPropagation();
+      const id = infoButton.getAttribute('data-info-id');
+      const item = SHAMPOOS.find(s => s.id === id);
+      if (item){ openInfo(item); }
+      return;
+    }
+    const item = e.target.closest('.type-item');
+    if (!item) return;
+    const id = item.getAttribute('data-id');
+    if (!id) return;
+    setSelectedType(id);
+    const curr = SHAMPOOS.find(s => s.id === id);
+    if (typeToggle && curr) typeToggle.textContent = curr.nombre;
+    closeTypeMenu();
+  });
+
+  // ESC to close info modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){
+      if (infoModal?.classList.contains('open')) closeInfo();
+      if (imgViewer?.classList.contains('open')) closeViewer();
+    }
+  });
+  // Sync when native select changes (unlikely used, but keeps state consistent)
+  tipoSelect.addEventListener('change', (e) => { setSelectedType(e.target.value); closeTypeMenu(); });
+  // Eliminar ítems del carrito (delegación)
+  cartList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.remove-btn');
+    if (!btn) return;
+    const typeId = btn.dataset.type;
+    const size = Number(btn.dataset.size);
+    if (cart[typeId]){
+      cart[typeId][size] = 0;
+      if ((cart[typeId][60]||0) === 0 && (cart[typeId][100]||0) === 0) {
+        delete cart[typeId];
+      }
+    }
+    if (selectedType === typeId){
+      if (size === 60 && qty60Input) qty60Input.value = 0;
+      if (size === 100 && qty100Input) qty100Input.value = 0;
+    }
+    renderCart();
+    updatePrice();
+    updateWhatsAppLink();
+  });
+
+  // Shipping interactions
+  function toggleAddressBlock() {
+    const addressBlock = document.getElementById('addressBlock');
+    const note = document.getElementById('shippingNote');
+    const isPickup = !!pickupRadio?.checked;
+    if (addressBlock) addressBlock.style.display = isPickup ? 'none' : 'block';
+    if (note) note.textContent = isPickup
+      ? 'Retiro en tienda: coordina con el vendedor el lugar y horario.'
+      : 'Calcularemos el costo con Bluexpress según tu región y peso del pedido.';
+  }
+  function setShipFormVisible(show){
+    const form = document.getElementById('shipForm');
+    if (form) form.style.display = show ? 'block' : 'none';
+  }
+  function expandCurrentMethod(){
+    setShipFormVisible(true);
+    toggleAddressBlock();
+  }
+  pickupRadio.addEventListener('change', () => { expandCurrentMethod(); updateTotals(); updateWhatsAppLink(); });
+  shipRadio.addEventListener('change', () => { expandCurrentMethod(); updateTotals(); updateWhatsAppLink(); });
+  // Clicking headers: if already selected, toggle; if switching, select and expand
+  pickupHeader?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const form = document.getElementById('shipForm');
+    const visible = form && form.style.display !== 'none';
+    if (pickupRadio.checked) {
+      setShipFormVisible(!visible);
+    } else {
+      pickupRadio.checked = true; shipRadio.checked = false;
+      setShipFormVisible(true);
+    }
+    toggleAddressBlock();
+    // sync segmented visual state
+    document.querySelectorAll('.ship-methods .radio').forEach(l => l.classList.remove('active'));
+    if (pickupRadio.checked) pickupRadio.closest('.radio')?.classList.add('active');
+    if (shipRadio.checked) shipRadio.closest('.radio')?.classList.add('active');
+    updateTotals(); updateWhatsAppLink();
+  });
+  shipHeader?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const form = document.getElementById('shipForm');
+    const visible = form && form.style.display !== 'none';
+    if (shipRadio.checked) {
+      setShipFormVisible(!visible);
+    } else {
+      shipRadio.checked = true; pickupRadio.checked = false;
+      setShipFormVisible(true);
+    }
+    toggleAddressBlock();
+    // sync segmented visual state
+    document.querySelectorAll('.ship-methods .radio').forEach(l => l.classList.remove('active'));
+    if (pickupRadio.checked) pickupRadio.closest('.radio')?.classList.add('active');
+    if (shipRadio.checked) shipRadio.closest('.radio')?.classList.add('active');
+    updateTotals(); updateWhatsAppLink();
+  });
+  // Toggle visual active state for iOS-like segmented delivery control
+  [pickupRadio, shipRadio].forEach(r => r.addEventListener('change', () => {
+    document.querySelectorAll('.ship-methods .radio').forEach(l => l.classList.remove('active'));
+    if (pickupRadio.checked) pickupRadio.closest('.radio')?.classList.add('active');
+    if (shipRadio.checked) shipRadio.closest('.radio')?.classList.add('active');
+  }));
+  [regionSelect, comunaSelect, zipInput, streetInput, numberInput, deptInput, nameInput, emailInput, phoneInput].forEach(el => {
+    el.addEventListener('input', () => { updateTotals(); updateWhatsAppLink(); });
+    el.addEventListener('change', () => { updateTotals(); updateWhatsAppLink(); });
+  });
+  regionSelect.addEventListener('change', () => {
+    populateComunasFor(regionSelect.value);
+    // reset cached quote when region changes
+    lastShipCost = 0; lastShipRegion = ''; lastShipComuna = ''; lastShipWeight = 0;
+    updateTotals(); updateWhatsAppLink();
+  });
+  comunaSelect.addEventListener('change', () => {
+    // reset cached quote when comuna changes
+    lastShipCost = 0; lastShipComuna = ''; lastShipWeight = 0;
+    updateTotals(); updateWhatsAppLink();
+  });
+
+  // Máscara ligera para teléfono en Chile: +56 9 XXXX XXXX
+  phoneInput.addEventListener('input', () => {
+    const digits = (phoneInput.value || '').replace(/\D+/g, '');
+    // Aceptar formatos con o sin 56/9, reconstruir a +56 9 XXXX XXXX
+    let d = digits;
+    if (d.startsWith('56')) d = d.slice(2);
+    if (!d.startsWith('9')) d = '9' + d; // celulares CL comienzan con 9
+    d = d.slice(0, 9); // 9 dígitos tras el 9
+    const part1 = d.slice(0, 1); // 9
+    const part2 = d.slice(1, 5); // XXXX
+    const part3 = d.slice(5, 9); // XXXX
+    const pretty = `+56 ${part1}${part2 ? ' ' + part2 : ''}${part3 ? ' ' + part3 : ''}`.trim();
+    phoneInput.value = pretty;
+  });
 
     async function createPreference(){
-      const { type, unit } = getCurrent();
-      if (!type || !unit) { alert("Selecciona un tipo y tamaño para continuar."); return null; }
-      const itemTitle = `${type.nombre} ${selectedSize}g`;
-      const payload = { title: itemTitle, quantity: qty, unit_price: unit, currency_id: CURRENCY, picture_url: type.img || PLACEHOLDER_IMG, category_id: "personal_care", description: (type.info?.descripcion || itemTitle).slice(0, 250) };
+      const items = getCartItems().map(it => ({ title: `${it.type.nombre} ${it.size} g`, quantity: it.qty, unit_price: it.unit, currency_id: CURRENCY, picture_url: it.type.img || PLACEHOLDER_IMG, category_id: "personal_care" }));
+      if (items.length === 0) { alert("Selecciona cantidades en uno o más tipos."); return null; }
+      // Gather shipping/payer
+      const isPickup = pickupRadio.checked;
+      const region = regionSelect.value;
+      const address = {
+        region,
+        city: comunaSelect.value || '',
+        zip: zipInput.value.trim(),
+        street: streetInput.value.trim(),
+        number: numberInput.value.trim(),
+        apartment: deptInput.value.trim(),
+      };
+      const buyer = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        phone: phoneInput.value.trim(),
+      };
+      // Validate if shipping
+      if (!isPickup){
+        const required = [buyer.name, buyer.email, buyer.phone, address.region, address.city, address.street, address.number];
+        if (required.some(v => !v)){
+          alert('Completa los datos de envío: nombre, email, teléfono, región, comuna, calle y número.');
+          return null;
+        }
+      } else {
+        // Validate minimal buyer info even for pickup (nombre, email y teléfono)
+        if (!buyer.name || !buyer.email || !buyer.phone){
+          alert('Para retiro en tienda, ingresa tu nombre, email y teléfono.');
+          return null;
+        }
+      }
+  const shippingCost = isPickup ? 0 : (lastShipCost || calcBluexpressCostLocal(region, getCartWeightKg()));
+      const payload = {
+        items,
+        description: `Pedido MUN - ${items.length} ítem(s)` ,
+        shipping: {
+          local_pickup: isPickup,
+          method: 'bluexpress',
+          cost: shippingCost,
+          address
+        },
+        payer: buyer,
+        metadata: { weightKg: getCartWeightKg() }
+      };
       const res = await fetch(BACKEND_PREFERENCE_ENDPOINT, { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(payload) });
       if (!res.ok) { throw new Error(`Error creando preferencia: ${res.status} ${await res.text()}`); }
       const data = await res.json();
@@ -361,24 +1273,149 @@
 
     async function handleCheckout(){
       if (!mp || !mpReady) { alert("Configura tu endpoint backend para habilitar el pago."); return; }
-      const btn = document.getElementById('checkoutBtn');
-      btn.disabled = true; btn.textContent = "Preparando pago...";
+      // UI de MP no visible por ahora
       try {
         const prefId = await createPreference();
         if (!prefId) return;
         mp.checkout({ preference: { id: prefId }, autoOpen: true, render: { container: null } });
       } catch (err){ console.error(err); alert("No se pudo iniciar el pago. Intenta nuevamente."); }
-      finally { btn.disabled = false; btn.textContent = "Pagar con Mercado Pago"; }
+      finally {}
     }
 
-    // Inicialización
-    setSelectedSize(60);
-    renderOptions("");
+  // ----- Image Viewer Logic -----
+  let vState = { scale: 1, x: 0, y: 0 };
+  let lastTouchDist = 0;
+  let isDragging = false;
+  let dragStart = { x: 0, y: 0 };
+
+  function applyTransform(){
+    if (!viewerImg) return;
+    viewerImg.style.transform = `translate3d(${vState.x}px, ${vState.y}px, 0) scale(${vState.scale})`;
+  }
+
+  function openViewer(){
+    if (!imgViewer || !viewerImg) return;
+    imgViewer.classList.add('open');
+    imgViewer.setAttribute('aria-hidden','false');
+    vState = { scale: 1, x: 0, y: 0 };
+    applyTransform();
+  }
+  function setViewerContent(){
+    const it = viewerList[viewerIndex];
+    if (!it) return;
+    viewerImg.src = it.src;
+    if (viewerCaption) viewerCaption.textContent = it.caption || '';
+    // nav visibility
+    const multi = viewerList.length > 1;
+    if (viewerPrev) viewerPrev.style.display = multi ? 'grid' : 'none';
+    if (viewerNext) viewerNext.style.display = multi ? 'grid' : 'none';
+  }
+  function closeViewer(){
+    if (!imgViewer) return;
+    imgViewer.classList.remove('open');
+    imgViewer.setAttribute('aria-hidden','true');
+  }
+  function dist(a,b){ const dx = a.clientX - b.clientX; const dy = a.clientY - b.clientY; return Math.hypot(dx,dy); }
+
+  // Close handlers
+  viewerClose?.addEventListener('click', closeViewer);
+  viewerBackdrop?.addEventListener('click', closeViewer);
+  viewerPrev?.addEventListener('click', () => { if (viewerList.length>1){ viewerIndex = (viewerIndex - 1 + viewerList.length) % viewerList.length; setViewerContent(); } });
+  viewerNext?.addEventListener('click', () => { if (viewerList.length>1){ viewerIndex = (viewerIndex + 1) % viewerList.length; setViewerContent(); } });
+
+  // Double tap to zoom
+  let lastTap = 0;
+  viewerStage?.addEventListener('click', (e) => {
+    const now = Date.now();
+    if (now - lastTap < 300){
+      // toggle zoom
+      vState.scale = vState.scale > 1 ? 1 : 2.2;
+      vState.x = 0; vState.y = 0;
+      applyTransform();
+    }
+    lastTap = now;
+  });
+
+  // Wheel zoom (desktop)
+  viewerStage?.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = Math.sign(e.deltaY) * -0.1;
+    vState.scale = Math.min(4, Math.max(1, vState.scale + delta));
+    applyTransform();
+  }, { passive: false });
+
+  // Touch gestures (pinch and pan)
+  viewerStage?.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2){
+      lastTouchDist = dist(e.touches[0], e.touches[1]);
+    } else if (e.touches.length === 1){
+      isDragging = true;
+      dragStart = { x: e.touches[0].clientX - vState.x, y: e.touches[0].clientY - vState.y };
+    }
+  }, { passive: true });
+  viewerStage?.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2){
+      const d = dist(e.touches[0], e.touches[1]);
+      const delta = (d - lastTouchDist) / 200; // sensitivity
+      vState.scale = Math.min(4, Math.max(1, vState.scale + delta));
+      lastTouchDist = d;
+      applyTransform();
+    } else if (e.touches.length === 1 && isDragging){
+      vState.x = e.touches[0].clientX - dragStart.x;
+      vState.y = e.touches[0].clientY - dragStart.y;
+      applyTransform();
+    }
+  }, { passive: true });
+  viewerStage?.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
+  viewerStage?.addEventListener('touchcancel', () => { isDragging = false; }, { passive: true });
+
+  // Inicialización
+  renderOptions("");
+  renderCart();
+  updatePrice();
+  // Precarga regiones y deja "Región Metropolitana" seleccionada para mostrar comunas de inmediato
+  populateRegions().then(() => {
+    const DEFAULT_REGION = 'Región Metropolitana';
+    if (regionSelect) {
+      regionSelect.value = DEFAULT_REGION;
+      populateComunasFor(DEFAULT_REGION);
+    }
+  });
+  // Mostrar contacto siempre; solo ocultar/mostrar dirección según método
+  toggleAddressBlock();
+  // Set initial segmented control visual state
+  document.querySelectorAll('.ship-methods .radio').forEach(l => l.classList.remove('active'));
+  if (pickupRadio.checked) pickupRadio.closest('.radio')?.classList.add('active');
+  if (shipRadio.checked) shipRadio.closest('.radio')?.classList.add('active');
 
     (function setShipText(){
       const el = document.getElementById('shipText');
       const countryByLocale = { "es-AR": "Envíos a toda Argentina", "es-CL": "Envíos a todo Chile", "es-MX": "Envíos a todo México", "es-UY": "Envíos a todo Uruguay", "es-PE": "Envíos a todo Perú" };
       el.textContent = countryByLocale[MERCADOPAGO_LOCALE] || "Envíos a todo el país";
+    })();
+  </script>
+  
+  <footer class="site-footer" role="contentinfo">
+    <div class="inner">
+      <a class="brand" href="/" aria-label="Inicio">
+        <img src="mun-logo.png" alt="MUN" />
+      </a>
+      <div class="contact">
+        <div>
+          <a href="https://www.instagram.com/tienda_mun89/" target="_blank" rel="noopener">@tienda_mun89</a>
+          •
+          <a href="mailto:mun.info89@gmail.com">mun.info89@gmail.com</a>
+        </div>
+      </div>
+      <small>© <span id="year"></span> MUN. Todos los derechos reservados.</small>
+    </div>
+  </footer>
+  <script>
+    // Año dinámico en el footer
+    (function(){
+      const y = new Date().getFullYear();
+      const el = document.getElementById('year');
+      if (el) el.textContent = y;
     })();
   </script>
 </body>
