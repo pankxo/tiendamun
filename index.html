@@ -580,7 +580,9 @@
   // Imagen fija para la vista izquierda
   const FIXED_PRODUCT_IMG = "assets/red.png";
   // Imagen fija para acondicionadores en la vista izquierda
-  const FIXED_CONDITIONER_IMG = "assets/acondicionador.png";
+  // Nueva imagen: cafe.png (con fallback a nombre legacy)
+  const FIXED_CONDITIONER_IMG = "assets/cafe.png";
+  const LEGACY_CONDITIONER_IMG = "assets/acondicionador.png";
 
     // Regiones de Chile (abreviado) para select
     const REGIONES_CL = [
@@ -639,12 +641,12 @@
 
     // Nuevo catálogo: Acondicionadores
     const ACONDICIONADORES = [
-  { id:"acond_danado", categoria:"acondicionador", nombre:"Acondicionador Reparador", tags:["dañado","reparación","frágil"], breve:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", info:{ descripcion:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", ingredientes:["Hibisco (fortalece y suaviza)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y protege)","Aceite de rosa mosqueta (regenera)","Manteca de cacao (nutre y suaviza)"], beneficios:["Acondiciona profundamente, reduce sequedad y fragilidad, mejora suavidad y manejabilidad."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
-  { id:"acond_tinturado_canoso", categoria:"acondicionador", nombre:"Acondicionador Tinturado o Canoso", tags:["tinturado","canoso","color"], breve:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", info:{ descripcion:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", ingredientes:["Henna en polvo (fortalece y da brillo)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y previene daño)","Aceite de ricino (fortalece)","Manteca de cacao (hidrata)"] , beneficios:["Protege color, mejora brillo, suaviza y acondiciona, previene rotura y daño."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
-  { id:"acond_brillo", categoria:"acondicionador", nombre:"Acondicionador Brillo", tags:["brillo","suavidad"], breve:"Acondicionador que aporta brillo y suavidad al cabello.", info:{ descripcion:"Acondicionador que aporta brillo y suavidad al cabello.", ingredientes:["Cáscara de naranja (vitamina C y aroma fresco)","Silicona vegetal (suaviza y protege)","Aceite Monoi (hidrata y suaviza)","Aceite de argán (nutre y aporta brillo)","Manteca de cacao (hidrata)"] , beneficios:["Mejora el brillo natural, suaviza la cutícula y nutre intensamente el cabello."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
-  { id:"acond_seco_danado_frizz", categoria:"acondicionador", nombre:"Acondicionador Fortalecedor", tags:["seco","frizz","hidratación"], breve:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", info:{ descripcion:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", ingredientes:["Pétalos de rosas (suavizan y aromatizan)","Silicona vegetal (protege y reduce frizz)","Aceite de coco (hidrata profundamente)","Aceite Monoi (suaviza y aromatiza)","Manteca de cacao (hidrata y nutre)"] , beneficios:["Hidratación profunda, reducción del frizz, suavidad y mejor textura del cabello."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
-  { id:"acond_verano_feliz", categoria:"acondicionador", nombre:"Acondicionador Protección Summer", tags:["verano","protección solar"], breve:"Acondicionador que protege y acondiciona el cabello durante el verano.", info:{ descripcion:"Acondicionador que protege y acondiciona el cabello durante el verano.", ingredientes:["Plantas ayurvédicas (calman y nutren)","Silicona vegetal (protege)","Aceite de coco (hidrata y protege)","Aceite de jojoba (equilibra y acondiciona)","Cacao y karité (hidratan)"] , beneficios:["Protege contra daños solares, hidrata intensamente y mantiene el cabello saludable y suave."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} },
-  { id:"acond_ninos", categoria:"acondicionador", nombre:"Acondicionador Niños", tags:["niños","suave","sensible"], breve:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", info:{ descripcion:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", ingredientes:["Inulina (hidrata y suaviza)","Avena en polvo (calma)","Silicona vegetal (protege y facilita el peinado)","Aceite de coco","Aceite de almendras","Manteca de cacao","Manteca de karité"], beneficios:["Hidratación, suavidad, fácil peinado, protección y nutrición para cabello sensible infantil."] }, img: "assets/acondicionador.png", gallery:["assets/acondicionador.png"], precios:{60: 7000, 100: 11000} }
+  { id:"acond_danado", categoria:"acondicionador", nombre:"Acondicionador Reparador", tags:["dañado","reparación","frágil"], breve:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", info:{ descripcion:"Acondicionador sólido para reparar y fortalecer el cabello dañado.", ingredientes:["Hibisco (fortalece y suaviza)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y protege)","Aceite de rosa mosqueta (regenera)","Manteca de cacao (nutre y suaviza)"], beneficios:["Acondiciona profundamente, reduce sequedad y fragilidad, mejora suavidad y manejabilidad."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_tinturado_canoso", categoria:"acondicionador", nombre:"Acondicionador Tinturado o Canoso", tags:["tinturado","canoso","color"], breve:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", info:{ descripcion:"Acondicionador que mantiene la salud y brillo del cabello teñido o canoso.", ingredientes:["Henna en polvo (fortalece y da brillo)","Silicona vegetal (protege y suaviza)","Aceite de coco (hidrata y previene daño)","Aceite de ricino (fortalece)","Manteca de cacao (hidrata)"] , beneficios:["Protege color, mejora brillo, suaviza y acondiciona, previene rotura y daño."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_brillo", categoria:"acondicionador", nombre:"Acondicionador Brillo", tags:["brillo","suavidad"], breve:"Acondicionador que aporta brillo y suavidad al cabello.", info:{ descripcion:"Acondicionador que aporta brillo y suavidad al cabello.", ingredientes:["Cáscara de naranja (vitamina C y aroma fresco)","Silicona vegetal (suaviza y protege)","Aceite Monoi (hidrata y suaviza)","Aceite de argán (nutre y aporta brillo)","Manteca de cacao (hidrata)"] , beneficios:["Mejora el brillo natural, suaviza la cutícula y nutre intensamente el cabello."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_seco_danado_frizz", categoria:"acondicionador", nombre:"Acondicionador Fortalecedor", tags:["seco","frizz","hidratación"], breve:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", info:{ descripcion:"Acondicionador para hidratar y suavizar el cabello seco o con frizz.", ingredientes:["Pétalos de rosas (suavizan y aromatizan)","Silicona vegetal (protege y reduce frizz)","Aceite de coco (hidrata profundamente)","Aceite Monoi (suaviza y aromatiza)","Manteca de cacao (hidrata y nutre)"] , beneficios:["Hidratación profunda, reducción del frizz, suavidad y mejor textura del cabello."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_verano_feliz", categoria:"acondicionador", nombre:"Acondicionador Protección Summer", tags:["verano","protección solar"], breve:"Acondicionador que protege y acondiciona el cabello durante el verano.", info:{ descripcion:"Acondicionador que protege y acondiciona el cabello durante el verano.", ingredientes:["Plantas ayurvédicas (calman y nutren)","Silicona vegetal (protege)","Aceite de coco (hidrata y protege)","Aceite de jojoba (equilibra y acondiciona)","Cacao y karité (hidratan)"] , beneficios:["Protege contra daños solares, hidrata intensamente y mantiene el cabello saludable y suave."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} },
+  { id:"acond_ninos", categoria:"acondicionador", nombre:"Acondicionador Niños", tags:["niños","suave","sensible"], breve:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", info:{ descripcion:"Acondicionador sólido nutritivo y suave para el cabello delicado de los niños.", ingredientes:["Inulina (hidrata y suaviza)","Avena en polvo (calma)","Silicona vegetal (protege y facilita el peinado)","Aceite de coco","Aceite de almendras","Manteca de cacao","Manteca de karité"], beneficios:["Hidratación, suavidad, fácil peinado, protección y nutrición para cabello sensible infantil."] }, img: "assets/cafe.png", gallery:["assets/cafe.png"], precios:{60: 7000, 100: 11000} }
     ];
 
     // Estado UI
@@ -959,7 +961,15 @@
       productImage.src = mainImageFor(item);
       productImage.alt = `${item.nombre} - imagen del producto`;
       // Fallback si la imagen seleccionada no existe
-      productImage.onerror = () => { productImage.onerror = null; productImage.src = item?.img || (selectedCategory === 'acondicionador' ? FIXED_CONDITIONER_IMG : FIXED_PRODUCT_IMG) || PLACEHOLDER_IMG; };
+      productImage.onerror = () => {
+        productImage.onerror = null;
+        if (selectedCategory === 'acondicionador') {
+          // intenta legacy si cafe.png no está
+          productImage.src = item?.img || LEGACY_CONDITIONER_IMG || PLACEHOLDER_IMG;
+        } else {
+          productImage.src = item?.img || FIXED_PRODUCT_IMG || PLACEHOLDER_IMG;
+        }
+      };
       leftTitle.textContent = item.nombre;
       leftDesc.textContent = item.breve || '';
   leftBadge.textContent = (item.tags||[]).slice(0,2).join(" • ") || (selectedCategory === 'acondicionador' ? 'Acondicionador' : 'Shampoo');
@@ -1107,9 +1117,16 @@
     if (!it) return;
     infoModalTitle.textContent = it.nombre || 'Shampoo';
     infoModalDesc.textContent = it.breve || it.info?.descripcion || '—';
-  // Preferir imagen específica del producto en el modal; fallback a imagen fija o placeholder
-  infoModalImg.src = it.img || FIXED_PRODUCT_IMG || PLACEHOLDER_IMG;
-  infoModalImg.onerror = () => { infoModalImg.onerror = null; infoModalImg.src = FIXED_PRODUCT_IMG || PLACEHOLDER_IMG; };
+    // Mostrar imagen acorde a la categoría (cafe.png para acondicionadores, rojo para shampoo)
+    infoModalImg.src = mainImageFor(it) || it.img || PLACEHOLDER_IMG;
+    infoModalImg.onerror = () => {
+      infoModalImg.onerror = null;
+      if (it.categoria === 'acondicionador') {
+        infoModalImg.src = it.img || LEGACY_CONDITIONER_IMG || PLACEHOLDER_IMG;
+      } else {
+        infoModalImg.src = it.img || PLACEHOLDER_IMG;
+      }
+    };
     infoModalImg.alt = it.nombre || 'Shampoo';
     infoModalIngr.innerHTML = (it.info?.ingredientes||[]).map(x=>`<li>${x}</li>`).join('');
     infoModalBene.innerHTML = (it.info?.beneficios||[]).map(x=>`<li>${x}</li>`).join('');
@@ -1188,7 +1205,7 @@
       e.preventDefault();
       e.stopPropagation();
       const id = infoButton.getAttribute('data-info-id');
-      const item = SHAMPOOS.find(s => s.id === id);
+      const item = findProductById(id);
       if (item){ openInfo(item); }
       return;
     }
@@ -1197,7 +1214,7 @@
     const id = item.getAttribute('data-id');
     if (!id) return;
     setSelectedType(id);
-    const curr = SHAMPOOS.find(s => s.id === id);
+    const curr = findProductById(id);
     if (typeToggle && curr) typeToggle.textContent = curr.nombre;
     closeTypeMenu();
   });
