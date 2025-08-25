@@ -1,0 +1,15 @@
+{
+  "Región Metropolitana": {
+    "Santiago": { "base1": 3490, "extraKg": 2000 },
+    "Maipú": { "base1": 3490, "extraKg": 2000 },
+    "Providencia": { "base1": 3490, "extraKg": 2000 },
+    "Puente Alto": { "base1": 3490, "extraKg": 2000 },
+    "Las Condes": { "base1": 3490, "extraKg": 2000 },
+    "Ñuñoa": { "base1": 3490, "extraKg": 2000 }
+  },
+  "Valparaíso": {
+    "Valparaíso": { "base1": 4990, "extraKg": 2200 },
+    "Viña del Mar": { "base1": 4990, "extraKg": 2200 },
+    "Quilpué": { "base1": 4990, "extraKg": 2200 }
+  }
+}
